@@ -1,0 +1,72 @@
+<nz-layout class="layout">
+  <nz-sider style="background-color: #29B6F6;">
+
+    <div style="color: white;font-family: 'Rubik', sans-serif;font-size:x-large;
+    margin: 20px;"
+    >Ati</div>
+
+
+    <ul nz-menu nzMode="inline" style="background-color: #29B6F6;">
+      <li nz-menu-item (click)="changeLayoutDesign('overview')">
+        <i nz-icon nzType="home" nzTheme="outline"></i>
+        <span>Home</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('stuff')">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>My Stuffs</span>
+      </li>
+      <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Review Timetable</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('ue')">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Review UE Timetable</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('home')">
+        <i nz-icon nzType="read" nzTheme="outline"></i>
+        <span>Review Subjects</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('collision')">
+        <i nz-icon nzType="ungroup" nzTheme="outline"></i>
+        <span>Collisions</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('files')">
+        <i nz-icon nzType="cloud-server" nzTheme="outline"></i>
+        <span>Class Files</span>
+      </li>
+
+
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <div *ngIf="switchLayoutType === 'home' ">
+        <app-home></app-home>
+      </div>
+      <div *ngIf="switchLayoutType === 'overview' ">
+        <app-overview-page></app-overview-page>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'stuff' ">
+        <app-my-stuff></app-my-stuff>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'review' ">
+        <app-review></app-review>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'ue' ">
+        <app-review-ue></app-review-ue>
+      </div>
+      <div *ngIf="switchLayoutType === 'collision' ">
+        <app-collision></app-collision>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'files' ">
+        <app-class-file></app-class-file>
+      </div>
+    </nz-content>
+    <nz-footer style="color: black;background-color: white;">©2020 Created By Adam W Reuben</nz-footer>
+  </nz-layout>
+</nz-layout>

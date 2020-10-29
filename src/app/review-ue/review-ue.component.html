@@ -1,0 +1,258 @@
+<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tab nzTitle="Monday">
+    <app-monday></app-monday>
+  </nz-tab>
+  <nz-tab nzTitle="Tuesday">
+    <app-tuesday></app-tuesday>
+  </nz-tab>
+  <nz-tab nzTitle="Wednesday">
+    <app-wednesday></app-wednesday>
+  </nz-tab>
+  <nz-tab nzTitle="Thursday">
+    <app-thursday></app-thursday>
+  </nz-tab>
+
+  <nz-tab nzTitle="Friday">
+    <app-friday></app-friday>
+  </nz-tab>
+</nz-tabset>
+
+<nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isVisibleMiddleUpdate"
+      nzTitle="Update University Timetable"
+      nzOkText="Set"
+      (nzOnCancel)="handleCancelMiddleUpdate()"
+      (nzOnOk)="handleOkMiddleUpdate()"
+    >
+    <form nz-form class="form" #form="ngForm" (ngSubmit)="onSubmit()">
+
+      <nz-form-item>
+        <nz-select
+        required
+        [(ngModel)]="selectedWeek"
+        name="weekUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Select Week">
+        <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
+        <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
+        <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
+        <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+        </nz-select>
+      </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      required
+      [(ngModel)]="dayValue"
+      name="dayUpdate"
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Select Day">
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-date-picker
+      style="width: 100%;margin-bottom: 10px;"
+      name="dateUpdate"
+       [(ngModel)]="dateValue"></nz-date-picker>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      [(ngModel)]="subjectValue"
+      name="subjectUpdate"
+      required
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Select Subject Name">
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      [(ngModel)]="typeValue"
+      name="typeUpdate"
+      required
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Set Lesson Type">
+        <nz-option nzValue="Lecture" nzLabel="Lecture"></nz-option>
+        <nz-option nzValue="Tutorial" nzLabel="Tutorial"></nz-option>
+        <nz-option nzValue="Practical" nzLabel="Practical"></nz-option>
+        <nz-option nzValue="Workshop" nzLabel="Workshop"></nz-option>
+        <nz-option nzValue="Discussion" nzLabel="Discussion"></nz-option>
+        <nz-option nzValue="Test" nzLabel="Test"></nz-option>
+
+      </nz-select>
+    </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="locationValue"
+        name="locationUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Lesson Location" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-time-picker
+        style="width: 100%;margin-bottom: 10px;"
+        name="startUpdate"
+        nzPlaceHolder="Start Time"
+        nzFormat="HH:mm"
+        [(ngModel)]="startTimeValue" name="start" required></nz-time-picker>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-time-picker
+        style="width: 100%;margin-bottom: 10px;"
+        name="endUpdate"
+        nzPlaceHolder="End Time"
+        nzFormat="HH:mm"
+         [(ngModel)]="endTimeValue" name="end" required></nz-time-picker>
+      </nz-form-item>
+
+    </form>
+
+    </nz-modal>
+
+    <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="true"
+      [nzWidth]="720"
+      [nzVisible]="isVisibleMiddle"
+      nzTitle="Set University Timetable"
+      (nzOnClose)="handleCancelMiddle()"
+    >
+    <form nz-form class="form" #form="ngForm" (ngSubmit)="onSubmit()">
+
+      <nz-form-item>
+        <nz-select
+        required
+        [(ngModel)]="selectedWeek"
+        name="weekUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Select Week">
+        <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
+        <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
+        <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
+        <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+        </nz-select>
+      </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      required
+      [(ngModel)]="dayValue"
+      name="dayUpdate"
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Select Day">
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-date-picker
+      style="width: 100%;margin-bottom: 10px;"
+       [(ngModel)]="dateValue"></nz-date-picker>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      [(ngModel)]="subjectValue"
+      name="subjectUpdate"
+      required
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Select Subject Name">
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+      </nz-select>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-select
+      [(ngModel)]="typeValue"
+      name="typeUpdate"
+      required
+      style="width: 100%;margin-bottom: 10px;"
+      nzPlaceHolder="Set Lesson Type">
+        <nz-option nzValue="Lecture" nzLabel="Lecture"></nz-option>
+        <nz-option nzValue="Tutorial" nzLabel="Tutorial"></nz-option>
+        <nz-option nzValue="Practical" nzLabel="Practical"></nz-option>
+        <nz-option nzValue="Workshop" nzLabel="Workshop"></nz-option>
+        <nz-option nzValue="Discussion" nzLabel="Discussion"></nz-option>
+        <nz-option nzValue="Test" nzLabel="Test"></nz-option>
+
+      </nz-select>
+    </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="locationValue"
+        name="locationUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Lesson Location" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-time-picker
+        name="startUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Start Time"
+        nzFormat="HH:mm"
+        [(ngModel)]="startTimeValue" name="start" required></nz-time-picker>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-time-picker
+        name="endUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="End Time"
+        nzFormat="HH:mm"
+         [(ngModel)]="endTimeValue" name="end" required></nz-time-picker>
+      </nz-form-item>
+
+      <div style="float: right;margin-top: 20px;">
+        <button nz-button style="margin-right: 8px;" (click)="handleCancelMiddle()">Cancel</button>
+        <button nz-button nzType="primary" (click)="handleOkMiddle()">Submit</button>
+      </div>
+      
+    </form>
+    </nz-drawer>
+
+
+
+<ng-template #extraTemplate>
+
+  <nz-select [(ngModel)]="selectedWeek">
+    <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
+    <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
+    <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
+    <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+  </nz-select>
+
+  <button nz-button nzType="primary" nzSize="large"
+  (click)="showModalMiddle()"
+  >
+  <i nz-icon nzType="plus" nzTheme="outline"></i>
+  Set Timetable
+</button>
+
+</ng-template>
+

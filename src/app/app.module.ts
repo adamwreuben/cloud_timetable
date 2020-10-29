@@ -3,16 +3,64 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { MaterialModule } from './material/material.module';
+import { LoginComponent } from './account/login/login.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { GoogleSignDirective } from './google-sign.directive';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ReviewComponent } from './review/review.component';
+import { ReviewUeComponent } from './review-ue/review-ue.component';
+import { CollisionComponent } from './collision/collision.component';
+import { ClassFileComponent } from './class-file/class-file.component';
+import { HomeComponent } from './home/home.component';
+import { MondayComponent } from './days/monday/monday.component';
+import { TuesdayComponent } from './days/tuesday/tuesday.component';
+import { WednesdayComponent } from './days/wednesday/wednesday.component';
+import { ThursdayComponent } from './days/thursday/thursday.component';
+import { FridayComponent } from './days/friday/friday.component';
+import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { MyStuffComponent } from './my-stuff/my-stuff.component';
+
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    GoogleSignDirective,
+    SidebarComponent,
+    ReviewComponent,
+    ReviewUeComponent,
+    CollisionComponent,
+    ClassFileComponent,
+    HomeComponent,
+    MondayComponent,
+    TuesdayComponent,
+    WednesdayComponent,
+    ThursdayComponent,
+    FridayComponent,
+    OverviewPageComponent,
+    MyStuffComponent,
   ],
   imports: [
+
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    FlexLayoutModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
-  providers: [],
+
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

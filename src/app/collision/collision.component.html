@@ -1,0 +1,20 @@
+<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tab nzTitle="All Collisions">
+
+  </nz-tab>
+
+</nz-tabset>
+<ng-template #extraTemplate>
+  <nz-select [(ngModel)]="selectedCourse" style="margin-right: 10px;">
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+  </nz-select>
+  <nz-select [(ngModel)]="selectedSubject">
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+  </nz-select>
+</ng-template>

@@ -1,0 +1,107 @@
+
+<div fxLayout="column" fxLayoutAlign="space-around center" style="width: 100%;">
+  <div style="font-family: 'Rubik', sans-serif; font-weight: bolder;margin-top: 20px;
+  margin-bottom: 30px;
+  color: black;
+  font-size: larger;"
+  >Welcom To Ati</div>
+  <div style="width: 60%;">
+    <nz-steps [nzCurrent]="current">
+      <nz-step nzTitle="Login" nzIcon="user"></nz-step>
+      <nz-step nzTitle="Verification"  nzIcon="solution"></nz-step>
+      <nz-step nzTitle="Done" nzStatus="wait" nz-icon="iconTemplate"></nz-step>
+    </nz-steps>
+
+    <div class="steps-content" *ngIf="index === 0">
+      <div fxLayout="column" fxLayoutAlign="space-around center">
+        <button nz-button nzType="primary" appGoogleSign style="width: 400px;"> Login with Google</button>
+
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+          <div style="font-family: 'Rubik', sans-serif">---OR---</div>
+          <button
+          nz-button
+          nzType="primary"
+          style="width: 400px;"> Enter Invitation Code</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="steps-content" *ngIf="index === 1">
+      <div  fxLayout="column" fxLayoutAlign="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center">
+
+          <div *ngIf="changeImageVerifiation === false">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="144" height="144"
+        viewBox="0 0 172 172"
+        style=" fill:#000000;"><g fill="none"
+         fill-rule="nonzero" stroke="none" stroke-width="1"
+         stroke-linecap="butt" stroke-linejoin="miter"
+         stroke-miterlimit="10" stroke-dasharray=""
+         stroke-dashoffset="0" font-family="none"
+         font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M106.13833,10.75l12.30158,19.02033l22.62517,1.13233l1.14308,22.62158l19.03108,12.29083l-10.32358,20.167l10.33433,20.15625l-19.02033,
+          12.30158l-1.13233,22.62517l-22.62158,1.14308l-12.29083,19.03108l-20.167,-10.32358l-20.15625,10.33433l-12.30158,-19.02033l-22.62517,-1.13233l-1.14308,-22.62158l-19.03108,-12.29083l10.32358,-20.167l-10.33433,-20.15625l19.02033,-12.30158l1.13233,-22.62517l22.62158,-1.14308l12.29083,-19.03108l20.167,10.32358z" fill="#e74c3c"></path><path d="M76.669,111.99708l-23.28092,-23.27375l7.60383,-7.60025l15.79175,15.79175l34.28533,-33.23183l7.482,7.7185z" fill="#ffffff"></path></g></g></svg>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === true">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="144" height="144"
+        viewBox="0 0 172 172"
+        style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g>
+          <path d="M106.13833,10.75l12.30158,19.02033l22.62517,1.13233l1.14308,22.62158l19.03108,12.29083l-10.32358,20.167l10.33433,20.15625l-19.02033,12.30158l-1.13233,22.62517l-22.62158,1.14308l-12.29083,19.03108l-20.167,-10.32358l-20.15625,10.33433l-12.30158,-19.02033l-22.62517,-1.13233l-1.14308,-22.62158l-19.03108,-12.29083l10.32358,-20.167l-10.33433,-20.15625l19.02033,-12.30158l1.13233,-22.62517l22.62158,-1.14308l12.29083,-19.03108l20.167,10.32358z" fill="#2ecc71"></path><path d="M76.669,111.99708l-23.28092,-23.27375l7.60383,-7.60025l15.79175,15.79175l34.28533,-33.23183l7.482,7.7185z" fill="#ffffff"></path></g></g></svg>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === false">
+            <button
+            nzType="primary"
+            nz-button (click)="requestVerifiation()">Request CR Verification</button>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === false" style="margin-top: 20px;">
+            <p style="font-family: 'Rubik', sans-serif">**You will Get Started After being Verified**</p>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === true" style="margin-top: 20px;">
+            <p style="font-family: 'Rubik', sans-serif;color: black;">Please Wait For Your Verification, This may take sometime.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="steps-content" *ngIf="index === 2">
+      <nz-result
+      nzStatus="success"
+      nzTitle="Successfully"
+      nzSubTitle="Go To Console and Start creating Timetable"
+       >
+        <div nz-result-extra>
+          <button nz-button nzType="primary" (click)="done()">Go Console</button>
+        </div>
+      </nz-result>
+    </div>
+
+    <div class="steps-action">
+      <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+        <span>Previous</span>
+      </button>
+      <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+        <span>Next</span>
+      </button>
+      <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+        <span>Done</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
