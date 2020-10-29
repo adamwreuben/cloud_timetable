@@ -23,10 +23,12 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 
 const materialModules = [
   NzStepsModule,
   NzDrawerModule,
+  NzTimelineModule,
   NzEmptyModule,
   NzUploadModule,
   NzDatePickerModule,

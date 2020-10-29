@@ -18,3 +18,66 @@
     <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
   </nz-select>
 </ng-template>
+
+<nz-timeline>
+  <nz-timeline-item>
+    <nz-card nzHoverable
+    style="
+    background-color: whitesmoke;
+    width: 98%;
+    margin: 10px 0 10px 0;">
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+<div fxLayout="row">
+
+<div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+  <div>{{"CL 113"}}</div>
+  <div style="font-weight: 100;font-size: small;">{{"YOMBO"}}</div>
+</div>
+
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+<div>
+  <nz-tag [nzColor]="'#448AFF'">{{"Lecture"}}</nz-tag>
+  <nz-tag [nzColor]="'#4CAF50'">{{"07:00"}}</nz-tag>
+  <nz-tag [nzColor]="'#66BB6A'">{{"09:00"}}</nz-tag>
+</div>
+</div>
+
+</div>
+    </nz-card>
+  </nz-timeline-item>
+
+  <nz-timeline-item nzColor="red" [nzDot]="dotTemplate">
+    <nz-card nzHoverable
+    style="
+    background-color: whitesmoke;
+    width: 98%;
+    margin: 10px 0 10px 0;">
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+<div fxLayout="row">
+
+<div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+  <div>{{"CL 113"}}</div>
+  <div style="font-weight: 100;font-size: small;">{{"YOMBO"}}</div>
+</div>
+
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+<div>
+  <nz-tag [nzColor]="'#448AFF'">{{"Lecture"}}</nz-tag>
+  <nz-tag [nzColor]="'#4CAF50'">{{"07:00"}}</nz-tag>
+  <nz-tag [nzColor]="'#66BB6A'">{{"09:00"}}</nz-tag>
+</div>
+</div>
+
+</div>
+    </nz-card>
+  </nz-timeline-item>
+</nz-timeline>
+<ng-template #dotTemplate>
+  <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
+</ng-template>
