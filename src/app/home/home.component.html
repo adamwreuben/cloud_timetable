@@ -1,9 +1,9 @@
 <nz-tabset
 [nzTabBarExtraContent]="extraTemplate">
   <nz-tab nzTitle="All Subjects">
-    <nz-list nzBordered nzSize="small">
-      <nz-list-item>
-        <nz-card nzHoverable style="width:98%">
+    <ul nz-list nzSize="small">
+      <li nz-list-item  nzNoFlex>
+        <nz-card nzHoverable style="width:98%;margin-bottom: 10px;">
           <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
             <div fxLayout="row">
               <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
@@ -19,10 +19,8 @@
 
           </div>
         </nz-card>
-      </nz-list-item>
 
-      <nz-list-item>
-        <nz-card nzHoverable style="width:98%">
+        <nz-card nzHoverable style="width:98%;margin-bottom: 10px;">
           <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
             <div fxLayout="row">
               <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
@@ -38,10 +36,9 @@
 
           </div>
         </nz-card>
-      </nz-list-item>
+      </li>
+    </ul>
 
-
-    </nz-list>
   </nz-tab>
 
 </nz-tabset>
@@ -172,7 +169,7 @@
       </div>
 
     </form>
-    
+
     </nz-drawer>
     <ng-template #extraTemplate>
       <button nz-button nzType="primary" nzSize="large"

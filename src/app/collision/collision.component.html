@@ -20,7 +20,10 @@
 </ng-template>
 
 <nz-timeline>
-  <nz-timeline-item>
+  <nz-timeline-item nzColor="red" [nzDot]="dotTemplate"
+  nz-tooltip
+  nzTooltipTitle="Fix This Collision"
+  nzTooltipPlacement="right">
     <nz-card nzHoverable
     style="
     background-color: whitesmoke;

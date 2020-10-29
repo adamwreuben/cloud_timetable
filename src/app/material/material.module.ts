@@ -24,11 +24,17 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 const materialModules = [
   NzStepsModule,
   NzDrawerModule,
+  NzMessageModule,
+  NzToolTipModule,
   NzTimelineModule,
+  NzPopconfirmModule,
   NzEmptyModule,
   NzUploadModule,
   NzDatePickerModule,

@@ -86,7 +86,7 @@
 
     </nz-modal>
 
-    <ul nz-list nzBordered nzSize="large">
+    <ul nz-list nzSize="small">
 
       <li nz-list-item  nzNoFlex>
 
@@ -109,7 +109,13 @@
   <div>
     <button nzType="primary" style="margin-right: 10px;"
     (click)="showModalMiddle()">Update</button>
-    <button nzType="primary" nzDanger>Delete</button>
+    <button nzType="primary"
+    nz-popconfirm
+        nzPopconfirmTitle="Are you sure delete this task?"
+        (nzOnConfirm)="confirm()"
+        (nzOnCancel)="cancel()"
+        nzPopconfirmPlacement="top"
+     nzDanger>Delete</button>
   </div>
 
   <div fxLayout="row" fxLayoutAlign="center center">

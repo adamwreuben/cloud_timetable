@@ -64,7 +64,14 @@ export class MondayComponent implements OnInit {
   }
 
   onSubmit(){
-    
+
+  }
+
+  confirm(){
+
+  }
+
+  cancel(){
   }
 
 }
