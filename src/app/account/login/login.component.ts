@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   current = 0;
   changeImageVerifiation: boolean = false;
+  isVisibleMiddle = false;
 
   index: any = 0;
 
@@ -56,6 +57,18 @@ export class LoginComponent implements OnInit {
       }
     }
 
+  }
+
+  handleOkMiddle(): void {
+    this.isVisibleMiddle = false;
+  }
+
+  handleCancelMiddle(): void {
+    this.isVisibleMiddle = false;
+  }
+
+  showModalMiddle(): void {
+    this.isVisibleMiddle = true;
   }
 
   loadVerification(uid: any) {

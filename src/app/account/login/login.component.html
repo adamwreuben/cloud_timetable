@@ -14,21 +14,45 @@ style="color: black;font-family: 'Rubik', sans-serif;font-size:xx-large;
       <div style="color: black;font-size: large;">Sign</div>
     </div>
 
-    <button nz-button nzType="primary">
+    <button nz-button nzType="primary" style="background-color: #448AFF;">
       <i nz-icon nzType="google" nzTheme="outline" style="margin-right: 20px;"></i>
       Sign In With Google
     </button>
 
-    <nz-divider nzText="Or Create Account" style="color: black;"></nz-divider>
+    <button nz-button
+    nzType="primary"
+    style="margin-top: 10px;background-color: #4CAF50;">
+    <i nz-icon nzType="team" nzTheme="outline"></i>
+      Request Login To Your Specific Course
+    </button>
+
+    <nz-divider
+    nzText="Or Create Account" style="color: black;font-size: small;"></nz-divider>
 
     <button nz-button nzType="primary" style="background-color: #66BB6A;">
       <i nz-icon nzType="user-add" nzTheme="outline" style="margin-right: 20px;"></i>
       Create Account
     </button>
 
+
   </div>
 
 </div>
+
+
+<nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isVisibleMiddle"
+      nzTitle="Set Subject Timetable"
+      nzOkText="Set"
+      (nzOnCancel)="handleCancelMiddle()"
+      (nzOnOk)="handleOkMiddle()"
+    >
+
+    </nz-modal>
+
+
+
   </nz-content>
 
   <nz-footer>©2020 Ati | 🇹🇿</nz-footer>
