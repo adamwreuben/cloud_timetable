@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "cloud-time"
+  "defaultProject": "cloud-time",
+  "cli": {
+    "analytics": "38360f17-694a-4e42-a25a-add07b5246fe"
+  }
 }

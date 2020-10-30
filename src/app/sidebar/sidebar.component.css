@@ -5,8 +5,9 @@
 }
 
 nz-sider {
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
+  padding-top: 40px;
   position: fixed;
   left: 0;
 }
@@ -19,7 +20,7 @@ nz-sider {
 
 nz-select {
   margin: 0 8px 10px 0;
-  width: 120px;
+  width: 100%;
 }
 
 nz-content {
@@ -42,4 +43,17 @@ nz-header {
   background: whitesmoke;
   padding: 0;
 }
+
+[nz-menu-item]{
+  margin: 0 10px 0 10px;
+  color: white;
+  border-radius: 5px;
+  width: 180px;
+}
+[nz-menu-item]:hover{
+  background-color: #5ec4f3;
+}
+/* [nzSelected]{
+  background-color: #1d8ec2;
+} */
 
