@@ -16,6 +16,7 @@ export class ReviewComponent implements OnInit {
   locationValue;
   startTimeValue;
   endTimeValue;
+  comment = 'No Info';
 
   constructor() { }
 
@@ -26,7 +27,7 @@ export class ReviewComponent implements OnInit {
 
   }
 
-  
+
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;
