@@ -2,7 +2,6 @@
 .layout {
   min-height: 100vh;
   background-color: white;
-
 }
 
 nz-sider {
@@ -18,7 +17,10 @@ nz-sider {
 
 }
 
-
+nz-select {
+  margin: 0 8px 10px 0;
+  width: 120px;
+}
 
 nz-content {
   margin: 10px 10px 0;
@@ -32,5 +34,10 @@ nz-footer {
 }
 [nz-menu] {
   width: 240px;
+}
+
+nz-header {
+  background: whitesmoke;
+  padding: 0;
 }
 

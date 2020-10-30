@@ -1,10 +1,6 @@
 <nz-layout class="layout">
   <nz-sider style="background-color: #29B6F6;">
 
-    <div style="color: white;font-family: 'Rubik', sans-serif;font-size:x-large;
-    margin: 20px;"
-    >Ati</div>
-
     <ul nz-menu nzMode="inline" style="background-color: #29B6F6;">
       <li nz-menu-item (click)="changeLayoutDesign('overview')">
         <i nz-icon nzType="home" nzTheme="outline"></i>
@@ -39,6 +35,22 @@
     </ul>
   </nz-sider>
   <nz-layout class="right-layout">
+    <nz-header>
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;padding: 5px;">
+        <div
+        style="color: black;font-family: 'Rubik', sans-serif;font-size:x-large;
+        "
+        >
+          Ati
+        </div>
+        <div>
+          <nz-avatar [ngStyle]="{ 'background-color': '#f56a00' }" nzText="Adam" nzSize="medium" style="vertical-align: middle;margin-right: 10px;"></nz-avatar>
+          <button
+          nz-button nzType="primary" nzSize="small"
+          >LogOut</button>
+        </div>
+      </div>
+    </nz-header>
     <nz-content>
       <div *ngIf="switchLayoutType === 'home' ">
         <app-home></app-home>
