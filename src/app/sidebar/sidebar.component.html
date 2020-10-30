@@ -43,7 +43,18 @@
           Ati
         </div>
         <div>
-          <nz-avatar [ngStyle]="{ 'background-color': '#f56a00' }" nzText="Adam" nzSize="medium" style="vertical-align: middle;margin-right: 10px;"></nz-avatar>
+          <nz-badge
+          [nzCount]="1000"
+          [nzOverflowCount]="999"
+          [nzStyle]="{ backgroundColor: '#52c41a' }"
+          >
+            <nz-avatar
+            style="
+            display: inline-block;
+            vertical-align: middle;"
+            [ngStyle]="{ 'background-color': '#f56a00' }" nzText="Adam" nzSize="medium" style="vertical-align: middle;margin-right: 10px;"></nz-avatar>
+          </nz-badge>
+
           <button
           nz-button nzType="primary" nzSize="small"
           >LogOut</button>

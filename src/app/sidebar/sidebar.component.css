@@ -27,7 +27,9 @@ nz-content {
   overflow: initial;
   background-color: white;
 }
-
+nz-badge {
+  margin-right: 30px;
+}
 
 nz-footer {
   text-align: center;
