@@ -19,3 +19,15 @@ button {
 [nz-button] {
   width: 100%;
 }
+nz-footer {
+  line-height: 1.5;
+  text-align: center;
+  background: whitesmoke;
+  color: black;
+}
+
+nz-content {
+  background: white;
+  height:100%;
+  width: 100%;
+}
