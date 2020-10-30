@@ -28,6 +28,13 @@ import { FridayComponent } from './days/friday/friday.component';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { MyStuffComponent } from './my-stuff/my-stuff.component';
 
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+
 registerLocaleData(en);
 
 @NgModule({
@@ -57,7 +64,13 @@ registerLocaleData(en);
     HttpClientModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule,// storage
+
   ],
 
   providers: [{ provide: NZ_I18N, useValue: en_US }],
