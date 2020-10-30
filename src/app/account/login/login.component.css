@@ -31,3 +31,19 @@ nz-content {
   height:100%;
   width: 100%;
 }
+::ng-deep .vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep .vertical-center-modal .ant-modal {
+  top: 0;
+}
+.form {
+  width: 100%;
+}
+
+nz-date-picker {
+  margin: 0 8px 12px 0;
+}

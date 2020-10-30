@@ -5,8 +5,8 @@
     <nz-modal
       nzWrapClassName="vertical-center-modal"
       [(nzVisible)]="isVisibleMiddle"
-      nzTitle="Set Subject Timetable"
-      nzOkText="Set"
+      nzTitle="Update Timetable"
+      nzOkText="Update"
       (nzOnCancel)="handleCancelMiddle()"
       (nzOnOk)="handleOkMiddle()"
     >
@@ -80,6 +80,14 @@
         nzPlaceHolder="End Time"
         nzFormat="HH:mm"
          [(ngModel)]="endTimeValue" name="end" required></nz-time-picker>
+      </nz-form-item>
+
+      <nz-form-item>
+        <textarea
+        style="width: 100%;margin-bottom: 10px;"
+        [(ngModel)]="comment"
+        nz-input placeholder="Enter Some Comment, Its Okay To Leave Blank! "
+        nzAutosize></textarea>
       </nz-form-item>
 
     </form>

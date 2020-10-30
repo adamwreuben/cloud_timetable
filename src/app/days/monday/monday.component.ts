@@ -18,6 +18,7 @@ export class MondayComponent implements OnInit {
   locationValue;
   startTimeValue;
   endTimeValue;
+  comment;
 
   noData: any;
   onlineStatus: any;

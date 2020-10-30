@@ -10,8 +10,19 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   current = 0;
+  selectedCourse;
+  
+  chooseUniversity;
+  chooseCourse;
+  startYear;
+  endYear;
+
   changeImageVerifiation: boolean = false;
+
   isVisibleMiddle = false;
+  isVisibleMiddleVerification = false
+  isVisibleMiddleCreate = false
+
 
   index: any = 0;
 
@@ -69,6 +80,34 @@ export class LoginComponent implements OnInit {
 
   showModalMiddle(): void {
     this.isVisibleMiddle = true;
+  }
+
+  handleOkMiddleCreate(): void {
+    this.isVisibleMiddleCreate = false;
+  }
+
+  handleCancelMiddleCreate(): void {
+    this.isVisibleMiddleCreate = false;
+  }
+
+  showModalMiddleCreate(): void {
+    this.isVisibleMiddleCreate = true;
+  }
+
+  handleOkMiddleVerification(): void {
+    this.isVisibleMiddleVerification = false;
+  }
+
+  handleCancelMiddleVerification(): void {
+    this.isVisibleMiddleVerification = false;
+  }
+
+  showModalMiddleVerification(): void {
+    this.isVisibleMiddleVerification = true;
+  }
+
+  onSubmit(){
+
   }
 
   loadVerification(uid: any) {
