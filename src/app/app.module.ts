@@ -13,7 +13,7 @@ import en from '@angular/common/locales/en';
 import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './account/login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { GoogleSignDirective } from './google-sign.directive';
+import { GoogleSignDirective } from './DirectiveForder/google-sign.directive';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReviewComponent } from './review/review.component';
 import { ReviewUeComponent } from './review-ue/review-ue.component';
