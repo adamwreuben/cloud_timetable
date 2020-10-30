@@ -2,31 +2,38 @@
   <nz-sider style="background-color: #29B6F6;">
 
     <ul nz-menu nzMode="inline" style="background-color: #29B6F6;">
-      <li nz-menu-item (click)="changeLayoutDesign('overview')">
+      <li nz-menu-item (click)="changeLayoutDesign('overview')"
+      [ngStyle]="{'color': switchLayoutType === 'overview'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="home" nzTheme="outline"></i>
         <span>Home</span>
       </li>
-      <li nz-menu-item (click)="changeLayoutDesign('stuff')">
+      <li nz-menu-item (click)="changeLayoutDesign('stuff')"
+      [ngStyle]="{'color': switchLayoutType === 'stuff'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="calendar" nzTheme="outline"></i>
         <span>My Stuffs</span>
       </li>
-      <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')">
+      <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')"
+      [ngStyle]="{'color': switchLayoutType === 'review'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="calendar" nzTheme="outline"></i>
         <span>Review Timetable</span>
       </li>
-      <li nz-menu-item (click)="changeLayoutDesign('ue')">
+      <li nz-menu-item (click)="changeLayoutDesign('ue')"
+      [ngStyle]="{'color': switchLayoutType === 'ue'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="calendar" nzTheme="outline"></i>
         <span>Review UE Timetable</span>
       </li>
-      <li nz-menu-item (click)="changeLayoutDesign('home')">
+      <li nz-menu-item (click)="changeLayoutDesign('home')"
+      [ngStyle]="{'color': switchLayoutType === 'home'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="read" nzTheme="outline"></i>
         <span>Review Subjects</span>
       </li>
-      <li nz-menu-item (click)="changeLayoutDesign('collision')">
+      <li nz-menu-item (click)="changeLayoutDesign('collision')"
+      [ngStyle]="{'color': switchLayoutType === 'collision'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="ungroup" nzTheme="outline"></i>
         <span>Collisions</span>
       </li>
-      <li nz-menu-item (click)="changeLayoutDesign('files')">
+      <li nz-menu-item (click)="changeLayoutDesign('files')"
+      [ngStyle]="{'color': switchLayoutType === 'files'? 'white':'#EEEEEE' }">
         <i nz-icon nzType="cloud-server" nzTheme="outline"></i>
         <span>Class Files</span>
       </li>
