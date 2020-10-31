@@ -27,6 +27,17 @@
       </li>
     </ul>
 
+    <nz-empty
+    *ngIf="noData === true"
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+        >
+          <ng-template #contentTpl>
+            <span>No Subject Found</span>
+          </ng-template>
+
+    </nz-empty>
+
   </nz-tab>
 
 </nz-tabset>
@@ -170,13 +181,4 @@
     </button>
     </ng-template>
 
-    <nz-empty
-    *ngIf="noData === true"
-          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-          [nzNotFoundContent]="contentTpl"
-        >
-          <ng-template #contentTpl>
-            <span>No Subject Found</span>
-          </ng-template>
 
-    </nz-empty>

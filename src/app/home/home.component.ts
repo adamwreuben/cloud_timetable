@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
         this.firebaseService
           .getUniversityCourse(userData.uid)
           .subscribe((data) => {
-            if (data.length != 0) {
+            if (data !== null) {
               this.statuService.progressBarStatus = false;
               this.noData = false;
               data.forEach((results) => {

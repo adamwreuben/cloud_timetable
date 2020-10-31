@@ -75,7 +75,7 @@ export class MondayComponent implements OnInit {
         this.firebaseService
           .getUniversityCourse(userData.uid)
           .subscribe((data) => {
-            if (data.length != 0) {
+            if (data.length !== 0) {
               data.forEach((results) => {
                 this.course = results.payload.doc.data()['course'];
                 this.university = results.payload.doc.data()['university'];
@@ -83,7 +83,7 @@ export class MondayComponent implements OnInit {
                 this.firebaseService
                   .getTimetable(this.university, this.course, 'Monday')
                   .subscribe((monday) => {
-                    if (monday.length != 0) {
+                    if (monday.length !== 0) {
                       this.noData = false;
                       this.timeMondayObjectFromFirebase = monday;
                       this.statuService.progressBarStatus = false;
