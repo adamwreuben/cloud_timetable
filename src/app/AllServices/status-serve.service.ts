@@ -13,6 +13,8 @@ export class StatusServeService implements OnInit{
   adminVerifyStatus:boolean = false;
   requestVerification:boolean = false;
 
+  weekSelected = 'Week 1';
+  weekChangeStatus = false;
 
   universityName:any = null
   courseName:any = null;

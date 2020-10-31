@@ -34,19 +34,19 @@ export class StorageService {
     });
   }
 
-  // deleteFile(university: any, courseName: any, subjectName: any, filePath: any, docId: any){
-  //   this.statusServ.progressBarStatus = true;
-  //   this.storage.storage.refFromURL(filePath)
-  //   .delete().then(() => {
-  //     this.db.collection('Class Files').doc(university).collection(courseName).doc(subjectName)
-  //     .collection('All', ref => ref.where('documentDownloadUrl', '==', filePath))
-  //     .doc(docId).delete().then(() => {
-  //       this.statusServ.progressBarStatus = false;
-  //       this.snackBar.open('File Deleted!', '', this.noMatchConfig);
-  //     });
+  deleteFile(university: any, courseName: any, subjectName: any, filePath: any, docId: any){
+    this.statusServ.progressBarStatus = true;
+    this.storage.storage.refFromURL(filePath)
+    .delete().then(() => {
+      this.db.collection('Class Files').doc(university).collection(courseName).doc(subjectName)
+      .collection('All', ref => ref.where('documentDownloadUrl', '==', filePath))
+      .doc(docId).delete().then(() => {
+        this.statusServ.progressBarStatus = false;
+        //this.snackBar.open('File Deleted!', '', this.noMatchConfig);
+      });
 
-  //   });
-  // }
+    });
+  }
 
   getDocuments(university: any, courseName: any, subjectName: any, userUid: any){
     return this.db.collection('Class Files').doc(university).collection(courseName).doc(subjectName)

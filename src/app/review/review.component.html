@@ -23,7 +23,10 @@
 </nz-tabset>
 
 <ng-template #extraTemplate>
-  <button nz-button nzType="primary" nzSize="large"
+  <button
+  [nzLoading]="statusServ.progressBarStatus"
+  nz-button
+  nzType="primary" nzSize="large"
   (click)="showModalMiddle()"
   >
   <i nz-icon nzType="plus" nzTheme="outline"></i>
@@ -115,6 +118,7 @@
           <textarea
           style="width: 100%;margin-bottom: 10px;"
           [(ngModel)]="comment"
+          name="comments"
           nz-input placeholder="Enter Some Comment, Its Okay To Leave Blank! "
           nzAutosize></textarea>
         </nz-form-item>

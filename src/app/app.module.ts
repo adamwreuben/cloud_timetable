@@ -29,11 +29,18 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { MyStuffComponent } from './my-stuff/my-stuff.component';
 
 
+
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+import { FridayUeComponent } from './ue-day/friday-ue/friday-ue.component';
+import { MondayUeComponent } from './ue-day/monday-ue/monday-ue.component';
+import { ThursdayUeComponent } from './ue-day/thursday-ue/thursday-ue.component';
+import { TuesdayUeComponent } from './ue-day/tuesday-ue/tuesday-ue.component';
+import { WednesdayUeComponent } from './ue-day/wednesday-ue/wednesday-ue.component';
 
 registerLocaleData(en);
 
@@ -55,6 +62,13 @@ registerLocaleData(en);
     FridayComponent,
     OverviewPageComponent,
     MyStuffComponent,
+
+    MondayUeComponent,
+    TuesdayUeComponent,
+    WednesdayUeComponent,
+    ThursdayUeComponent,
+    FridayUeComponent,
+
   ],
   imports: [
 

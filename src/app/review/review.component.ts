@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatusServeService } from '../AllServices/status-serve.service';
 
 @Component({
   selector: 'app-review',
@@ -18,7 +19,9 @@ export class ReviewComponent implements OnInit {
   endTimeValue;
   comment = 'No Info';
 
-  constructor() { }
+  constructor(
+    public statusServ: StatusServeService
+  ) { }
 
   ngOnInit(): void {
   }

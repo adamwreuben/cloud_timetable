@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { FirebaseAllService } from '../AllServices/firebase-all.service';
+import { StatusServeService } from '../AllServices/status-serve.service';
 
 @Component({
   selector: 'app-review-ue',
@@ -9,7 +13,12 @@ export class ReviewUeComponent implements OnInit {
 
   isVisibleMiddle = false;
   isVisibleMiddleUpdate = false;
+  selectedWeek = 'Week 1';
+  seletedDay = 'Monday';
 
+
+  university: any;
+  course: any;
 
   dayValue;
   dateValue;
@@ -19,13 +28,19 @@ export class ReviewUeComponent implements OnInit {
   startTimeValue;
   endTimeValue;
 
-  constructor() { }
-
-  selectedWeek = 'Week 1';
+  constructor(
+    public statusServ: StatusServeService
+  ) { }
 
 
   ngOnInit(): void {
   }
+
+
+  weekChange(){
+    this.statusServ.weekSelected = this.selectedWeek;
+  }
+
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;

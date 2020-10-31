@@ -247,22 +247,8 @@ export class FirebaseAllService {
     }
   }
 
-  //Get code
-  getCheckInviteCode(userUid) {
-    return this.db
-      .collection('InvitationCodes', (ref) =>
-        ref.where('userUid', '==', userUid)
-      )
-      .snapshotChanges();
-  }
+  
 
-  getInviteCode(inviteCode: any) {
-    return this.db
-      .collection('InvitationCodes', (ref) =>
-        ref.where('code', '==', inviteCode)
-      )
-      .snapshotChanges();
-  }
 
   // Get University And Course
   getUniversityCourse(userUid: any) {
@@ -328,255 +314,42 @@ export class FirebaseAllService {
   // END OF COLLISIONS
 
   // Get All TimeTable
-  getTimetableMonday(university: any, course: any) {
+  getTimetable(university: any, course: any, day: any) {
     return this.db
       .collection('TimeTable')
       .doc(university)
       .collection('All')
       .doc(course)
-      .collection('Monday', (ref) => ref.orderBy('start'))
+      .collection(day, (ref) => ref.orderBy('start'))
       .snapshotChanges();
   }
 
-  getTimetableTuesday(university: any, course: any) {
-    return this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Tuesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableWednesday(university: any, course: any) {
-    return this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Wednesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableThursday(university: any, course: any) {
-    return this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Thursday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableFriday(university: any, course: any) {
-    return this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Friday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
 
   //******END OF GET TIMETABLE FOR EACH DAY */
 
   //***TIMETABLE FOR UE WEEK 1*/
-  getTimetableUeMonday(university: any, course: any) {
+  getTimetableUe(university: any, course: any, week: any, day: any) {
     return this.db
       .collection('UE')
       .doc(university)
       .collection('All')
       .doc(course)
       .collection('All')
-      .doc('Week 1')
-      .collection('Monday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeTuesday(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Tuesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeWednesday(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Wednesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeThursday(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Thursday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeFriday(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Friday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  //***END OF UE TIMETABLE WEEK 1*/
-
-  //***TIMETABLE FOR UE WEEK 2*/
-  getTimetableUeMondayWeek2(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Monday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeTuesdayWeek2(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Tuesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeWednesdayWeek2(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Wednesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeThursdayWeek2(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Thursday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeFridayWeek2(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Friday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  //***END OF UE TIMETABLE WEEK 2*/
-
-  //***TIMETABLE FOR UE WEEK 2*/
-  getTimetableUeMondayWeek3(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Monday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeTuesdayWeek3(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Tuesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeWednesdayWeek3(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Wednesday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeThursdayWeek3(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Thursday', (ref) => ref.orderBy('start'))
-      .snapshotChanges();
-  }
-
-  getTimetableUeFridayWeek3(university: any, course: any) {
-    return this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Friday', (ref) => ref.orderBy('start'))
+      .doc(week)
+      .collection(day, (ref) => ref.orderBy('start'))
       .snapshotChanges();
   }
 
   //***END OF UE TIMETABLE WEEK 3*/
 
   //DELETE TIMETABLES
-  deleteTimetableMonday(docId: any, university: any, course: any) {
+  deleteTimetableForDay(docId: any, university: any, course: any, day: any) {
     this.db
       .collection('TimeTable')
       .doc(university)
       .collection('All')
       .doc(course)
-      .collection('Monday')
+      .collection(day)
       .doc(docId)
       .delete()
       .then(() => {
@@ -584,74 +357,20 @@ export class FirebaseAllService {
       });
   }
 
-  deleteTimetableTuesday(docId: any, university: any, course: any) {
-    this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Tuesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
 
-  deleteTimetableWednesday(docId: any, university: any, course: any) {
-    this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Wednesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableThursday(docId: any, university: any, course: any) {
-    this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Thursday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-       // this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableFriday(docId: any, university: any, course: any) {
-    this.db
-      .collection('TimeTable')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('Friday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-       // this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
 
   // ********** END OF DELETE **********
 
   //DELETE UE TIMETABLE WEEK 1****
-  deleteTimetableUeMonday(docId: any, university: any, course: any) {
+  deleteTimetableUe(docId: any, university: any, course: any, week: any, day: any) {
     this.db
       .collection('UE')
       .doc(university)
       .collection('All')
       .doc(course)
       .collection('All')
-      .doc('Week 1')
-      .collection('Monday')
+      .doc(week)
+      .collection(day)
       .doc(docId)
       .delete()
       .then(() => {
@@ -659,233 +378,6 @@ export class FirebaseAllService {
       });
   }
 
-  deleteTimetableUeTuesday(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Tuesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeWednesday(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Wednesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeThursday(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Thursday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeFriday(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 1')
-      .collection('Friday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-  //END OF DELETE UE TIMETABLE WEEK 1****
-
-  //DELETE UE TIMETABLE WEEK 2****
-  deleteTimetableUeMondayWeek2(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Monday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeTuesdayWeek2(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Tuesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-       // this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeWednesdayWeek2(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Wednesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeThursdayWeek2(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Thursday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeFridayWeek2(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 2')
-      .collection('Friday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-  //END OF DELETE UE TIMETABLE WEEK 2****
-
-  //DELETE UE TIMETABLE WEEK 3****
-  deleteTimetableUeMondayWeek3(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Monday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeTuesdayWeek3(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Tuesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeWednesdayWeek3(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Wednesday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeThursdayWeek3(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Thursday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
-
-  deleteTimetableUeFridayWeek3(docId: any, university: any, course: any) {
-    this.db
-      .collection('UE')
-      .doc(university)
-      .collection('All')
-      .doc(course)
-      .collection('All')
-      .doc('Week 3')
-      .collection('Friday')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
-      });
-  }
   //END OF DELETE UE TIMETABLE WEEK 3****
 
   //UPDATE TIMETABLE

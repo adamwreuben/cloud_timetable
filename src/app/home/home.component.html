@@ -1,41 +1,29 @@
 <nz-tabset
 [nzTabBarExtraContent]="extraTemplate">
   <nz-tab nzTitle="All Subjects">
-    <ul nz-list nzSize="small">
-      <li nz-list-item  nzNoFlex>
+    <ul nz-list nzSize="small"
+    *ngIf="noData !== true"
+    >
+      <li nz-list-item
+      *ngFor="let data of allCourseInitials"
+      nzNoFlex>
         <nz-card nzHoverable style="width:98%;margin-bottom: 10px;">
           <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
             <div fxLayout="row">
               <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-                <div>{{"DS 133"}}</div>
-                <div style="font-weight: 100;font-size: small;">{{"Development studies"}}</div>
+                <div>{{data.payload.doc.data().subjectShort}}</div>
+                <div style="font-weight: 100;font-size: small;">{{data.payload.doc.data().subjectLong}}</div>
               </div>
             </div>
             <div>
-              <button nzType="primary" style="margin-right: 10px;"
+              <button nz-button nzType="primary" style="margin-right: 10px;"
               (click)="showModalMiddleUpdate()">Update</button>
-              <button nzType="primary" nzDanger>Delete</button>
+              <button nz-button nzType="primary" nzDanger>Delete</button>
             </div>
 
           </div>
         </nz-card>
 
-        <nz-card nzHoverable style="width:98%;margin-bottom: 10px;">
-          <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-            <div fxLayout="row">
-              <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-                <div>{{"DS 133"}}</div>
-                <div style="font-weight: 100;font-size: small;">{{"Development studies"}}</div>
-              </div>
-            </div>
-            <div>
-              <button nzType="primary" style="margin-right: 10px;"
-              (click)="showModalMiddleUpdate()">Update</button>
-              <button nzType="primary" nzDanger>Delete</button>
-            </div>
-
-          </div>
-        </nz-card>
       </li>
     </ul>
 
@@ -172,10 +160,23 @@
 
     </nz-drawer>
     <ng-template #extraTemplate>
-      <button nz-button nzType="primary" nzSize="large"
+      <button
+      [nzLoading]="statuService.progressBarStatus"
+      nz-button nzType="primary" nzSize="large"
       (click)="showModalMiddle()"
       >
       <i nz-icon nzType="plus" nzTheme="outline"></i>
       Set Subject
     </button>
     </ng-template>
+
+    <nz-empty
+    *ngIf="noData === true"
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+        >
+          <ng-template #contentTpl>
+            <span>No Subject Found</span>
+          </ng-template>
+
+    </nz-empty>

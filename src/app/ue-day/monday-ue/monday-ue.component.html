@@ -38,22 +38,6 @@ nzPlaceHolder="Select Subject Name">
 </nz-select>
 </nz-form-item>
 
-<nz-form-item>
-<nz-select
-[(ngModel)]="typeValue"
-name="type"
-required
-style="width: 100%;margin-bottom: 10px;"
-nzPlaceHolder="Set Lesson Type">
-  <nz-option nzValue="Lecture" nzLabel="Lecture"></nz-option>
-  <nz-option nzValue="Tutorial" nzLabel="Tutorial"></nz-option>
-  <nz-option nzValue="Practical" nzLabel="Practical"></nz-option>
-  <nz-option nzValue="Workshop" nzLabel="Workshop"></nz-option>
-  <nz-option nzValue="Discussion" nzLabel="Discussion"></nz-option>
-  <nz-option nzValue="Test" nzLabel="Test"></nz-option>
-
-</nz-select>
-</nz-form-item>
 
 <nz-form-item>
   <input
@@ -79,21 +63,14 @@ nzPlaceHolder="Set Lesson Type">
    [(ngModel)]="endTimeValue" name="end" required></nz-time-picker>
 </nz-form-item>
 
-<nz-form-item>
-  <textarea
-  style="width: 100%;margin-bottom: 10px;"
-  [(ngModel)]="comment"
-  name="comments"
-  nz-input placeholder="Enter Some Comment, Its Okay To Leave Blank! "
-  nzAutosize></textarea>
-</nz-form-item>
 
 </form>
 
 </nz-modal>
 
 <ul nz-list nzSize="small"
-*ngIf="noData !== true">
+*ngIf="noData !== true"
+>
 
 <li nz-list-item
 nzNoFlex
@@ -116,8 +93,7 @@ nzNoFlex
 </div>
 
 <div>
-<button nz-button nzType="primary"
-style="margin-right: 10px;"
+<button nz-button nzType="primary" style="margin-right: 10px;"
 (click)="showModalMiddle()">Update</button>
 <button nz-button nzType="primary" nzDanger
 nz-popconfirm
@@ -130,7 +106,6 @@ nzDanger>Delete</button>
 
 <div fxLayout="row" fxLayoutAlign="center center">
 <div>
-<nz-tag [nzColor]="'#448AFF'">{{monday.payload.doc.data().type}}</nz-tag>
 <nz-tag [nzColor]="'#4CAF50'">{{monday.payload.doc.data().start}}</nz-tag>
 <nz-tag [nzColor]="'#66BB6A'">{{monday.payload.doc.data().end}}</nz-tag>
 </div>
@@ -144,7 +119,6 @@ nzDanger>Delete</button>
 
 
 
-
 <nz-empty
 *ngIf="noData === true"
       nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
@@ -155,3 +129,4 @@ nzDanger>Delete</button>
       </ng-template>
 
 </nz-empty>
+
