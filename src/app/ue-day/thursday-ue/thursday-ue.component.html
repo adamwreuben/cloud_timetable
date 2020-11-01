@@ -38,22 +38,6 @@ nzPlaceHolder="Select Subject Name">
 </nz-select>
 </nz-form-item>
 
-<nz-form-item>
-<nz-select
-[(ngModel)]="typeValue"
-name="type"
-required
-style="width: 100%;margin-bottom: 10px;"
-nzPlaceHolder="Set Lesson Type">
-  <nz-option nzValue="Lecture" nzLabel="Lecture"></nz-option>
-  <nz-option nzValue="Tutorial" nzLabel="Tutorial"></nz-option>
-  <nz-option nzValue="Practical" nzLabel="Practical"></nz-option>
-  <nz-option nzValue="Workshop" nzLabel="Workshop"></nz-option>
-  <nz-option nzValue="Discussion" nzLabel="Discussion"></nz-option>
-  <nz-option nzValue="Test" nzLabel="Test"></nz-option>
-
-</nz-select>
-</nz-form-item>
 
 <nz-form-item>
   <input
@@ -79,25 +63,18 @@ nzPlaceHolder="Set Lesson Type">
    [(ngModel)]="endTimeValue" name="end" required></nz-time-picker>
 </nz-form-item>
 
-<nz-form-item>
-  <textarea
-  style="width: 100%;margin-bottom: 10px;"
-  [(ngModel)]="comment"
-  name="comments"
-  nz-input placeholder="Enter Some Comment, Its Okay To Leave Blank! "
-  nzAutosize></textarea>
-</nz-form-item>
 
 </form>
 
 </nz-modal>
 
 <ul nz-list nzSize="small"
-*ngIf="noData !== true">
+*ngIf="noData !== true"
+>
 
 <li nz-list-item
 nzNoFlex
-*ngFor="let monday of timeMondayObjectFromFirebase"
+*ngFor="let thursday of timeThursdayObjectFromFirebase"
 >
 
   <nz-card nzHoverable
@@ -109,15 +86,14 @@ nzNoFlex
 <div fxLayout="row">
 
 <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-<div>{{monday.payload.doc.data().subject}}</div>
-<div style="font-weight: 100;font-size: small;">{{monday.payload.doc.data().location}}</div>
+<div>{{thursday.payload.doc.data().subject}}</div>
+<div style="font-weight: 100;font-size: small;">{{thursday.payload.doc.data().location}}</div>
 </div>
 
 </div>
 
 <div>
-<button nz-button nzType="primary"
-style="margin-right: 10px;"
+<button nz-button nzType="primary" style="margin-right: 10px;"
 (click)="showModalMiddle()">Update</button>
 <button nz-button nzType="primary" nzDanger
 nz-popconfirm
@@ -130,9 +106,8 @@ nzDanger>Delete</button>
 
 <div fxLayout="row" fxLayoutAlign="center center">
 <div>
-<nz-tag [nzColor]="'#448AFF'">{{monday.payload.doc.data().type}}</nz-tag>
-<nz-tag [nzColor]="'#4CAF50'">{{monday.payload.doc.data().start}}</nz-tag>
-<nz-tag [nzColor]="'#66BB6A'">{{monday.payload.doc.data().end}}</nz-tag>
+<nz-tag [nzColor]="'#4CAF50'">{{thursday.payload.doc.data().start}}</nz-tag>
+<nz-tag [nzColor]="'#66BB6A'">{{thursday.payload.doc.data().end}}</nz-tag>
 </div>
 </div>
 
@@ -143,15 +118,15 @@ nzDanger>Delete</button>
 </ul>
 
 
-
-
 <nz-empty
 *ngIf="noData === true"
       nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
       [nzNotFoundContent]="contentTpl"
     >
       <ng-template #contentTpl>
-        <span>No Timetable On {{"Monday"}}</span>
+        <span>No Timetable On {{"Thursday"}}</span>
       </ng-template>
 
 </nz-empty>
+
+

@@ -1,6 +1,9 @@
 <nz-tabset [nzTabBarExtraContent]="extraTemplate">
   <nz-tab nzTitle="All Class Files">
-    <nz-table nzTemplateMode>
+    <nz-table
+    [nzData]="listOfData"
+    *ngIf="noData !== true"
+    nzTemplateMode>
       <thead>
         <tr>
           <th>Name Of Document</th>
@@ -10,10 +13,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>DS 113</td>
-          <td>20:30 PM| October 8</td>
-          <td>21.67 KB</td>
+        <tr *ngFor="let fileData of listOfData">
+          <td>{{fileData.documentName}}</td>
+          <td>{{fileData.dateUploaded}}</td>
+          <td>{{fileData.documentSize}}</td>
           <td>
           <button nz-button nzType="primary" nzSize="small" nzDanger style="margin: 10px">Delete</button>
           </td>
@@ -26,11 +29,14 @@
 
 </nz-tabset>
 <ng-template #extraTemplate>
-  <nz-select [(ngModel)]="selectedSubject">
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+  <nz-select
+  [(ngModel)]="subjectSelected"
+  nzPlaceHolder="Choose"
+  (ngModelChange)="subjectChange()">
+    <nz-option
+    *ngFor="let subject of allSubjectFromFirebase"
+    [nzValue]="subject.payload.doc.data().subjectShort"
+    [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
   </nz-select>
 
   <nz-upload
@@ -46,3 +52,28 @@
     <button nz-button><i nz-icon nzType="upload"></i>Upload</button>
   </nz-upload>
 </ng-template>
+
+<nz-empty
+    *ngIf=" noData === true"
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+
+        >
+          <ng-template #contentTpl>
+            <span>No Subject Files Found</span>
+          </ng-template>
+
+    </nz-empty>
+
+
+
+    <nz-empty
+    *ngIf="selectNow === false "
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+        >
+          <ng-template #contentTpl>
+            <span>Please Select Subject To See Your Files!</span>
+          </ng-template>
+
+    </nz-empty>

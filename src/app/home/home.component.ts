@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { FirebaseAllService } from '../AllServices/firebase-all.service';
+import { StatusServeService } from '../AllServices/status-serve.service';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +10,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  allCourseInitials: any;
+
+  course: any;
+  university: any;
+
+  courseSub;
+  universitySub;
+  docIdSub: any;
+
+  noData: any;
+  onlineStatus: any;
 
   subjectLong;
   subjectShort;
@@ -18,9 +33,15 @@ export class HomeComponent implements OnInit {
   isVisibleMiddleUpdate = false;
 
 
-  constructor() { }
+  constructor(
+    private firebaseService: FirebaseAllService,
+    public statuService: StatusServeService,
+    private auth: AngularFireAuth,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+    this.loadSubjects();
   }
 
   handleOkMiddle(): void {
@@ -50,6 +71,36 @@ export class HomeComponent implements OnInit {
 
   onSubmit(){
 
+  }
+
+  loadSubjects() {
+    this.statuService.progressBarStatus = true;
+    this.auth.authState.subscribe((userData) => {
+      if (userData !== null) {
+        this.firebaseService
+          .getUniversityCourse(userData.uid)
+          .subscribe((data) => {
+            if (data !== null) {
+              this.statuService.progressBarStatus = false;
+              this.noData = false;
+              data.forEach((results) => {
+                this.docIdSub = results.payload.doc.id;
+                this.courseSub = results.payload.doc.data()['course'];
+                this.universitySub = results.payload.doc.data()['university'];
+
+                this.firebaseService
+                  .getCourseLongAndShort(this.universitySub, this.courseSub)
+                  .subscribe((datas) => {
+                    this.allCourseInitials = datas;
+                  });
+              });
+            } else {
+              //No data
+              this.noData = true;
+            }
+          });
+      }
+    });
   }
 
 }
