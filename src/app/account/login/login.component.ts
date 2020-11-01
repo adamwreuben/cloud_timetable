@@ -144,13 +144,12 @@ export class LoginComponent implements OnInit, DoCheck {
       if (datas.length !== 0) {
         this.changeImageVerifiation = true;
         this.statusServ.progressBarStatus = false;
-        this.message.create('warning', 'Wait For Verification!', {nzDuration: 2000});
         datas.forEach((results) => {
           this.statusVerification = results.payload.doc.data()['status'];
           if (this.statusVerification === 'verified') {
             console.log('Verified!');
-            this.showModalMiddleCreate();
-            //this.router.navigate(['/home']);
+            //this.showModalMiddleCreate();
+            this.router.navigate(['/home']);
           } else {
             console.log('no verified!');
             this.message.create('error', 'Not Verified!', {nzDuration: 2000});

@@ -28,10 +28,12 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 const materialModules = [
   NzStepsModule,
   NzDrawerModule,
+  NzDropDownModule,
   NzBadgeModule,
   NzMessageModule,
   NzToolTipModule,

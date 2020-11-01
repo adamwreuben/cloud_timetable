@@ -25,7 +25,6 @@ export class ReviewComponent implements OnInit {
 
   showSpinner: boolean = false;
   comment = 'No Info';
-  collision = 'no' ;
 
   //Arrays--->
   startArray = [];
@@ -77,6 +76,14 @@ export class ReviewComponent implements OnInit {
   }
 
   onSubmitAdd(){
+
+    console.log('day: ', this.dayValue);
+    console.log('subj: ', this.subjectValue);
+    console.log('type: ', this.typeValue);
+    console.log('start: ', this.startTimeValue);
+    console.log('end: ', this.endTimeValue);
+
+
     if (this.startTimeValue >= this.endTimeValue) {
       // this.snack.open(
       //   "Start Time can't Exceed End Time! Or Be Equal",
@@ -165,7 +172,6 @@ export class ReviewComponent implements OnInit {
                       start: this.startTimeValue,
                       end: this.endTimeValue,
                       comment: this.comment,
-                      collision: this.collision
                     },
                     this.university,
                     this.course
@@ -174,6 +180,7 @@ export class ReviewComponent implements OnInit {
                     this.dayValue = '';
                     this.subjectValue = '';
                     this.startTimeValue = '';
+                    this.typeValue = '';
                     this.locationValue = '';
                     this.startTimeValue = '';
                     this.endTimeValue = '';

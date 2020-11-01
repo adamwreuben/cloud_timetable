@@ -22,7 +22,7 @@ export class MondayComponent implements OnInit {
   locationValue;
   startTimeValue;
   endTimeValue;
-  comment;
+  comments;
 
   noData: any;
   onlineStatus: any;
@@ -54,7 +54,20 @@ export class MondayComponent implements OnInit {
     this.isVisibleMiddle = false;
   }
 
-  showModalMiddle(): void {
+  showModalMiddle(
+    subject: any,
+    location: any,
+    type: any,
+    start: any,
+    end: any,
+    comment: any
+  ): void {
+    this.subjectValue = subject;
+    this.locationValue = location;
+    this.typeValue = type;
+    this.startTimeValue = start;
+    this.endTimeValue = end;
+    this.comments = comment;
     this.isVisibleMiddle = true;
   }
 
