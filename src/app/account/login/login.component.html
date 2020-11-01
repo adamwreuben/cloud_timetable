@@ -7,7 +7,7 @@
       nzWrapClassName="vertical-center-modal"
       [(nzVisible)]="isVisibleMiddleVerification"
       [nzFooter]="null"
-      nzClosable="false"
+      [nzClosable]="false"
       nzTitle="Request Course Verification"
     >
     <form nz-form class="form" #formRequest="ngForm" (ngSubmit)="onSubmitRequest()">
@@ -23,7 +23,18 @@
           <nz-option nzValue="Computer Science" nzLabel="Computer Science"></nz-option>
         </nz-select>
       </nz-form-item>
+      <button
+      style="width: 100%;"
+      type="submit"
+      nz-button
+      [disabled]="formRequest.invalid"
+      nzType="primary">Request</button>
 
+      <button
+      (click)="handleCancelMiddleVerification()"
+      style="width: 100%;margin-top: 10px;"
+      nz-button
+      nzType="primary">Cancel</button>
       </form>
     </nz-modal>
 

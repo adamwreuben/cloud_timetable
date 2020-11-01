@@ -39,18 +39,16 @@
     [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
   </nz-select>
 
-  <nz-upload
-  nzAccept="
-  .doc,
-  .docx,
-  .xml,
-  application/msword,
-  application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-  application/pdf,application/vnd.ms-excel
-  "
-  nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76">
-    <button nz-button><i nz-icon nzType="upload"></i>Upload</button>
-  </nz-upload>
+  <input style="display: none"
+      type="file" (change)="uploadDoc($event)" #fileInput
+      accept=".doc,.docx,.xml,
+      application/msword,
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+      application/pdf,application/vnd.ms-excel">
+      <button
+      nzType="default"
+      (click)="fileInput.click()"
+      nz-button><i nz-icon nzType="upload"></i>Upload</button>
 </ng-template>
 
 <nz-empty

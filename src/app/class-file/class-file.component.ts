@@ -8,6 +8,8 @@ import { StatusServeService } from '../AllServices/status-serve.service';
 import { StorageService } from '../AllServices/storage/storage.service';
 import { DocumentUploadInterface } from '../AllServices/storage/storage.model';
 import * as moment from 'moment';
+import * as firebase from 'firebase';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 
 
@@ -17,9 +19,16 @@ import * as moment from 'moment';
   styleUrls: ['./class-file.component.css']
 })
 export class ClassFileComponent implements OnInit {
-  course: any;
-  university: any;
-  showTable: boolean = false;
+
+  universityName: any;
+  courseName: any;
+  subjectName: any;
+
+  fileName: any = undefined;
+  docFileUrl: File = null;
+  docName: any;
+  docSize: any;
+  docFileDownloadedUrl: any;
 
   listOfData: DocumentUploadInterface[] = [];
 
@@ -32,12 +41,14 @@ export class ClassFileComponent implements OnInit {
   selectNow = false;
   onlineStatus: any;
 
+
   constructor(
     private afAuth: AngularFireAuth,
     private statuService: StatusServeService,
     private router: Router,
     private storage: AngularFireStorage,
     private db: AngularFirestore,
+    private message: NzMessageService,
     private storageServ: StorageService,
     private firebaseService: FirebaseAllService,
   ) { }
@@ -46,6 +57,51 @@ export class ClassFileComponent implements OnInit {
     this.loadCourses();
     this.statuService.checkOnlineStatus$().subscribe((isOnline) => {
       this.onlineStatus = isOnline;
+    });
+  }
+
+  uploadDoc(event) {
+    this.docFileUrl = event.target.files[0];
+    this.docSize = this.formatBytes(event.target.files[0].size, 2);
+    this.fileName = this.docFileUrl.name;
+
+    this.onSubmit();
+  }
+
+  onSubmit() {
+    this.statuService.progressBarStatus = true;
+    let storageRef = firebase.storage().ref();
+
+    let docRef = storageRef.child(
+      `${this.universityName}/${this.courseName}/${
+        this.subjectName
+      }/${new Date().getTime()}_${this.makeid(6)}_${this.fileName}`
+    );
+
+    docRef.put(this.docFileUrl).then(() => {
+      docRef.getDownloadURL().then((url) => {
+        this.docFileDownloadedUrl = url;
+        this.message.create('warning', 'Uploading Please Wait...', {nzDuration: 2000});
+        this.storageServ
+          .uploadDocuments(
+            this.universityName,
+            this.courseName,
+            {
+              documentName: this.fileName,
+              dateUploaded: firebase.firestore.FieldValue.serverTimestamp(),
+              documentSize: this.docSize,
+              documentDownloadUrl: this.docFileDownloadedUrl,
+            },
+            this.subjectName
+          )
+          .then(() => {
+            this.statuService.progressBarStatus = false;
+            //this._bottomSheetRef.dismiss();
+            this.docName = '';
+            this.docFileUrl = null;
+            this.message.create('success', 'Successfully Uploaded', {nzDuration: 2000});
+          });
+      });
     });
   }
 
@@ -65,13 +121,13 @@ export class ClassFileComponent implements OnInit {
       if (data !== null) {
         this.storageServ
           .getDocuments(
-            this.university,
-            this.course,
+            this.universityName,
+            this.courseName,
             this.subjectSelected,
             data.uid
           )
           .subscribe((documentResults) => {
-            if(documentResults !== null){
+            if (documentResults !== null){
               this.noData = false;
               documentResults.forEach(documentSingleData => {
                 this.listOfData.push({
@@ -98,7 +154,10 @@ export class ClassFileComponent implements OnInit {
     this.statuService.progressBarStatus = true;
     this.storage.storage.refFromURL(docFilePath)
     .delete().then(() => {
-      this.db.collection('Class Files').doc(this.university).collection(this.course).doc(this.subjectSelected)
+      this.db.collection('Class Files')
+      .doc(this.universityName)
+      .collection(this.courseName)
+      .doc(this.subjectSelected)
       .collection('All', ref => ref.where('documentDownloadUrl', '==', docFilePath))
       .doc(docId).delete().then(() => {
         this.statuService.progressBarStatus = false;
@@ -119,10 +178,10 @@ export class ClassFileComponent implements OnInit {
             if (data.length != 0) {
               this.statuService.progressBarStatus = false;
               data.forEach((results) => {
-                this.university = results.payload.doc.data()['university'];
-                this.course = results.payload.doc.data()['course'];
+                this.universityName = results.payload.doc.data()['university'];
+                this.courseName = results.payload.doc.data()['course'];
                 this.firebaseService
-                  .getCourseLongAndShort(this.university, this.course)
+                  .getCourseLongAndShort(this.universityName, this.courseName)
                   .subscribe((subjectResults) => {
                     if (subjectResults !== null) {
                       this.noDataCourses = false;
@@ -148,6 +207,29 @@ export class ClassFileComponent implements OnInit {
         this.router.navigate(['/']);
       }
     });
+  }
+
+  formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  makeid(length) {
+    var result = '';
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
 }
