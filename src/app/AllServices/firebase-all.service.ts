@@ -385,7 +385,15 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        // this.matSnack.open('Deleted', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -482,7 +490,15 @@ export class FirebaseAllService {
         date,
       })
       .then(() => {
-        // this.matSnack.open('Updated', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
   // **END UE UPDATE TIMETABLE */
@@ -514,7 +530,15 @@ export class FirebaseAllService {
         teacherRoom,
       })
       .then(() => {
-        // this.matSnack.open('Updated', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -528,7 +552,15 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        // this.matSnack.open('Deleted', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -543,7 +575,15 @@ export class FirebaseAllService {
         course: courseData,
       })
       .then(() => {
-        // this.matSnack.open('Updated', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -553,7 +593,15 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        // this.matSnack.open('Deleted', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -599,7 +647,15 @@ export class FirebaseAllService {
         status: 'verified',
       })
       .then(() => {
-        // this.matSnack.open('Verified', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 }
