@@ -56,8 +56,9 @@ export class MondayUeComponent implements OnInit, DoCheck {
     }
   }
 
-  deleteData(docId: any, university: any, course: any) {
-    // this.loadDatabase();
+  deleteData(docId: any, university: any, course: any, week: any, day: any) {
+    this.firebaseService.deleteTimetableUe(docId, university, course, week, day);
+    this.loadDatabase();
   }
 
 
@@ -65,6 +66,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;
+    this.onSubmit();
   }
 
   handleCancelMiddle(): void {
@@ -85,7 +87,6 @@ export class MondayUeComponent implements OnInit, DoCheck {
   ): void {
     this.isVisibleMiddle = true;
     this.docIds = docId;
-    this.selectedWeek = weeks;
     this.universitys = university;
     this.courses = course;
     this.dayValue = days;
@@ -95,7 +96,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
     this.endTimeValue = ends;
     this.week = weeks;
     this.dateValue = dates;
-    this.onSubmit();
+
   }
 
   onSubmit(){
@@ -108,14 +109,12 @@ export class MondayUeComponent implements OnInit, DoCheck {
       this.locationValue,
       this.startTimeValue,
       this.endTimeValue,
-      this.week,
+      this.statuService.weekSelected,
       this.dateValue
       );
   }
 
-  confirm(){
 
-  }
 
   cancel(){
   }
@@ -127,7 +126,9 @@ export class MondayUeComponent implements OnInit, DoCheck {
           this.statuService.progressBarStatus = false;
 
           data.forEach(results => {
+            // tslint:disable-next-line: no-string-literal
             this.course = results.payload.doc.data()['course'];
+            // tslint:disable-next-line: no-string-literal
             this.university = results.payload.doc.data()['university'];
 
             this.firebaseService.getTimetableUe(this.university, this.course, this.statuService.weekSelected, 'Monday').subscribe(monday => {
