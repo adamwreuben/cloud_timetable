@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from '../AllServices/firebase-all.service';
 import { StatusServeService } from '../AllServices/status-serve.service';
 
@@ -12,8 +13,6 @@ import { StatusServeService } from '../AllServices/status-serve.service';
 export class HomeComponent implements OnInit {
   allCourseInitials: any;
 
-  course: any;
-  university: any;
 
   courseSub;
   universitySub;
@@ -38,6 +37,7 @@ export class HomeComponent implements OnInit {
     public statuService: StatusServeService,
     private auth: AngularFireAuth,
     private router: Router,
+    private notification: NzNotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +70,34 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(){
-
+    this.statuService.progressBarStatus = true;
+    this.firebaseService
+      .uploadShortAndLongForm(this.universitySub, this.courseSub, {
+        subjectShort: this.subjectShort,
+        subjectLong: this.subjectLong,
+        teacherName: this.teacherName,
+        teacherEmail: this.teacherEmail,
+        teacherPhone: this.teacherPhoneNo,
+        teacherRoom: this.teacherRoom,
+      })
+      .then(() => {
+        this.statuService.progressBarStatus = false;
+        this.notification.create(
+          'success',
+          '😁',
+          'Subject is Added!',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
+        this.subjectShort = '';
+        this.subjectLong = '';
+        this.teacherName = '';
+        this.teacherEmail = '';
+        this.teacherPhoneNo = '';
+        this.teacherRoom = '';
+      });
   }
 
   loadSubjects() {
@@ -87,11 +114,15 @@ export class HomeComponent implements OnInit {
                 this.docIdSub = results.payload.doc.id;
                 this.courseSub = results.payload.doc.data()['course'];
                 this.universitySub = results.payload.doc.data()['university'];
-
                 this.firebaseService
                   .getCourseLongAndShort(this.universitySub, this.courseSub)
                   .subscribe((datas) => {
-                    this.allCourseInitials = datas;
+                    if (datas.length !== 0){
+                      this.noData = false;
+                      this.allCourseInitials = datas;
+                    }else{
+                      this.noData = true;
+                    }
                   });
               });
             } else {

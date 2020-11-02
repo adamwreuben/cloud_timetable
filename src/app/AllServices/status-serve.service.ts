@@ -16,6 +16,8 @@ export class StatusServeService implements OnInit{
   weekSelected = 'Week 1';
   weekChangeStatus = false;
 
+  subjectInitialForAll: any;
+
   universityName:any = null
   courseName:any = null;
 

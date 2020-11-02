@@ -6,6 +6,7 @@ import { TimeTableForAti } from '../review/time.model';
 import { UniversityCourse } from '../account/login/unicourse.model';
 import { SubjectShortLongForm } from '../home/add.course.model';
 import { CollisionModel } from '../collision/collision.model';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +17,11 @@ export class FirebaseAllService {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
+    private notification: NzNotificationService,
+
   ) {}
 
-  //Add invite code..
+  // Add invite code..
   async setInviteCode(uid: any, invitationCode: any, course, university: any) {
     const user = await this.afAuth.currentUser;
     if (user !== null) {
@@ -27,16 +30,16 @@ export class FirebaseAllService {
         .add({
           userUid: uid,
           code: invitationCode,
-          course: course,
-          university: university,
+          course,
+          university,
         })
         .then(() => {
-          //this.matSnack.open('Successfully added!', '', { duration: 2000 });
+          // this.matSnack.open('Successfully added!', '', { duration: 2000 });
         });
     }
   }
 
-  //Set Timetable
+  // Set Timetable
   async uploadTimetable(data: TimeTableForAti, university: any, course: any) {
     this.afAuth.user.subscribe((user) => {
       if (user !== null) {
@@ -54,8 +57,8 @@ export class FirebaseAllService {
             start: data.start,
             end: data.end,
             comment: data.comment,
-            university: university,
-            course: course,
+            university,
+            course,
             adminName: user.displayName,
             adminPhoto: user.photoURL,
             email: user.email
@@ -78,8 +81,8 @@ export class FirebaseAllService {
             start: data.start,
             end: data.end,
             comment: data.comment,
-            university: university,
-            course: course,
+            university,
+            course,
             adminName: 'Guest',
           })
           .catch((error) => {
@@ -89,7 +92,7 @@ export class FirebaseAllService {
     });
   }
 
-  //Set UE Timetable
+  // Set UE Timetable
   async uploadUeTimetable(
     data: TimeTableForAti,
     university: any,
@@ -112,12 +115,12 @@ export class FirebaseAllService {
           location: data.location,
           start: data.start,
           end: data.end,
-          university: university,
-          course: course,
+          university,
+          course,
           adminName: user.displayName,
           adminPhoto: user.photoURL,
           email: user.email,
-          week: week,
+          week,
           date: data.dateUe,
         })
         .catch((error) => {
@@ -138,10 +141,10 @@ export class FirebaseAllService {
           location: data.location,
           start: data.start,
           end: data.end,
-          university: university,
-          course: course,
+          university,
+          course,
           adminName: 'Guest',
-          week: week,
+          week,
           date: data.dateUe,
         })
         .catch((error) => {
@@ -150,7 +153,7 @@ export class FirebaseAllService {
     }
   }
 
-  //Upload University And Course Data
+  // Upload University And Course Data
   async uploadUniversityCourse(data: UniversityCourse) {
     const user = await this.afAuth.currentUser;
     if (user !== null) {
@@ -185,7 +188,7 @@ export class FirebaseAllService {
     }
   }
 
-  //Upload Course short and long form
+  // Upload Course short and long form
   async uploadShortAndLongForm(
     university: any,
     course: any,
@@ -202,8 +205,8 @@ export class FirebaseAllService {
         .add({
           subjectLong: data.subjectLong,
           subjectShort: data.subjectShort,
-          university: university,
-          course: course,
+          university,
+          course,
           teacherName:
             data.teacherName == null ? 'Please Add' : data.teacherName,
           teacherEmail:
@@ -229,8 +232,8 @@ export class FirebaseAllService {
         .add({
           subjectLong: data.subjectLong,
           subjectShort: data.subjectShort,
-          university: university,
-          course: course,
+          university,
+          course,
           teacherName:
             data.teacherName == null ? 'Please Add' : data.teacherName,
           teacherEmail:
@@ -247,7 +250,7 @@ export class FirebaseAllService {
     }
   }
 
-  
+
 
 
   // Get University And Course
@@ -287,7 +290,7 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
-  getTimeCollisionSubject(universityName: any, course: any, day: any,subject:any) {
+  getTimeCollisionSubject(universityName: any, course: any, day: any, subject: any) {
     return this.db
       .collection('TimeTable')
       .doc(universityName)
@@ -325,9 +328,9 @@ export class FirebaseAllService {
   }
 
 
-  //******END OF GET TIMETABLE FOR EACH DAY */
+  // ******END OF GET TIMETABLE FOR EACH DAY */
 
-  //***TIMETABLE FOR UE WEEK 1*/
+  // ***TIMETABLE FOR UE WEEK 1*/
   getTimetableUe(university: any, course: any, week: any, day: any) {
     return this.db
       .collection('UE')
@@ -340,9 +343,9 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
-  //***END OF UE TIMETABLE WEEK 3*/
+  // ***END OF UE TIMETABLE WEEK 3*/
 
-  //DELETE TIMETABLES
+  // DELETE TIMETABLES
   deleteTimetableForDay(docId: any, university: any, course: any, day: any) {
     this.db
       .collection('TimeTable')
@@ -353,7 +356,15 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -361,7 +372,7 @@ export class FirebaseAllService {
 
   // ********** END OF DELETE **********
 
-  //DELETE UE TIMETABLE WEEK 1****
+  // DELETE UE TIMETABLE WEEK 1****
   deleteTimetableUe(docId: any, university: any, course: any, week: any, day: any) {
     this.db
       .collection('UE')
@@ -374,13 +385,13 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
+        // this.matSnack.open('Deleted', '', { duration: 2000 });
       });
   }
 
-  //END OF DELETE UE TIMETABLE WEEK 3****
+  // END OF DELETE UE TIMETABLE WEEK 3****
 
-  //UPDATE TIMETABLE
+  // UPDATE TIMETABLE
   updateTimeTable(
     docId: any,
     university: any,
@@ -401,15 +412,23 @@ export class FirebaseAllService {
       .collection(day)
       .doc(docId)
       .update({
-        subject: subject,
-        type: type,
-        location: location,
-        start: start,
-        end: end,
-        comment: comment,
+        subject,
+        type,
+        location,
+        start,
+        end,
+        comment,
       })
       .then(() => {
-        //this.matSnack.open('Updated', '', { duration: 2000 });
+        this.notification.create(
+          'success',
+          'Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
   }
 
@@ -427,13 +446,13 @@ export class FirebaseAllService {
         collidedCourse: collisionCourse
       })
       .then(() => {
-        //this.matSnack.open('Collision Detected is Added !', '', { duration: 2000 });
+        // this.matSnack.open('Collision Detected is Added !', '', { duration: 2000 });
       });
   }
 
-  //*****END OF UPDATE */
+  // *****END OF UPDATE */
 
-  //**UPDATE UE TIMETABLE */
+  // **UPDATE UE TIMETABLE */
   updateUeTimeTable(
     docId: any,
     university: any,
@@ -456,17 +475,17 @@ export class FirebaseAllService {
       .collection(day)
       .doc(docId)
       .update({
-        subject: subject,
-        location: location,
-        start: start,
-        end: end,
-        date: date,
+        subject,
+        location,
+        start,
+        end,
+        date,
       })
       .then(() => {
-        //this.matSnack.open('Updated', '', { duration: 2000 });
+        // this.matSnack.open('Updated', '', { duration: 2000 });
       });
   }
-  //**END UE UPDATE TIMETABLE */
+  // **END UE UPDATE TIMETABLE */
 
   updateCourseInitial(
     docId: any,
@@ -487,15 +506,15 @@ export class FirebaseAllService {
       .collection('My Course')
       .doc(docId)
       .update({
-        subjectShort: subjectShort,
-        subjectLong: subjectLong,
-        teacherName: teacherName,
-        teacherEmail: teacherEmail,
+        subjectShort,
+        subjectLong,
+        teacherName,
+        teacherEmail,
         teacherPhoneNo: teacherPhone,
-        teacherRoom: teacherRoom,
+        teacherRoom,
       })
       .then(() => {
-        //this.matSnack.open('Updated', '', { duration: 2000 });
+        // this.matSnack.open('Updated', '', { duration: 2000 });
       });
   }
 
@@ -509,11 +528,11 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
+        // this.matSnack.open('Deleted', '', { duration: 2000 });
       });
   }
 
-  //*****END About updating course short and Long form */
+  // *****END About updating course short and Long form */
 
   updateUniversityDetail(docId: any, universityData: any, courseData: any) {
     this.db
@@ -524,7 +543,7 @@ export class FirebaseAllService {
         course: courseData,
       })
       .then(() => {
-        //this.matSnack.open('Updated', '', { duration: 2000 });
+        // this.matSnack.open('Updated', '', { duration: 2000 });
       });
   }
 
@@ -534,12 +553,12 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        //this.matSnack.open('Deleted', '', { duration: 2000 });
+        // this.matSnack.open('Deleted', '', { duration: 2000 });
       });
   }
 
-  //ALL ABOUT ADMINS HERE
-  //Set Timetable
+  // ALL ABOUT ADMINS HERE
+  // Set Timetable
   async verifyAdmins(adminName: string, adminEmail: string, adminUid: any) {
     this.db
       .collection('All_Admins')
@@ -580,7 +599,7 @@ export class FirebaseAllService {
         status: 'verified',
       })
       .then(() => {
-        //this.matSnack.open('Verified', '', { duration: 2000 });
+        // this.matSnack.open('Verified', '', { duration: 2000 });
       });
   }
 }

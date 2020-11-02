@@ -8,19 +8,33 @@ nzOkText="Update"
 (nzOnOk)="handleOkMiddle()"
 >
 <form nz-form class="form" #form="ngForm" (ngSubmit)="onSubmit()">
+<nz-form-item>
+  <nz-select
+  required
+  [(ngModel)]="dayValue"
+  name="day"
+  style="width: 100%;margin-bottom: 10px;"
+  nzPlaceHolder="Select Day">
+  <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+  <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+  <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+  <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+  <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+  </nz-select>
+</nz-form-item>
 
 <nz-form-item>
-<nz-select
-[(ngModel)]="subjectValue"
-name="subject"
-required
-style="width: 100%;margin-bottom: 10px;"
-nzPlaceHolder="Select Subject Name">
-<nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
-<nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
-<nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
-<nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
-</nz-select>
+  <nz-select
+  [(ngModel)]="subjectValue"
+  name="subject"
+  required
+  style="width: 100%;margin-bottom: 10px;"
+  nzPlaceHolder="Select Subject Name">
+  <nz-option
+  *ngFor="let subject of statuService.subjectInitialForAll"
+  [nzValue]="subject.payload.doc.data().subjectShort"
+  [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
+  </nz-select>
 </nz-form-item>
 
 <nz-form-item>
@@ -219,6 +233,8 @@ nzNoFlex
 <button nz-button nzType="primary"
 style="margin-right: 10px;"
 (click)="showModalMiddle(
+  monday.payload.doc.id,
+  monday.payload.doc.data().day,
   monday.payload.doc.data().subject,
   monday.payload.doc.data().location,
   monday.payload.doc.data().type,
@@ -228,12 +244,17 @@ style="margin-right: 10px;"
   )"
 >Update</button>
 <button nz-button nzType="primary" nzDanger
-nz-popconfirm
-  nzPopconfirmTitle="Are you sure delete this task?"
-  (nzOnConfirm)="confirm()"
+  nz-popconfirm
+  nzPopconfirmTitle="Are you sure delete this Timetable?"
+  (nzOnConfirm)="deleteData(
+    monday.payload.doc.id,
+    monday.payload.doc.data().university,
+    monday.payload.doc.data().course,
+    monday.payload.doc.data().day
+    )"
   (nzOnCancel)="cancel()"
   nzPopconfirmPlacement="top"
-nzDanger>Delete</button>
+  nzDanger>Delete</button>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">

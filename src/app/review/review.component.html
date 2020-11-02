@@ -65,10 +65,10 @@
         required
         style="width: 100%;margin-bottom: 10px;"
         nzPlaceHolder="Select Subject Name">
-        <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
-        <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
-        <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
-        <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+        <nz-option
+        *ngFor="let subject of allCourseInitials"
+        [nzValue]="subject.payload.doc.data().subjectShort"
+        [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
         </nz-select>
       </nz-form-item>
 

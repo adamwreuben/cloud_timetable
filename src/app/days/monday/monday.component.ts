@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from 'src/app/AllServices/firebase-all.service';
 import { StatusServeService } from 'src/app/AllServices/status-serve.service';
 
@@ -15,6 +16,7 @@ export class MondayComponent implements OnInit {
   timeMondayObjectFromFirebase: any;
   university: any;
   course: any;
+  docId: any;
 
   dayValue;
   subjectValue;
@@ -29,8 +31,9 @@ export class MondayComponent implements OnInit {
 
   constructor(
     private firebaseService: FirebaseAllService,
-    private statuService: StatusServeService,
+    public statuService: StatusServeService,
     private afAuth: AngularFireAuth,
+    private notification: NzNotificationService,
     private router: Router
   ) { }
 
@@ -41,13 +44,14 @@ export class MondayComponent implements OnInit {
     });
   }
 
-  deleteData(docId: any, university: any, course: any) {
+  deleteData(docId: any, university: any, course: any, day: any) {
+    this.firebaseService.deleteTimetableForDay(docId, university, course, day);
     this.loadDatabase();
   }
 
 
   handleOkMiddle(): void {
-    this.isVisibleMiddle = false;
+    this.onSubmit();
   }
 
   handleCancelMiddle(): void {
@@ -55,6 +59,8 @@ export class MondayComponent implements OnInit {
   }
 
   showModalMiddle(
+    id: any,
+    day: any,
     subject: any,
     location: any,
     type: any,
@@ -62,6 +68,8 @@ export class MondayComponent implements OnInit {
     end: any,
     comment: any
   ): void {
+    this.docId = id;
+    this.dayValue = day;
     this.subjectValue = subject;
     this.locationValue = location;
     this.typeValue = type;
@@ -72,12 +80,20 @@ export class MondayComponent implements OnInit {
   }
 
   onSubmit(){
-
+    this.firebaseService.updateTimeTable(
+      this.docId,
+      this.university,
+      this.course,
+      this.dayValue,
+      this.subjectValue,
+      this.typeValue,
+      this.locationValue,
+      this.startTimeValue,
+      this.endTimeValue,
+      this.comments
+      );
   }
 
-  confirm(){
-
-  }
 
   cancel(){
   }

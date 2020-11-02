@@ -50,23 +50,30 @@ export class LoginComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
-    this.statusServ.progressBarStatus = true;
-    this.afAuths.authState.subscribe((data) => {
-      if (data !== null) {
-        //this.snack.open('Please Wait...', '', { duration: 2000 });
-        if (data.email === 'adamreuben66@gmail.com') {
-          this.statusServ.progressBarStatus = false;
-          this.router.navigate(['/me']);
-        } else {
-          this.statusServ.progressBarStatus = false;
-          this.loadVerification(data.uid);
-        }
-      } else {
-        this.message.create('warning', 'Please Sign In!', {nzDuration: 2000});
-        this.statusServ.progressBarStatus = false;
-        this.router.navigate(['/']);
+    this.statusServ.checkOnlineStatus$().subscribe((isOnline) => {
+      if (isOnline === true){
+        this.statusServ.progressBarStatus = true;
+        this.afAuths.authState.subscribe((data) => {
+          if (data !== null) {
+            //this.snack.open('Please Wait...', '', { duration: 2000 });
+            if (data.email === 'adamreuben66@gmail.com') {
+              this.statusServ.progressBarStatus = false;
+              this.router.navigate(['/me']);
+            } else {
+              this.statusServ.progressBarStatus = false;
+              this.loadVerification(data.uid);
+            }
+          } else {
+            this.message.create('warning', 'Please Sign In!', {nzDuration: 2000});
+            this.statusServ.progressBarStatus = false;
+            this.router.navigate(['/']);
+          }
+        });
+      }else{
+        this.message.create('error', 'Check Your Internet Connection!', {nzDuration: 4000});
       }
     });
+
 
   }
 
