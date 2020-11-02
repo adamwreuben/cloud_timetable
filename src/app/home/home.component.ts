@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   noData: any;
   onlineStatus: any;
 
+  docIdReal;
   subjectLong;
   subjectShort;
   teacherName;
@@ -30,7 +31,14 @@ export class HomeComponent implements OnInit {
 
   isVisibleMiddle = false;
   isVisibleMiddleUpdate = false;
+  visible = false;
 
+  nameInfo;
+  shortInfo;
+  emailInfo;
+  phoneNoInfo;
+  roomInfo;
+  subjectinfo;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -42,6 +50,25 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSubjects();
+  }
+
+
+  open(short: any, name: any, email: any, phoneNo: any, room: any, subject: any): void {
+    this.visible = true;
+    this.shortInfo = short;
+    this.nameInfo = name;
+    this.emailInfo = email;
+    this.phoneNoInfo = phoneNo;
+    this.roomInfo = room;
+    this.subjectinfo = subject;
+  }
+
+  close(): void {
+    this.visible = false;
+  }
+
+  handleCancelDrawer(){
+    console.log('drawer closing');
   }
 
   handleOkMiddle(): void {
@@ -58,6 +85,18 @@ export class HomeComponent implements OnInit {
 
 
   handleOkMiddleUpdate(): void {
+
+    this.firebaseService.updateCourseInitial(
+      this.docIdReal,
+      this.universitySub,
+      this.courseSub,
+      this.subjectShort,
+      this.subjectLong,
+      this.teacherName,
+      this.teacherEmail,
+      this.teacherPhoneNo,
+      this.teacherRoom
+      );
     this.isVisibleMiddleUpdate = false;
   }
 
@@ -65,11 +104,53 @@ export class HomeComponent implements OnInit {
     this.isVisibleMiddleUpdate = false;
   }
 
-  showModalMiddleUpdate(): void {
-    this.isVisibleMiddleUpdate = true;
+  cancel(){
   }
 
-  onSubmit(){
+  deleteData(docId: any, university: any, course: any) {
+    this.firebaseService.deleteCourseInitial(docId, university, course);
+    this.loadSubjects();
+  }
+
+  showModalMiddleUpdate(
+    docId: any,
+    university: any,
+    course: any,
+    subjectShorts: any,
+    subjectLongs: any,
+    teacherNames: any,
+    teacherEmails: any,
+    teacherPhones: any,
+    teacherRooms: any
+  ): void {
+    this.isVisibleMiddleUpdate = true;
+
+    this.docIdReal = docId;
+    this.universitySub = university;
+    this.courseSub = course;
+    this.subjectShort = subjectShorts;
+    this.subjectLong = subjectLongs;
+    this.teacherName = teacherNames;
+    this.teacherEmail = teacherEmails;
+    this.teacherPhoneNo = teacherPhones;
+    this.teacherRoom = teacherRooms;
+  }
+
+  onSubmitUpdate(){
+    this.firebaseService.updateCourseInitial(
+      this.docIdReal,
+      this.universitySub,
+      this.courseSub,
+      this.subjectShort,
+      this.subjectLong,
+      this.teacherName,
+      this.teacherEmail,
+      this.teacherPhoneNo,
+      this.teacherRoom
+      );
+  }
+
+  onSubmitSubj(){
     this.statuService.progressBarStatus = true;
     this.firebaseService
       .uploadShortAndLongForm(this.universitySub, this.courseSub, {
@@ -112,7 +193,9 @@ export class HomeComponent implements OnInit {
               this.noData = false;
               data.forEach((results) => {
                 this.docIdSub = results.payload.doc.id;
+                // tslint:disable-next-line: no-string-literal
                 this.courseSub = results.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
                 this.universitySub = results.payload.doc.data()['university'];
                 this.firebaseService
                   .getCourseLongAndShort(this.universitySub, this.courseSub)
@@ -126,7 +209,7 @@ export class HomeComponent implements OnInit {
                   });
               });
             } else {
-              //No data
+              // No data
               this.noData = true;
             }
           });

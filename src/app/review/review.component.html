@@ -36,11 +36,11 @@
 
     <nz-drawer
       [nzBodyStyle]="{ overflow: 'auto' }"
-      [nzMaskClosable]="true"
+      [nzMaskClosable]="false"
       [nzWidth]="720"
+      (nzOnClose)="handleCancelMiddle()"
       [nzVisible]="isVisibleMiddle"
       nzTitle="Set Subject Timetable"
-      (nzOnClose)="handleCancelMiddle()"
     >
     <form nz-form class="form" #formAdd="ngForm" (ngSubmit)="onSubmitAdd()">
       <nz-form-item>
@@ -238,7 +238,7 @@
         </nz-form-item>
 
         <div style="float: right;margin-top: 20px;">
-          <button nz-button style="margin-right: 8px;" (click)="handleCancelMiddle()">Cancel</button>
+
           <button
           [disabled]="formAdd.invalid"
           type="submit"

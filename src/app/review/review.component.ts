@@ -26,15 +26,15 @@ export class ReviewComponent implements OnInit {
 
   allCourseInitials: any;
 
-  showSpinner: boolean = false;
+  showSpinner = false;
   comment = 'No Info';
 
-  //Arrays--->
+  // Arrays--->
   startArray = [];
   endArray = [];
 
-  startArrayStatus: boolean = false;
-  endArrayStatus: boolean = false;
+  startArrayStatus = false;
+  endArrayStatus = false;
 
 
   constructor(
@@ -53,7 +53,9 @@ export class ReviewComponent implements OnInit {
             if (data.length !== 0) {
               this.statusServ.progressBarStatus = false;
               data.forEach((results) => {
+                // tslint:disable-next-line: no-string-literal
                 this.course = results.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
                 this.university = results.payload.doc.data()['university'];
               });
               this.loadSubjects();
@@ -62,7 +64,7 @@ export class ReviewComponent implements OnInit {
             }
           });
       } else {
-        //No user data.
+        // No user data.
       }
     });
   }
@@ -73,17 +75,7 @@ export class ReviewComponent implements OnInit {
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
-    this.dayValue = '';
-    this.subjectValue = '';
-    this.startTimeValue = '';
-    this.typeValue = '';
-    this.locationValue = '';
-    this.startTimeValue = '';
-    this.endTimeValue = '';
-    this.startArray = [];
-    this.endArray = [];
-    this.startArrayStatus = false;
-    this.endArrayStatus = false;
+    console.log('log');
   }
 
   showModalMiddle(): void {
@@ -91,12 +83,6 @@ export class ReviewComponent implements OnInit {
   }
 
   onSubmitAdd(){
-
-    console.log('day: ', this.dayValue);
-    console.log('subj: ', this.subjectValue);
-    console.log('type: ', this.typeValue);
-    console.log('start: ', this.startTimeValue);
-    console.log('end: ', this.endTimeValue);
 
     if (this.startTimeValue >= this.endTimeValue) {
 
@@ -122,26 +108,30 @@ export class ReviewComponent implements OnInit {
           }
         );
       } else {
+        console.log(this.dayValue);
         this.servFirebase
-          .getTimeCollision(this.university, this.course, this.dayValue)
+          .getTimeCollision(
+            this.university,
+             this.course,
+             this.dayValue)
           .subscribe((datas) => {
-            if (datas !==  null) {
+            if (datas.length !== 0) {
               datas.forEach((results) => {
                 if (
-                  !this.startArray.includes(results.payload.doc.data()['start'])
+                  !this.startArray.includes(results.payload.doc.data().start)
                 ) {
                   this.startArray.push(
                     parseInt(
-                      results.payload.doc.data()['start'].replace(':', '')
+                      results.payload.doc.data().start.replace(':', '')
                     )
                   );
                 }
 
                 if (
-                  !this.endArray.includes(results.payload.doc.data()['end'])
+                  !this.endArray.includes(results.payload.doc.data().end)
                 ) {
                   this.endArray.push(
-                    parseInt(results.payload.doc.data()['end'].replace(':', ''))
+                    parseInt(results.payload.doc.data().end.replace(':', ''))
                   );
                 }
               });
@@ -232,7 +222,7 @@ export class ReviewComponent implements OnInit {
                   });
               }
             } else {
-              //No data So user can just post timetable.
+              // No data So user can just post timetable.
               this.servFirebase
                 .uploadTimetable(
                   {
@@ -282,24 +272,24 @@ export class ReviewComponent implements OnInit {
           .subscribe((data) => {
             if (data !== null) {
               this.statusServ.progressBarStatus = false;
-              //this.noData = false;
+              // this.noData = false;
               data.forEach((results) => {
 
                 this.servFirebase
                   .getCourseLongAndShort(this.university, this.course)
                   .subscribe((datas) => {
                     if (datas.length !== 0){
-                      //this.noData = false;
+                      // this.noData = false;
                       this.allCourseInitials = datas;
                       this.statusServ.subjectInitialForAll = datas;
                     }else{
-                      //this.noData = true;
+                      // this.noData = true;
                     }
                   });
               });
             } else {
-              //No data
-              //this.noData = true;
+              // No data
+              // this.noData = true;
             }
           });
       }

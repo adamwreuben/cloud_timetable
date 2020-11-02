@@ -18,7 +18,15 @@
           <td>{{fileData.dateUploaded}}</td>
           <td>{{fileData.documentSize}}</td>
           <td>
-          <button nz-button nzType="primary" nzSize="small" nzDanger style="margin: 10px">Delete</button>
+          <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          nzDanger
+          (click)="
+            deleteFile(fileData.documentDownloadUrl, fileData.documentFileId)
+          "
+          style="margin: 10px">Delete</button>
           </td>
         </tr>
 
@@ -46,6 +54,7 @@
       application/vnd.openxmlformats-officedocument.wordprocessingml.document,
       application/pdf,application/vnd.ms-excel">
       <button
+      *ngIf="subjectSelected !== undefined"
       nzType="default"
       (click)="fileInput.click()"
       nz-button><i nz-icon nzType="upload"></i>Upload</button>

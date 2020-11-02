@@ -95,9 +95,10 @@ export class MondayComponent implements OnInit {
   }
 
 
+
   cancel(){
   }
-
+  
   loadDatabase() {
     this.afAuth.authState.subscribe((userData) => {
       if (userData !== null) {
