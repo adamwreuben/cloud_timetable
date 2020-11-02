@@ -110,7 +110,6 @@ export class ClassFileComponent implements OnInit {
     });
   }
 
-
   subjectChange(){
     this.selectNow = true;
     this.loadDocuments();
