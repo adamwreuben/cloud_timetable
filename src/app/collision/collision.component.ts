@@ -97,12 +97,12 @@ export class CollisionComponent implements OnInit {
 
     this.statuService.progressBarStatus = true;
 
-    if (this.startArray.length !== 0){
-      this.endArrayOther = [];
+    if (this.startArrayOther.length !== 0){
       this.startArrayOther = [];
+      this.startArray = [];
+      this.endArray = [];
+
     }
-
-
     this.firebaseService
       .getTimeCollision(this.statuService.universityNameService, this.selectedCourse, this.dayValue)
       .subscribe((datas) => {
@@ -111,6 +111,7 @@ export class CollisionComponent implements OnInit {
           this.statuService.progressBarStatus = false;
 
           datas.forEach((results) => {
+
             if (
               !this.startArrayOther.includes(
                 {
@@ -134,37 +135,14 @@ export class CollisionComponent implements OnInit {
                 }
               );
             }
-
-            if (
-              !this.endArrayOther.includes(
-                {
-                  documentId: results.payload.doc.id,
-                  subjName: results.payload.doc.data().subject,
-                  type: results.payload.doc.data().type,
-                  location: results.payload.doc.data().location,
-                  start: results.payload.doc.data().start,
-                  end: results.payload.doc.data().end
-                }
-              )
-            ) {
-              this.endArrayOther.push(
-                {
-                  documentId: results.payload.doc.id,
-                  subjName: results.payload.doc.data().subject,
-                  type: results.payload.doc.data().type,
-                  location: results.payload.doc.data().location,
-                  start: results.payload.doc.data().start,
-                  end: results.payload.doc.data().end
-                }
-              );
-            }
             this.showFullCollsion();
           });
         } else {
          this.statuService.progressBarStatus = false;
-
         }
       });
+
+
   }
 
   showFullCollsion() {
@@ -201,6 +179,7 @@ export class CollisionComponent implements OnInit {
                   )
                   .subscribe((timeCollisionReults) => {
                     if (timeCollisionReults.length !== 0) {
+                      this.noData = false;
                       timeCollisionReults.forEach((meResults) => {
                         if (
                           !this.startArray.includes(
@@ -252,11 +231,22 @@ export class CollisionComponent implements OnInit {
                       for (let otherStartIndex = 0; otherStartIndex < this.startArrayOther.length; otherStartIndex++){
                         for (let meStartIndex = 0; meStartIndex < this.startArray.length; meStartIndex++){
                           if (
-                            parseInt(this.startArray[meStartIndex].start.replace(':', '')) >= parseInt(this.startArrayOther[otherStartIndex].start.replace(':', '')) ||
-                            parseInt(this.startArray[meStartIndex].start.replace(':', '')) <= parseInt(this.startArrayOther[otherStartIndex].end.replace(':', ''))
-                          ) {
 
-                            this.noData = false;
+                            (
+                            parseInt(this.startArray[meStartIndex].start.replace(':', '')) >= parseInt(this.startArrayOther[otherStartIndex].start.replace(':', ''))
+                            &&
+                            parseInt(this.startArray[meStartIndex].start.replace(':', '')) <= parseInt(this.startArrayOther[otherStartIndex].end.replace(':', ''))
+                            )
+
+                            ||
+
+                            (
+                              parseInt(this.startArray[meStartIndex].end.replace(':', '')) >= parseInt(this.startArrayOther[otherStartIndex].end.replace(':', ''))
+                              &&
+                              parseInt(this.startArray[meStartIndex].end.replace(':', '')) <= parseInt(this.startArrayOther[otherStartIndex].end.replace(':', ''))
+                            )
+
+                          ) {
 
                             this.statuService.progressBarStatus = false;
                             this.startArrayStatus = false;
@@ -281,7 +271,7 @@ export class CollisionComponent implements OnInit {
                           } else {
                             this.statuService.progressBarStatus = false;
                             this.startArrayStatus = true;
-                            this.noData = true;
+
                           }
                         }
                       }
@@ -324,6 +314,7 @@ export class CollisionComponent implements OnInit {
 
                     }else{
                       this.showSelectSubject = true;
+                      this.noData =  true;
                     }
                   });
                 }
