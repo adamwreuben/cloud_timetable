@@ -122,7 +122,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
   loadDatabase(){
     this.afAuth.authState.subscribe(userData => {
       this.firebaseService.getUniversityCourse(userData.uid).subscribe(data => {
-        if (data.length != 0){
+        if (data.length !== 0){
           this.statuService.progressBarStatus = false;
 
           data.forEach(results => {

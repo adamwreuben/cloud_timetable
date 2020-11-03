@@ -15,13 +15,20 @@ export class ThursdayUeComponent implements OnInit, DoCheck {
   university: any;
   course: any;
 
-  currentWeek: any;
-
+  selectedWeek;
   dayValue;
   subjectValue;
   locationValue;
   startTimeValue;
   endTimeValue;
+
+  docIds: any;
+  universitys: any;
+  courses: any;
+  dateValue: any;
+  week: any;
+
+  currentWeek: any;
 
   noData: any;
   onlineStatus: any;
@@ -35,19 +42,22 @@ export class ThursdayUeComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.loadDatabase();
+    this.currentWeek = this.statuService.weekSelected;
+
     this.statuService.checkOnlineStatus$().subscribe((isOnline) => {
       this.onlineStatus = isOnline;
     });
   }
 
   ngDoCheck(){
-    if(this.statuService.weekSelected !== this.currentWeek){
+    if (this.statuService.weekSelected !== this.currentWeek){
       this.loadDatabase();
       this.currentWeek = this.statuService.weekSelected;
     }
   }
 
-  deleteData(docId: any, university: any, course: any) {
+  deleteData(docId: any, university: any, course: any, week: any, day: any) {
+    this.firebaseService.deleteTimetableUe(docId, university, course, week, day);
     this.loadDatabase();
   }
 
@@ -56,58 +66,93 @@ export class ThursdayUeComponent implements OnInit, DoCheck {
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;
+    this.onSubmit();
   }
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
   }
 
-  showModalMiddle(): void {
+  showModalMiddle(
+    docId: any,
+    university: any,
+    course: any,
+    days: any,
+    subjects: any,
+    locations: any,
+    starts: any,
+    ends: any,
+    weeks: any,
+    dates: any
+  ): void {
     this.isVisibleMiddle = true;
+    this.docIds = docId;
+    this.universitys = university;
+    this.courses = course;
+    this.dayValue = days;
+    this.subjectValue = subjects;
+    this.locationValue = locations;
+    this.startTimeValue = starts;
+    this.endTimeValue = ends;
+    this.week = weeks;
+    this.dateValue = dates;
+
   }
 
   onSubmit(){
-
+    this.firebaseService.updateUeTimeTable(
+      this.docIds,
+      this.university,
+      this.course,
+      this.dayValue,
+      this.subjectValue,
+      this.locationValue,
+      this.startTimeValue,
+      this.endTimeValue,
+      this.statuService.weekSelected,
+      this.dateValue
+      );
   }
 
-  confirm(){
 
-  }
 
   cancel(){
   }
 
   loadDatabase(){
-    this.afAuth.authState.subscribe(userData=>{
-      this.firebaseService.getUniversityCourse(userData.uid).subscribe(data=>{
-        if(data.length != 0){
+    this.afAuth.authState.subscribe(userData => {
+      this.firebaseService.getUniversityCourse(userData.uid).subscribe(data => {
+        if (data.length !== 0){
           this.statuService.progressBarStatus = false;
 
-          data.forEach(results=>{
+          data.forEach(results => {
+            // tslint:disable-next-line: no-string-literal
             this.course = results.payload.doc.data()['course'];
+            // tslint:disable-next-line: no-string-literal
             this.university = results.payload.doc.data()['university'];
 
-            this.firebaseService.getTimetableUe(this.university,this.course, this.statuService.weekSelected, 'Thursday').subscribe(thursday=>{
+            this.firebaseService.getTimetableUe(this.university, this.course, this.statuService.weekSelected, 'Thursday').subscribe(thursday => {
 
-              if(thursday.length != 0){
+              if (thursday.length !== 0){
                 this.noData = false;
                 this.timeThursdayObjectFromFirebase = thursday;
                 this.statuService.progressBarStatus = false;
               }else{
-                //No data
+                // No data
                 this.noData = true;
                 this.statuService.progressBarStatus = false;
               }
 
             });
-          })
+          });
         }else{
-          //No data
-          //this.snack.open("Set Your University and Your Course Class","",{duration:2000})
+          // No data
+          // this.snack.open("Set Your University and Your Course Class","",{duration:2000})
 
         }
 
       });
     });
   }
+
 }
