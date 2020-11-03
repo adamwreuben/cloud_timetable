@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FirebaseAllService } from '../AllServices/firebase-all.service';
 import { StatusServeService } from '../AllServices/status-serve.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,13 +18,19 @@ export class SidebarComponent implements OnInit {
   hideButton;
   userProfileImg: any;
   showInvite: boolean = true;
-  userName:any;
+  userName: any;
+  noData;
 
+  docIdSub: any;
+  courseSub: any;
+  universitySub: any;
+  allCourseInitials: any;
 
   constructor(
     public statuService: StatusServeService,
     private afAuth: AngularFireAuth,
     private routers: Router,
+    private notification: NzNotificationService,
     private fireService: FirebaseAllService,
   ) { }
 
@@ -38,6 +45,7 @@ export class SidebarComponent implements OnInit {
           this.hideButton = true;
           this.userProfileImg = data.photoURL;
           this.userName = data.displayName;
+          this.loadSubjects();
         } else {
           if (this.statuService.courseName === null) {
             this.routers.navigate(['/']);
@@ -46,6 +54,21 @@ export class SidebarComponent implements OnInit {
         }
       });
     });
+  }
+
+  createNotification(){
+    this.notification.create(
+      'info',
+      'Add Your Subjects First ( GO TO REVIEW SUBJECTS TAB )! 🤓',
+      'You Have To Add All Subjects For Your Course Before Doing Anything!😊.',
+      {
+        nzDuration: 0,
+        nzStyle: {
+          width: '600px',
+          marginLeft: '-265px'
+        }
+      }
+    );
   }
 
   logOut(){
@@ -60,7 +83,7 @@ export class SidebarComponent implements OnInit {
 
   loadVerification(uid: any) {
     this.fireService.getUserVerification(uid).subscribe((datas) => {
-      if (datas.length != 0) {
+      if (datas.length !== 0) {
         datas.forEach((results) => {
           this.status = results.payload.doc.data()['status'];
           if (this.status === 'verified') {
@@ -70,6 +93,40 @@ export class SidebarComponent implements OnInit {
           }
         });
       } else {
+      }
+    });
+  }
+
+  loadSubjects() {
+    this.statuService.progressBarStatus = true;
+    this.afAuth.authState.subscribe((userData) => {
+      if (userData !== null) {
+        this.fireService
+          .getUniversityCourse(userData.uid)
+          .subscribe((data) => {
+            if (data !== null) {
+              this.statuService.progressBarStatus = false;
+              this.noData = false;
+              data.forEach((results) => {
+                this.docIdSub = results.payload.doc.id;
+                this.courseSub = results.payload.doc.data()['course'];
+                this.universitySub = results.payload.doc.data()['university'];
+                this.fireService
+                  .getCourseLongAndShort(this.universitySub, this.courseSub)
+                  .subscribe((datas) => {
+                    if (datas.length !== 0){
+                      this.noData = false;
+                    }else{
+                      this.noData = true;
+                      this.createNotification();
+                    }
+                  });
+              });
+            } else {
+              //No data
+              this.noData = true;
+            }
+          });
       }
     });
   }

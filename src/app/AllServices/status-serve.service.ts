@@ -16,6 +16,8 @@ export class StatusServeService implements OnInit{
   weekSelected = 'Week 1';
   weekChangeStatus = false;
 
+  subjectInitialForAll: any;
+
   universityName:any = null
   courseName:any = null;
 
@@ -29,14 +31,13 @@ export class StatusServeService implements OnInit{
   constructor(private auth:AngularFireAuth) { }
 
   ngOnInit(){
-
     this.auth.authState.subscribe(userData=>{
       if(userData !== null){
         this.loginStatus = true
       }else{
         this.loginStatus =false
       }
-    })
+    });
   }
 
   changeStatusServ(value:boolean){

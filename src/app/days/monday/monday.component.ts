@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from 'src/app/AllServices/firebase-all.service';
 import { StatusServeService } from 'src/app/AllServices/status-serve.service';
 
@@ -15,6 +16,7 @@ export class MondayComponent implements OnInit {
   timeMondayObjectFromFirebase: any;
   university: any;
   course: any;
+  docId: any;
 
   dayValue;
   subjectValue;
@@ -22,15 +24,16 @@ export class MondayComponent implements OnInit {
   locationValue;
   startTimeValue;
   endTimeValue;
-  comment;
+  comments;
 
   noData: any;
   onlineStatus: any;
 
   constructor(
     private firebaseService: FirebaseAllService,
-    private statuService: StatusServeService,
+    public statuService: StatusServeService,
     private afAuth: AngularFireAuth,
+    private notification: NzNotificationService,
     private router: Router
   ) { }
 
@@ -41,34 +44,61 @@ export class MondayComponent implements OnInit {
     });
   }
 
-  deleteData(docId: any, university: any, course: any) {
+  deleteData(docId: any, university: any, course: any, day: any) {
+    this.firebaseService.deleteTimetableForDay(docId, university, course, day);
     this.loadDatabase();
   }
 
 
   handleOkMiddle(): void {
-    this.isVisibleMiddle = false;
+    this.onSubmit();
   }
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
   }
 
-  showModalMiddle(): void {
+  showModalMiddle(
+    id: any,
+    day: any,
+    subject: any,
+    location: any,
+    type: any,
+    start: any,
+    end: any,
+    comment: any
+  ): void {
+    this.docId = id;
+    this.dayValue = day;
+    this.subjectValue = subject;
+    this.locationValue = location;
+    this.typeValue = type;
+    this.startTimeValue = start;
+    this.endTimeValue = end;
+    this.comments = comment;
     this.isVisibleMiddle = true;
   }
 
   onSubmit(){
-
+    this.firebaseService.updateTimeTable(
+      this.docId,
+      this.university,
+      this.course,
+      this.dayValue,
+      this.subjectValue,
+      this.typeValue,
+      this.locationValue,
+      this.startTimeValue,
+      this.endTimeValue,
+      this.comments
+      );
   }
 
-  confirm(){
 
-  }
 
   cancel(){
   }
-
+  
   loadDatabase() {
     this.afAuth.authState.subscribe((userData) => {
       if (userData !== null) {

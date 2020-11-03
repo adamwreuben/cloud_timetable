@@ -6,6 +6,7 @@ import { DocumentUploadInterface } from './storage.model';
 import * as firebase from 'firebase';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { StatusServeService } from '../status-serve.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class StorageService {
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
     private storage: AngularFireStorage,
+    private notification: NzNotificationService,
     private statusServ: StatusServeService,
     ) { }
 
@@ -42,7 +44,15 @@ export class StorageService {
       .collection('All', ref => ref.where('documentDownloadUrl', '==', filePath))
       .doc(docId).delete().then(() => {
         this.statusServ.progressBarStatus = false;
-        //this.snackBar.open('File Deleted!', '', this.noMatchConfig);
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       });
 
     });

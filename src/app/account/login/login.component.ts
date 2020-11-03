@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { FormControl, Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { FirebaseAllService } from 'src/app/AllServices/firebase-all.service';
 import { StatusServeService } from 'src/app/AllServices/status-serve.service';
 
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, DoCheck {
     public statusServ: StatusServeService,
     private fireService: FirebaseAllService,
     private router: Router,
+    private message: NzMessageService
   ) { }
 
   selectedCourse;
@@ -48,22 +50,30 @@ export class LoginComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
-    this.statusServ.progressBarStatus = true;
-    this.afAuths.authState.subscribe((data) => {
-      if (data !== null) {
-        //this.snack.open('Please Wait...', '', { duration: 2000 });
-        if (data.email === 'adamreuben66@gmail.com') {
-          this.statusServ.progressBarStatus = false;
-          this.router.navigate(['/me']);
-        } else {
-          this.statusServ.progressBarStatus = false;
-          this.loadVerification(data.uid);
-        }
-      } else {
-        this.statusServ.progressBarStatus = false;
-        this.router.navigate(['/']);
+    this.statusServ.checkOnlineStatus$().subscribe((isOnline) => {
+      if (isOnline === true){
+        this.statusServ.progressBarStatus = true;
+        this.afAuths.authState.subscribe((data) => {
+          if (data !== null) {
+            //this.snack.open('Please Wait...', '', { duration: 2000 });
+            if (data.email === 'adamreuben66@gmail.com') {
+              this.statusServ.progressBarStatus = false;
+              this.router.navigate(['/me']);
+            } else {
+              this.statusServ.progressBarStatus = false;
+              this.loadVerification(data.uid);
+            }
+          } else {
+            this.message.create('warning', 'Please Sign In!', {nzDuration: 2000});
+            this.statusServ.progressBarStatus = false;
+            this.router.navigate(['/']);
+          }
+        });
+      }else{
+        this.message.create('error', 'Check Your Internet Connection!', {nzDuration: 4000});
       }
     });
+
 
   }
 
@@ -95,7 +105,9 @@ export class LoginComponent implements OnInit, DoCheck {
   }
 
   showModalMiddleCreate(): void {
-    this.isVisibleMiddleCreate = true;
+    if (this.statusVerification !== 'verified'){
+      this.isVisibleMiddleCreate = true;
+    }
   }
 
   handleOkMiddleVerification(): void {
@@ -129,7 +141,7 @@ export class LoginComponent implements OnInit, DoCheck {
         this.startYear = '';
         this.endYear = '';
         this.router.navigate(['/home']);
-        //this.snack.open('Successful Added', '', { duration: 2000 });
+        this.message.create('success', 'Successful Added!', {nzDuration: 2000});
       });
   }
 
@@ -139,15 +151,15 @@ export class LoginComponent implements OnInit, DoCheck {
       if (datas.length !== 0) {
         this.changeImageVerifiation = true;
         this.statusServ.progressBarStatus = false;
-        //this.snack.open('Wait For Verification!', '', { duration: 2000 });
         datas.forEach((results) => {
           this.statusVerification = results.payload.doc.data()['status'];
           if (this.statusVerification === 'verified') {
             console.log('Verified!');
-            this.showModalMiddleCreate();
-            //this.router.navigate(['/home']);
+            //this.showModalMiddleCreate();
+            this.router.navigate(['/home']);
           } else {
             console.log('no verified!');
+            this.message.create('error', 'Not Verified!', {nzDuration: 2000});
             this.needsVerification = true;
             this.showModalMiddle();
           }
@@ -168,7 +180,7 @@ export class LoginComponent implements OnInit, DoCheck {
         .verifyAdmins(userData.displayName, userData.email, userData.uid)
         .then(() => {
           this.statusServ.progressBarStatus = false;
-          //this.snack.open('Requested', '', { duration: 2000 });
+          this.message.create('success', 'Requested!', {nzDuration: 2000});
         });
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from '../AllServices/firebase-all.service';
 import { StatusServeService } from '../AllServices/status-serve.service';
 
@@ -23,21 +24,23 @@ export class ReviewComponent implements OnInit {
   startTimeValue;
   endTimeValue;
 
-  showSpinner: boolean = false;
-  comment = 'No Info';
-  collision = 'no' ;
+  allCourseInitials: any;
 
-  //Arrays--->
+  showSpinner = false;
+  comment = 'No Info';
+
+  // Arrays--->
   startArray = [];
   endArray = [];
 
-  startArrayStatus: boolean = false;
-  endArrayStatus: boolean = false;
+  startArrayStatus = false;
+  endArrayStatus = false;
 
 
   constructor(
     public statusServ: StatusServeService,
     public servFirebase: FirebaseAllService,
+    private notification: NzNotificationService,
     private auth: AngularFireAuth
   ) { }
 
@@ -50,16 +53,18 @@ export class ReviewComponent implements OnInit {
             if (data.length !== 0) {
               this.statusServ.progressBarStatus = false;
               data.forEach((results) => {
+                // tslint:disable-next-line: no-string-literal
                 this.course = results.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
                 this.university = results.payload.doc.data()['university'];
               });
+              this.loadSubjects();
             } else {
               this.statusServ.progressBarStatus = false;
             }
           });
       } else {
-        this.course = this.statusServ.courseName;
-        this.university = this.statusServ.universityName;
+        // No user data.
       }
     });
   }
@@ -70,6 +75,7 @@ export class ReviewComponent implements OnInit {
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
+    console.log('log');
   }
 
   showModalMiddle(): void {
@@ -77,40 +83,55 @@ export class ReviewComponent implements OnInit {
   }
 
   onSubmitAdd(){
+
     if (this.startTimeValue >= this.endTimeValue) {
-      // this.snack.open(
-      //   "Start Time can't Exceed End Time! Or Be Equal",
-      //   '',
-      //   this.noMatchConfig
-      // );
+
+      this.notification.create(
+        'warning',
+        'Something is Wrong😡',
+        'Start Time can\'t Exceed End Time! Or Be Equal',
+        {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft'
+        }
+      );
     } else {
       if (this.endTimeValue <= this.startTimeValue) {
-        // this.snack.open(
-        //   "End Time can't be Less than Start Time!",
-        //   '',
-        //   this.noMatchConfig
-        // );
+
+        this.notification.create(
+          'warning',
+          'Something is Wrong😡',
+          'End Time can\'t be Less than Start Time Or Be Equal!',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
       } else {
+        console.log(this.dayValue);
         this.servFirebase
-          .getTimeCollision(this.university, this.course, this.dayValue)
+          .getTimeCollision(
+            this.university,
+             this.course,
+             this.dayValue)
           .subscribe((datas) => {
             if (datas.length !== 0) {
               datas.forEach((results) => {
                 if (
-                  !this.startArray.includes(results.payload.doc.data()['start'])
+                  !this.startArray.includes(results.payload.doc.data().start)
                 ) {
                   this.startArray.push(
                     parseInt(
-                      results.payload.doc.data()['start'].replace(':', '')
+                      results.payload.doc.data().start.replace(':', '')
                     )
                   );
                 }
 
                 if (
-                  !this.endArray.includes(results.payload.doc.data()['end'])
+                  !this.endArray.includes(results.payload.doc.data().end)
                 ) {
                   this.endArray.push(
-                    parseInt(results.payload.doc.data()['end'].replace(':', ''))
+                    parseInt(results.payload.doc.data().end.replace(':', ''))
                   );
                 }
               });
@@ -122,11 +143,15 @@ export class ReviewComponent implements OnInit {
                   parseInt(this.startTimeValue.replace(':', '')) <=
                     this.endArray[i]
                 ) {
-                  // this.snack.open(
-                  //   'Start time already exist!',
-                  //   '',
-                  //   this.noMatchConfig
-                  // );
+                  this.notification.create(
+                    'warning',
+                    'Something is Wrong😡',
+                    'Start time already exist!',
+                    {
+                      nzDuration: 2000,
+                      nzPlacement: 'bottomLeft'
+                    }
+                  );
                   this.startArrayStatus = false;
                 } else {
                   this.startArrayStatus = true;
@@ -140,11 +165,15 @@ export class ReviewComponent implements OnInit {
                   parseInt(this.endTimeValue.replace(':', '')) <=
                     this.endArray[i]
                 ) {
-                  // this.snack.open(
-                  //   'End time already exist!',
-                  //   '',
-                  //   this.noMatchConfig
-                  // );
+                  this.notification.create(
+                    'warning',
+                    'Something is Wrong😡',
+                    'End time already exist!',
+                    {
+                      nzDuration: 2000,
+                      nzPlacement: 'bottomLeft'
+                    }
+                  );
                   this.endArrayStatus = false;
                 } else {
                   this.endArrayStatus = true;
@@ -165,7 +194,6 @@ export class ReviewComponent implements OnInit {
                       start: this.startTimeValue,
                       end: this.endTimeValue,
                       comment: this.comment,
-                      collision: this.collision
                     },
                     this.university,
                     this.course
@@ -174,6 +202,7 @@ export class ReviewComponent implements OnInit {
                     this.dayValue = '';
                     this.subjectValue = '';
                     this.startTimeValue = '';
+                    this.typeValue = '';
                     this.locationValue = '';
                     this.startTimeValue = '';
                     this.endTimeValue = '';
@@ -181,11 +210,19 @@ export class ReviewComponent implements OnInit {
                     this.endArray = [];
                     this.startArrayStatus = false;
                     this.endArrayStatus = false;
-                    //this.snack.open('Successful Added', '', { duration: 2000 });
+                    this.notification.create(
+                      'success',
+                      'Everything Looks Fine😁',
+                      'Timetable is Added!',
+                      {
+                        nzDuration: 2000,
+                        nzPlacement: 'bottomLeft'
+                      }
+                    );
                   });
               }
             } else {
-              //No data So user can just post timetable.
+              // No data So user can just post timetable.
               this.servFirebase
                 .uploadTimetable(
                   {
@@ -209,12 +246,54 @@ export class ReviewComponent implements OnInit {
                   this.endArray = [];
                   this.startArrayStatus = false;
                   this.endArrayStatus = false;
-                  //this.snack.open('Successful Added', '', { duration: 2000 });
+
+                  this.notification.create(
+                    'success',
+                    'Everything Looks Fine😁',
+                    'Timetable is Added!',
+                    {
+                      nzDuration: 2000,
+                      nzPlacement: 'bottomLeft'
+                    }
+                  );
                 });
             }
           });
       }
     }
+  }
+
+  loadSubjects() {
+    this.statusServ.progressBarStatus = true;
+    this.auth.authState.subscribe((userData) => {
+      if (userData !== null) {
+        this.servFirebase
+          .getUniversityCourse(userData.uid)
+          .subscribe((data) => {
+            if (data !== null) {
+              this.statusServ.progressBarStatus = false;
+              // this.noData = false;
+              data.forEach((results) => {
+
+                this.servFirebase
+                  .getCourseLongAndShort(this.university, this.course)
+                  .subscribe((datas) => {
+                    if (datas.length !== 0){
+                      // this.noData = false;
+                      this.allCourseInitials = datas;
+                      this.statusServ.subjectInitialForAll = datas;
+                    }else{
+                      // this.noData = true;
+                    }
+                  });
+              });
+            } else {
+              // No data
+              // this.noData = true;
+            }
+          });
+      }
+    });
   }
 
 }

@@ -26,7 +26,7 @@
   <button
   [nzLoading]="statusServ.progressBarStatus"
   nz-button
-  nzType="primary" nzSize="large"
+  nzType="primary"
   (click)="showModalMiddle()"
   >
   <i nz-icon nzType="plus" nzTheme="outline"></i>
@@ -36,11 +36,11 @@
 
     <nz-drawer
       [nzBodyStyle]="{ overflow: 'auto' }"
-      [nzMaskClosable]="true"
+      [nzMaskClosable]="false"
       [nzWidth]="720"
+      (nzOnClose)="handleCancelMiddle()"
       [nzVisible]="isVisibleMiddle"
       nzTitle="Set Subject Timetable"
-      (nzOnClose)="handleCancelMiddle()"
     >
     <form nz-form class="form" #formAdd="ngForm" (ngSubmit)="onSubmitAdd()">
       <nz-form-item>
@@ -50,10 +50,11 @@
         name="day"
         style="width: 100%;margin-bottom: 10px;"
         nzPlaceHolder="Select Day">
-        <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
-        <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
-        <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
-        <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
         </nz-select>
       </nz-form-item>
 
@@ -64,10 +65,10 @@
         required
         style="width: 100%;margin-bottom: 10px;"
         nzPlaceHolder="Select Subject Name">
-        <nz-option nzValue="Week 1" nzLabel="Week 1"></nz-option>
-        <nz-option nzValue="Week 2" nzLabel="Week 2"></nz-option>
-        <nz-option nzValue="Week 3" nzLabel="Week 3"></nz-option>
-        <nz-option nzValue="Week 4" nzLabel="Week 4"></nz-option>
+        <nz-option
+        *ngFor="let subject of allCourseInitials"
+        [nzValue]="subject.payload.doc.data().subjectShort"
+        [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
         </nz-select>
       </nz-form-item>
 
@@ -237,7 +238,7 @@
         </nz-form-item>
 
         <div style="float: right;margin-top: 20px;">
-          <button nz-button style="margin-right: 8px;" (click)="handleCancelMiddle()">Cancel</button>
+
           <button
           [disabled]="formAdd.invalid"
           type="submit"

@@ -4,23 +4,41 @@
       nzWrapClassName="vertical-center-modal"
       [(nzVisible)]="isVisibleMiddleVerification"
       [nzFooter]="null"
-      nzClosable="false"
+      [nzClosable]="false"
       nzTitle="Request Course Verification"
     >
     <form nz-form class="form" #formRequest="ngForm" (ngSubmit)="onSubmitRequest()">
+
       <nz-form-item>
         <nz-select
         required
+        nzShowSearch
+        nzAllowClear
         [(ngModel)]="selectedCourse"
         name="day"
         style="width: 100%;margin-bottom: 10px;"
         nzPlaceHolder="Select Course">
-          <nz-option nzValue="Computer Science" nzLabel="Computer Science"></nz-option>
-          <nz-option nzValue="Computer Science" nzLabel="Computer Science"></nz-option>
-          <nz-option nzValue="Computer Science" nzLabel="Computer Science"></nz-option>
+          <nz-option nzTooltipTitle="Computer Science From 2019 To 2022" nz-tooltip nzValue="Computer Science" nzLabel="Computer Science From 2019 To 2022"></nz-option>
+          <nz-option nzTooltipTitle="Computer Engineering From 2010 To 2016" nz-tooltip nzValue="Computer Engineering" nzLabel="Computer Engineering From 2010 To 2016"></nz-option>
+          <nz-option nzTooltipTitle="Software Engineering From 2008 To 2013" nz-tooltip nzValue="Software Engineering" nzLabel="Software Engineering From 2008 To 2013"></nz-option>
         </nz-select>
       </nz-form-item>
 
+      <button
+      style="width: 100%;"
+      type="submit"
+      nz-button
+      nz-popconfirm
+      nzPopconfirmTitle="Are You Sure?"
+      nzOkText="Yes" nzCancelText="Cancel"
+      [disabled]="formRequest.invalid"
+      nzType="primary">Request</button>
+
+      <button
+      (click)="handleCancelMiddleVerification()"
+      style="width: 100%;margin-top: 10px;"
+      nz-button
+      nzType="primary">Cancel</button>
       </form>
     </nz-modal>
 
