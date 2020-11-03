@@ -75,7 +75,7 @@ export class ReviewComponent implements OnInit {
 
   handleCancelMiddle(): void {
     this.isVisibleMiddle = false;
-    console.log('log');
+
   }
 
   showModalMiddle(): void {

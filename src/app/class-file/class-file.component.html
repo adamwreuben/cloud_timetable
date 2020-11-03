@@ -23,10 +23,14 @@
           nzType="primary"
           nzSize="small"
           nzDanger
-          (click)="
-            deleteFile(fileData.documentDownloadUrl, fileData.documentFileId)
-          "
-          style="margin: 10px">Delete</button>
+          style="margin: 10px"
+          nz-popconfirm
+          nzPopconfirmTitle="Are you Sure?"
+          (nzOnConfirm)="deleteFile(fileData.documentDownloadUrl, fileData.documentFileId)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+
+          >Delete</button>
           </td>
         </tr>
 

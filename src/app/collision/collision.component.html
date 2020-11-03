@@ -5,17 +5,31 @@
 
 </nz-tabset>
 <ng-template #extraTemplate>
-  <nz-select [(ngModel)]="selectedCourse" style="margin-right: 10px;">
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+  <nz-select
+  class="courseClassSelect"
+  nzPlaceHolder="Select Course"
+  [(ngModel)]="selectedCourse"
+  required
+  nzShowSearch
+  nzAllowClear
+  name="courseName"
+  style="margin-right: 10px;">
+    <nz-option
+    *ngFor="let courses of allCourseFromFirebase"
+    [nzValue]="courses.payload.doc.data().course"
+    [nzLabel]="courses.payload.doc.data().course"></nz-option>
   </nz-select>
-  <nz-select [(ngModel)]="selectedSubject">
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
-    <nz-option nzValue="DS 133" nzLabel="DS 133"></nz-option>
+  <nz-select
+  required
+  [(ngModel)]="dayValue"
+  name="day"
+  class="DayClassSelect"
+  nzPlaceHolder="Select Day">
+  <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+  <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+  <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+  <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+  <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
   </nz-select>
 </ng-template>
 

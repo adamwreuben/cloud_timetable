@@ -104,10 +104,22 @@ export class ClassFileComponent implements OnInit {
             this.message.remove(id);
             this.docFileUrl = null;
             this.message.create('success', 'Successfully Uploaded', {nzDuration: 1000});
+            this.notification.create(
+              'success',
+              'Uploaded! 😁',
+              'Successfully',
+              {
+                nzDuration: 2000,
+                nzPlacement: 'bottomLeft'
+              }
+            );
             this.loadDocumentsAfterUpload(this.subjectSelected);
           });
       });
     });
+  }
+  cancel(){
+
   }
 
   subjectChange(){
@@ -135,10 +147,14 @@ export class ClassFileComponent implements OnInit {
               documentResults.forEach(documentSingleData => {
                 this.listOfData.push({
                   documentFileId: documentSingleData.payload.doc.id,
-                  documentName: documentSingleData.payload.doc.data().documentName,
-                  dateUploaded: moment(documentSingleData.payload.doc.data().dateUploaded.seconds * 1000).format('llll'),
-                  documentSize: documentSingleData.payload.doc.data().documentSize,
-                  documentDownloadUrl: documentSingleData.payload.doc.data().documentDownloadUrl
+                  // tslint:disable-next-line: no-string-literal
+                  documentName: documentSingleData.payload.doc.data()['documentName'],
+                  // tslint:disable-next-line: no-string-literal
+                  dateUploaded: moment(documentSingleData.payload.doc.data()['dateUploaded'].seconds * 1000).format('llll'),
+                  // tslint:disable-next-line: no-string-literal
+                  documentSize: documentSingleData.payload.doc.data()['documentSize'],
+                  // tslint:disable-next-line: no-string-literal
+                  documentDownloadUrl: documentSingleData.payload.doc.data()['documentDownloadUrl']
                 });
 
               });

@@ -1,4 +1,9 @@
-nz-select {
+.courseClassSelect {
+  margin-right: 8px;
+  width: 400px;
+}
+
+.DayClassSelect {
   margin-right: 8px;
   width: 120px;
 }
