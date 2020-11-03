@@ -29,6 +29,7 @@ export class WednesdayComponent implements OnInit {
 
   noData: any;
   onlineStatus: any;
+  showSkeleton: boolean;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -101,6 +102,7 @@ export class WednesdayComponent implements OnInit {
   }
 
   loadDatabase() {
+    this.showSkeleton = true;
     this.afAuth.authState.subscribe((userData) => {
       if (userData !== null) {
         this.firebaseService
@@ -116,6 +118,7 @@ export class WednesdayComponent implements OnInit {
                   .subscribe((wednesday) => {
                     if (wednesday.length !== 0) {
                       this.noData = false;
+                      this.showSkeleton = false;
                       this.timeWednesdayObjectFromFirebase = wednesday;
                       this.statuService.progressBarStatus = false;
                     } else {

@@ -31,9 +31,11 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 const materialModules = [
   NzStepsModule,
+  NzSkeletonModule,
   NzDrawerModule,
   NzDescriptionsModule,
   NzNotificationModule,

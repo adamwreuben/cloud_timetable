@@ -73,6 +73,10 @@
 
     </nz-empty>
 
+    <nz-skeleton
+    *ngIf="showSkeleton === true && noData !== true"
+    [nzActive]="true"></nz-skeleton>
+
   </nz-tab>
 
 </nz-tabset>

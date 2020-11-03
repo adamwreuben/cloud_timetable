@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   phoneNoInfo;
   roomInfo;
   subjectinfo;
+  showSkeleton: boolean;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -182,6 +183,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadSubjects() {
+    this.showSkeleton = true;
     this.statuService.progressBarStatus = true;
     this.auth.authState.subscribe((userData) => {
       if (userData !== null) {
@@ -202,6 +204,7 @@ export class HomeComponent implements OnInit {
                   .subscribe((datas) => {
                     if (datas.length !== 0){
                       this.noData = false;
+                      this.showSkeleton = false;
                       this.allCourseInitials = datas;
                     }else{
                       this.noData = true;

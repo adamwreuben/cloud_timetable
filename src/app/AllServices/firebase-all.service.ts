@@ -633,6 +633,12 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
+  getUserVerifiedCrOly() {
+    return this.db
+      .collection('All_Admins', (ref) => ref.where('status', '==', 'verified'))
+      .snapshotChanges();
+  }
+
   getAllAdminsRequest() {
     return this.db
       .collection('All_Admins', (ref) => ref.where('status', '==', 'not'))

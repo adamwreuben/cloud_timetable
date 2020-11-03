@@ -236,8 +236,6 @@ nzDanger>Delete</button>
 </li>
 </ul>
 
-
-
 <nz-empty
 *ngIf="noData === true"
       nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
@@ -249,3 +247,6 @@ nzDanger>Delete</button>
 
 </nz-empty>
 
+<nz-skeleton
+*ngIf="showSkeleton === true && noData !== true"
+[nzActive]="true"></nz-skeleton>

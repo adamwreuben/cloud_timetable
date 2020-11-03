@@ -267,3 +267,7 @@ style="margin-right: 10px;"
       </ng-template>
 
 </nz-empty>
+
+<nz-skeleton
+*ngIf="showSkeleton === true && noData !== true"
+[nzActive]="true"></nz-skeleton>

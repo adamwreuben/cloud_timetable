@@ -32,6 +32,7 @@ export class FridayUeComponent implements OnInit, DoCheck {
 
   noData: any;
   onlineStatus: any;
+  showSkeleton: boolean;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -43,7 +44,6 @@ export class FridayUeComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.loadDatabase();
     this.currentWeek = this.statuService.weekSelected;
-
     this.statuService.checkOnlineStatus$().subscribe((isOnline) => {
       this.onlineStatus = isOnline;
     });
@@ -118,6 +118,7 @@ export class FridayUeComponent implements OnInit, DoCheck {
   }
 
   loadDatabase(){
+    this.showSkeleton = true;
     this.afAuth.authState.subscribe(userData => {
       this.firebaseService.getUniversityCourse(userData.uid).subscribe(data => {
         if (data.length !== 0){
@@ -133,6 +134,7 @@ export class FridayUeComponent implements OnInit, DoCheck {
 
               if (friday.length !== 0){
                 this.noData = false;
+                this.showSkeleton = false;
                 this.timeFridayObjectFromFirebase = friday;
                 this.statuService.progressBarStatus = false;
               }else{

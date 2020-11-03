@@ -32,6 +32,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
 
   noData: any;
   onlineStatus: any;
+  showSkeleton: boolean;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -120,6 +121,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
   }
 
   loadDatabase(){
+    this.showSkeleton = true;
     this.afAuth.authState.subscribe(userData => {
       this.firebaseService.getUniversityCourse(userData.uid).subscribe(data => {
         if (data.length !== 0){
@@ -134,6 +136,7 @@ export class MondayUeComponent implements OnInit, DoCheck {
             this.firebaseService.getTimetableUe(this.university, this.course, this.statuService.weekSelected, 'Monday').subscribe(monday => {
 
               if (monday.length !== 0){
+                this.showSkeleton = false;
                 this.noData = false;
                 this.timeMondayObjectFromFirebase = monday;
                 this.statuService.progressBarStatus = false;

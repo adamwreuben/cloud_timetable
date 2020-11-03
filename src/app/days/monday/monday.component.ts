@@ -17,7 +17,7 @@ export class MondayComponent implements OnInit {
   university: any;
   course: any;
   docId: any;
-
+  showSkeleton;
   dayValue;
   subjectValue;
   typeValue;
@@ -98,8 +98,9 @@ export class MondayComponent implements OnInit {
 
   cancel(){
   }
-  
+
   loadDatabase() {
+    this.showSkeleton = true;
     this.afAuth.authState.subscribe((userData) => {
       if (userData !== null) {
         this.firebaseService
@@ -115,6 +116,7 @@ export class MondayComponent implements OnInit {
                   .subscribe((monday) => {
                     if (monday.length !== 0) {
                       this.noData = false;
+                      this.showSkeleton = false;
                       this.timeMondayObjectFromFirebase = monday;
                       this.statuService.progressBarStatus = false;
                     } else {
