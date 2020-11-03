@@ -111,6 +111,7 @@ export class SidebarComponent implements OnInit {
                 this.docIdSub = results.payload.doc.id;
                 this.courseSub = results.payload.doc.data()['course'];
                 this.universitySub = results.payload.doc.data()['university'];
+                this.statuService.universityNameService = this.universitySub;
                 this.fireService
                   .getCourseLongAndShort(this.universitySub, this.courseSub)
                   .subscribe((datas) => {

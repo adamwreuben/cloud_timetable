@@ -23,6 +23,8 @@
   required
   [(ngModel)]="dayValue"
   name="day"
+  *ngIf="selectedCourse !== undefined"
+  (ngModelChange)="setDayValue()"
   class="DayClassSelect"
   nzPlaceHolder="Select Day">
   <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
@@ -34,65 +36,46 @@
 </ng-template>
 
 <nz-timeline>
-  <nz-timeline-item nzColor="red" [nzDot]="dotTemplate"
-  nz-tooltip
-  nzTooltipTitle="Fix This Collision"
-  nzTooltipPlacement="right">
-    <nz-card nzHoverable
+  <nz-timeline-item
+  nzColor="red"
+  *ngFor="let collisionData of allCollideTimeOther"
+  [nzDot]="dotTemplate">
+  <nz-card nzHoverable
     style="
     width: 98%;
     margin: 10px 0 10px 0;">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row">
+        <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+          <div>{{collisionData.subjName}}</div>
+          <div style="font-weight: 100;font-size: small;">{{collisionData.location}}</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div style="margin-right: 10px;">
+          <nz-tag nzColor="error">Collide With Your Time</nz-tag>
+        </div>
+        <div>
+          <nz-tag [nzColor]="'#448AFF'">{{collisionData.type}}</nz-tag>
+          <nz-tag [nzColor]="'#4CAF50'">{{collisionData.start}}</nz-tag>
+          <nz-tag [nzColor]="'#66BB6A'">{{collisionData.end}}</nz-tag>
+        </div>
+      </div>
+    </div>
+  </nz-card>
+</nz-timeline-item>
 
-<div fxLayout="row" fxLayoutAlign="space-between center">
-<div fxLayout="row">
 
-<div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-  <div>{{"CL 113"}}</div>
-  <div style="font-weight: 100;font-size: small;">{{"YOMBO"}}</div>
-</div>
-
-</div>
-
-<div fxLayout="row" fxLayoutAlign="center center">
-<div>
-  <nz-tag [nzColor]="'#448AFF'">{{"Lecture"}}</nz-tag>
-  <nz-tag [nzColor]="'#4CAF50'">{{"07:00"}}</nz-tag>
-  <nz-tag [nzColor]="'#66BB6A'">{{"09:00"}}</nz-tag>
-</div>
-</div>
-
-</div>
-    </nz-card>
-  </nz-timeline-item>
-
-  <nz-timeline-item nzColor="red" [nzDot]="dotTemplate">
-    <nz-card nzHoverable
-    style="
-    width: 98%;
-    margin: 10px 0 10px 0;">
-
-<div fxLayout="row" fxLayoutAlign="space-between center">
-<div fxLayout="row">
-
-<div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-  <div>{{"CL 113"}}</div>
-  <div style="font-weight: 100;font-size: small;">{{"YOMBO"}}</div>
-</div>
-
-</div>
-
-<div fxLayout="row" fxLayoutAlign="center center">
-<div>
-  <nz-tag [nzColor]="'#448AFF'">{{"Lecture"}}</nz-tag>
-  <nz-tag [nzColor]="'#4CAF50'">{{"07:00"}}</nz-tag>
-  <nz-tag [nzColor]="'#66BB6A'">{{"09:00"}}</nz-tag>
-</div>
-</div>
-
-</div>
-    </nz-card>
-  </nz-timeline-item>
-</nz-timeline>
 <ng-template #dotTemplate>
   <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
 </ng-template>
+<nz-empty
+*ngIf="noData === true"
+      nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+      [nzNotFoundContent]="contentTpl"
+    >
+      <ng-template #contentTpl>
+        <span>No Timetable On {{"Thursday"}}</span>
+      </ng-template>
+
+</nz-empty>

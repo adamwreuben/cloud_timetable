@@ -18,7 +18,7 @@ export class StatusServeService implements OnInit{
 
   subjectInitialForAll: any;
 
-  universityName:any = null
+  universityNameService;
   courseName:any = null;
 
   dayFromTabs:any = "Monday";
