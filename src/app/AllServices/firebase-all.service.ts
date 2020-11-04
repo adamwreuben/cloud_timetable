@@ -633,9 +633,15 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
-  getUserVerifiedCrOly() {
+  getUserVerifiedCrOnly() {
     return this.db
       .collection('All_Admins', (ref) => ref.where('status', '==', 'verified'))
+      .snapshotChanges();
+  }
+
+  getUserVerifiedCrOnlySpecificCourse(course: any) {
+    return this.db
+      .collection('All_Admins', (ref) => ref.where('status', '==', 'verified').where('course', '==', course))
       .snapshotChanges();
   }
 

@@ -26,7 +26,7 @@ export class OverviewPageComponent implements OnInit {
 
   checkAllCr(){
     this.statusServ.progressBarStatus = true;
-    this.fireService.getUserVerifiedCrOly().subscribe((datas) => {
+    this.fireService.getUserVerifiedCrOnly().subscribe((datas) => {
       if (datas.length !== 0) {
         this.statusServ.progressBarStatus = false;
         this.totalCrNumber = String(datas.length) + ' CRs';

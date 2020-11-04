@@ -1,8 +1,38 @@
 <nz-tabset>
   <nz-tab nzTitle="Admin Requests">
+
+    <nz-card nzHoverable
+    style="
+    width: 98%;
+    margin: 10px 0 10px 0;">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row">
+        <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+          <div>{{"Adam"}}</div>
+          <div style="font-weight: 100;font-size: small;">{{"adam@gmail.com"}}</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+
+        <div>
+          <button
+          nz-button
+          nzType="primary">Verify</button>
+
+          <button
+          nz-button
+          nzDanger
+          nzType="primary">Remove</button>
+        </div>
+      </div>
+    </div>
+  </nz-card>
+
+  
   </nz-tab>
 
-  <nz-tab nzTitle="My Details">
+  <nz-tab nzTitle="All Admins">
+
   </nz-tab>
 
 </nz-tabset>

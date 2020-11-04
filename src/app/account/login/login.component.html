@@ -167,23 +167,19 @@ style="color: black;font-family: 'Rubik', sans-serif;font-size:xx-large;
       </nz-form-item>
 
       <nz-form-item>
-        <nz-date-picker
-        required
+        <input
         style="width: 100%;margin-bottom: 10px;"
         name="start"
-        nzMode="year"
         nzPlaceHolder="Start Year"
-        [(ngModel)]="startYear"></nz-date-picker>
+        [(ngModel)]="startYear"required />
       </nz-form-item>
 
       <nz-form-item>
-        <nz-date-picker
-        required
+        <input
         style="width: 100%;margin-bottom: 10px;"
-        name="end"
-        nzMode="year"
+        name="start"
         nzPlaceHolder="Graduate Year"
-        [(ngModel)]="endYear"></nz-date-picker>
+        [(ngModel)]="endYear"required />
       </nz-form-item>
 
       <button
