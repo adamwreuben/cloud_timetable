@@ -155,8 +155,14 @@ export class LoginComponent implements OnInit, DoCheck {
           this.statusVerification = results.payload.doc.data()['status'];
           if (this.statusVerification === 'verified') {
             console.log('Verified!');
-            //this.showModalMiddleCreate();
-            this.router.navigate(['/home']);
+            this.fireService.getUniversityCourse(uid).subscribe((data) => {
+            if (data !== null) {
+              this.statusServ.progressBarStatus = false;
+              this.router.navigate(['/home']);
+            } else {
+              this.showModalMiddleCreate();
+            }
+          });
           } else {
             console.log('no verified!');
             this.message.create('error', 'Not Verified!', {nzDuration: 2000});
@@ -176,13 +182,36 @@ export class LoginComponent implements OnInit, DoCheck {
   requestVerifiation() {
     this.statusServ.progressBarStatus = true;
     this.afAuths.authState.subscribe((userData) => {
-      this.fireService
+    this.fireService.getUserVerification(userData.uid).subscribe(userVerificationData => {
+      if(userVerificationData.length !== 0){
+        userVerificationData.forEach((results) => {
+          this.statusVerification = results.payload.doc.data()['status'];
+          if (this.statusVerification === 'verified') {
+            console.log('Verified!');
+            this.fireService.getUniversityCourse(userData.uid).subscribe((data) => {
+            if (data !== null) {
+              this.router.navigate(['/home']);
+            } else {
+              this.showModalMiddleCreate();
+            }
+          });
+          } else {
+            console.log('no verified!');
+            this.message.create('error', 'Not Verified!', {nzDuration: 2000});
+            this.needsVerification = true;
+            this.showModalMiddle();
+          }
+        });
+      }else{
+        this.fireService
         .verifyAdmins(userData.displayName, userData.email, userData.uid)
         .then(() => {
           this.statusServ.progressBarStatus = false;
           this.message.create('success', 'Requested!', {nzDuration: 2000});
         });
+      }
     });
+  });
   }
 
 

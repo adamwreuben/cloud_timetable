@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from 'src/app/AllServices/firebase-all.service';
 import { StatusServeService } from 'src/app/AllServices/status-serve.service';
@@ -10,7 +11,7 @@ import { StatusServeService } from 'src/app/AllServices/status-serve.service';
   templateUrl: './monday.component.html',
   styleUrls: ['./monday.component.css']
 })
-export class MondayComponent implements OnInit {
+export class MondayComponent implements OnInit, OnDestroy {
 
   isVisibleMiddle = false;
   timeMondayObjectFromFirebase: any;
@@ -26,10 +27,14 @@ export class MondayComponent implements OnInit {
   endTimeValue;
   comments;
 
+  //Messages ID
+
+
   noData: any;
   onlineStatus: any;
 
   constructor(
+    private message: NzMessageService,
     private firebaseService: FirebaseAllService,
     public statuService: StatusServeService,
     private afAuth: AngularFireAuth,
@@ -37,12 +42,17 @@ export class MondayComponent implements OnInit {
     private router: Router
   ) { }
 
+  ngOnDestroy(): void {
+  }
+
   ngOnInit(): void {
     this.loadDatabase();
     this.statuService.checkOnlineStatus$().subscribe((isOnline) => {
       this.onlineStatus = isOnline;
     });
   }
+
+
 
   deleteData(docId: any, university: any, course: any, day: any) {
     this.firebaseService.deleteTimetableForDay(docId, university, course, day);
