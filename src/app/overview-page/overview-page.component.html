@@ -1,5 +1,8 @@
-<nz-card nzHoverable style="width:98%">
-  <nz-row [nzGutter]="16">
+<nz-card nzHoverable style="width:98%"
+*ngIf="showSkeleton !== true">
+  <nz-row [nzGutter]="16"
+
+  >
     <nz-col [nzSpan]="12">
       <nz-statistic nzValue="50+ Students" [nzTitle]="'Active Users'"></nz-statistic>
     </nz-col>
@@ -14,5 +17,7 @@
   </nz-row>
 </nz-card>
 
-
+<nz-skeleton
+*ngIf="showSkeleton === true"
+[nzActive]="true"></nz-skeleton>
 

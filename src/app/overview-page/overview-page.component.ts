@@ -12,6 +12,8 @@ import { StatusServeService } from '../AllServices/status-serve.service';
 export class OverviewPageComponent implements OnInit {
 
   totalCrNumber: any = undefined;
+  showSkeleton: boolean;
+
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -25,11 +27,14 @@ export class OverviewPageComponent implements OnInit {
   }
 
   checkAllCr(){
+    this.showSkeleton = true;
     this.statusServ.progressBarStatus = true;
     this.fireService.getUserVerifiedCrOnly().subscribe((datas) => {
       if (datas.length !== 0) {
+        this.showSkeleton = false;
         this.statusServ.progressBarStatus = false;
         this.totalCrNumber = String(datas.length) + ' CRs';
+
       } else {
         this.statusServ.progressBarStatus = false;
       }
