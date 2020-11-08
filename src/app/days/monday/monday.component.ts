@@ -9,10 +9,9 @@ import { StatusServeService } from 'src/app/AllServices/status-serve.service';
 @Component({
   selector: 'app-monday',
   templateUrl: './monday.component.html',
-  styleUrls: ['./monday.component.css']
+  styleUrls: ['./monday.component.css'],
 })
 export class MondayComponent implements OnInit, OnDestroy {
-
   isVisibleMiddle = false;
   timeMondayObjectFromFirebase: any;
   university: any;
@@ -27,11 +26,12 @@ export class MondayComponent implements OnInit, OnDestroy {
   endTimeValue;
   comments;
 
-  //Messages ID
-
+  // Messages ID
 
   noData: any;
   onlineStatus: any;
+  docIdAdmin: string;
+  adminType: any;
 
   constructor(
     private message: NzMessageService,
@@ -40,10 +40,9 @@ export class MondayComponent implements OnInit, OnDestroy {
     private afAuth: AngularFireAuth,
     private notification: NzNotificationService,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     this.loadDatabase();
@@ -52,13 +51,10 @@ export class MondayComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   deleteData(docId: any, university: any, course: any, day: any) {
     this.firebaseService.deleteTimetableForDay(docId, university, course, day);
     this.loadDatabase();
   }
-
 
   handleOkMiddle(): void {
     this.onSubmit();
@@ -89,11 +85,11 @@ export class MondayComponent implements OnInit, OnDestroy {
     this.isVisibleMiddle = true;
   }
 
-  onSubmit(){
+  onSubmit() {
     this.firebaseService.updateTimeTable(
       this.docId,
-      this.university,
-      this.course,
+      this.adminType === 'collaborate' ? this.statuService.universityNameService : this.university,
+      this.adminType === 'collaborate' ? this.statuService.courseNameService : this.course,
       this.dayValue,
       this.subjectValue,
       this.typeValue,
@@ -101,48 +97,84 @@ export class MondayComponent implements OnInit, OnDestroy {
       this.startTimeValue,
       this.endTimeValue,
       this.comments
-      );
+    );
   }
 
-
-
-  cancel(){
-  }
+  cancel() {}
 
   loadDatabase() {
     this.showSkeleton = true;
-    this.afAuth.authState.subscribe((userData) => {
-      if (userData !== null) {
+    this.afAuth.authState.subscribe((data) => {
+      if (data !== null) {
         this.firebaseService
-          .getUniversityCourse(userData.uid)
-          .subscribe((data) => {
-            if (data.length !== 0) {
-              data.forEach((results) => {
-                this.course = results.payload.doc.data()['course'];
-                this.university = results.payload.doc.data()['university'];
+          .checkAdminType(data.email)
+          .subscribe((userVerificationType) => {
+            if (userVerificationType.length !== 0) {
+              userVerificationType.forEach((resultsTypes) => {
+                this.docIdAdmin = resultsTypes.payload.doc.id;
+                // tslint:disable-next-line: no-string-literal
+                this.adminType = resultsTypes.payload.doc.data()['type'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.courseNameService = resultsTypes.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.universityNameService = resultsTypes.payload.doc.data()['university'];
 
-                this.firebaseService
-                  .getTimetable(this.university, this.course, 'Monday')
-                  .subscribe((monday) => {
-                    if (monday.length !== 0) {
-                      this.noData = false;
-                      this.showSkeleton = false;
-                      this.timeMondayObjectFromFirebase = monday;
-                      this.statuService.progressBarStatus = false;
-                    } else {
-                      //No data
-                      this.noData = true;
-                      this.statuService.progressBarStatus = false;
-                    }
-                  });
+                if (this.adminType === 'collaborate') {
+                  this.firebaseService
+                    .getTimetable(
+                      this.statuService.universityNameService,
+                      this.statuService.courseNameService,
+                      'Monday'
+                    )
+                    .subscribe((monday) => {
+                      if (monday.length !== 0) {
+                        this.noData = false;
+                        this.showSkeleton = false;
+                        this.timeMondayObjectFromFirebase = monday;
+                        this.statuService.progressBarStatus = false;
+                      } else {
+                        // No data
+                        this.noData = true;
+                        this.statuService.progressBarStatus = false;
+                      }
+                    });
+                } else {
+                  // Load that uid origin CR created the course
+                  this.firebaseService
+                    .getUniversityCourse(data.uid)
+                    .subscribe((datas) => {
+                      if (datas.length !== 0) {
+                        datas.forEach((results) => {
+                          // tslint:disable-next-line: no-string-literal
+                          this.course = results.payload.doc.data()['course'];
+                          // tslint:disable-next-line: no-string-literal
+                          this.university = results.payload.doc.data()['university'];
+                          this.firebaseService
+                            .getTimetable(
+                              this.university,
+                              this.course,
+                              'Monday'
+                            )
+                            .subscribe((monday) => {
+                              if (monday.length !== 0) {
+                                this.noData = false;
+                                this.showSkeleton = false;
+                                this.timeMondayObjectFromFirebase = monday;
+                                this.statuService.progressBarStatus = false;
+                              } else {
+                                // No data
+                                this.noData = true;
+                                this.statuService.progressBarStatus = false;
+                              }
+                            });
+                        });
+                      } else {
+                      }
+                    });
+                }
               });
             } else {
-              //No data
-              // this.snack.open(
-              //   'Set Your University and Your Course Class',
-              //   '',
-              //   { duration: 2000 }
-              // );
+              this.router.navigate(['/']);
             }
           });
       } else {
@@ -150,5 +182,4 @@ export class MondayComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 }

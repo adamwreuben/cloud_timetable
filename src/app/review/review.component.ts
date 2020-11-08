@@ -35,6 +35,9 @@ export class ReviewComponent implements OnInit {
 
   startArrayStatus = false;
   endArrayStatus = false;
+  docIdSub: string;
+  docIdAdmin: string;
+  adminType: any;
 
 
   constructor(
@@ -45,29 +48,44 @@ export class ReviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.auth.authState.subscribe((userData) => {
-      if (userData !== null) {
-        this.servFirebase
-          .getUniversityCourse(userData.uid)
-          .subscribe((data) => {
-            if (data.length !== 0) {
-              this.statusServ.progressBarStatus = false;
-              data.forEach((results) => {
-                // tslint:disable-next-line: no-string-literal
-                this.course = results.payload.doc.data()['course'];
-                // tslint:disable-next-line: no-string-literal
-                this.university = results.payload.doc.data()['university'];
-              });
-              this.loadSubjects();
-            } else {
-              this.statusServ.progressBarStatus = false;
-            }
-          });
-      } else {
-        // No user data.
+    this.auth.user.subscribe(userData => {
+      if (userData !== null){
+        this.servFirebase.checkAdminType(userData.email).subscribe(adminTypeDdata => {
+          if (adminTypeDdata !== null){
+            adminTypeDdata.forEach(typeResults => {
+              this.docIdSub = typeResults.payload.doc.id;
+              this.docIdAdmin = typeResults.payload.doc.id;
+              // tslint:disable-next-line: no-string-literal
+              this.adminType = typeResults.payload.doc.data()['type'];
+              // tslint:disable-next-line: no-string-literal
+              this.statusServ.courseNameService = typeResults.payload.doc.data()['course'];
+              // tslint:disable-next-line: no-string-literal
+              this.statusServ.universityNameService = typeResults.payload.doc.data()['university'];
+
+              if (this.adminType === 'collaborate'){
+                this.loadSubjects();
+              }else{
+                this.servFirebase.getUniversityCourse(userData.uid).subscribe(ogUserData => {
+                  if (ogUserData.length !== 0){
+                    ogUserData.forEach(ogTypeEachData => {
+                      // tslint:disable-next-line: no-string-literal
+                      this.course = ogTypeEachData.payload.doc.data()['course'];
+                      // tslint:disable-next-line: no-string-literal
+                      this.university = ogTypeEachData.payload.doc.data()['university'];
+                    });
+                    this.loadSubjects();
+                  }else{
+                    //No data
+                  }
+                });
+              }
+            });
+          }
+        });
       }
     });
   }
+
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;
@@ -81,6 +99,10 @@ export class ReviewComponent implements OnInit {
   showModalMiddle(): void {
     this.isVisibleMiddle = true;
   }
+
+
+
+
 
   onSubmitAdd(){
 
@@ -108,11 +130,10 @@ export class ReviewComponent implements OnInit {
           }
         );
       } else {
-        console.log(this.dayValue);
         this.servFirebase
           .getTimeCollision(
-            this.university,
-             this.course,
+            this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+            this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course,
              this.dayValue)
           .subscribe((datas) => {
             if (datas.length !== 0) {
@@ -234,8 +255,8 @@ export class ReviewComponent implements OnInit {
                     end: this.endTimeValue,
                     comment: this.comment,
                   },
-                  this.university,
-                  this.course
+                  this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+                  this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course
                 )
                 .then(() => {
                   this.dayValue = '';
@@ -265,35 +286,18 @@ export class ReviewComponent implements OnInit {
 
   loadSubjects() {
     this.statusServ.progressBarStatus = true;
-    this.auth.authState.subscribe((userData) => {
-      if (userData !== null) {
-        this.servFirebase
-          .getUniversityCourse(userData.uid)
-          .subscribe((data) => {
-            if (data !== null) {
-              this.statusServ.progressBarStatus = false;
-              // this.noData = false;
-              data.forEach((results) => {
-
-                this.servFirebase
-                  .getCourseLongAndShort(this.university, this.course)
-                  .subscribe((datas) => {
-                    if (datas.length !== 0){
-                      // this.noData = false;
-                      this.allCourseInitials = datas;
-                      this.statusServ.subjectInitialForAll = datas;
-                    }else{
-                      // this.noData = true;
-                    }
-                  });
-              });
-            } else {
-              // No data
-              // this.noData = true;
-            }
-          });
-      }
-    });
+    this.servFirebase.getCourseLongAndShort(
+      this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+      this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course)
+     .subscribe((datas) => {
+       if (datas.length !== 0){
+         // this.noData = false;
+         this.allCourseInitials = datas;
+         this.statusServ.subjectInitialForAll = datas;
+        }else{
+          // this.noData = true;
+        }
+      });
   }
 
 }

@@ -58,9 +58,9 @@ export class StorageService {
     });
   }
 
-  getDocuments(university: any, courseName: any, subjectName: any, userUid: any){
+  getDocuments(university: any, courseName: any, subjectName: any){
     return this.db.collection('Class Files').doc(university).collection(courseName).doc(subjectName)
-    .collection('All', ref => ref.where('adminUid', '==', userUid).orderBy('dateUploaded', 'asc'))
+    .collection('All', ref => ref.orderBy('dateUploaded', 'asc'))
     .snapshotChanges();
   }
 

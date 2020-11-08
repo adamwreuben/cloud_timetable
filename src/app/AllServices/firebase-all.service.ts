@@ -621,6 +621,60 @@ export class FirebaseAllService {
       });
   }
 
+  async verifyAdminsForSpecificCourse(adminEmail: string, universityName: any, courseName: any) {
+    this.db
+      .collection('All_Admins')
+      .add({
+        email: adminEmail,
+        status: 'verified',
+        type: 'collaborate',
+        course: courseName,
+        university: universityName
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  updateAdminAdded(docId: any, adminName: any, adminUid: any) {
+    this.db
+      .collection('All_Admins')
+      .doc(docId)
+      .update({
+        name: adminName,
+        uid: adminUid,
+      })
+      .then(() => {
+        this.notification.create(
+          'success',
+          'Information Updated! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
+      });
+  }
+
+  deleteAdminOnCourse(docId: any){
+    this.db
+      .collection('All_Admins')
+      .doc(docId)
+      .delete()
+      .then(() => {
+        this.notification.create(
+          'success',
+          'Deleted! 😔',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft'
+          }
+        );
+      });
+  }
+
   getAllAdmins() {
     return this.db
       .collection('All_Admins', (ref) => ref.where('status', '==', 'verified'))
@@ -641,13 +695,19 @@ export class FirebaseAllService {
 
   getUserVerifiedCrOnlySpecificCourse(course: any) {
     return this.db
-      .collection('All_Admins', (ref) => ref.where('status', '==', 'verified').where('course', '==', course))
+      .collection('All_Admins', ref => ref.where('course', '==', course))
       .snapshotChanges();
   }
 
-  getAllAdminsRequest() {
+  checkAdminType(email: any) {
     return this.db
-      .collection('All_Admins', (ref) => ref.where('status', '==', 'not'))
+      .collection('All_Admins', ref => ref.where('email', '==', email))
+      .snapshotChanges();
+  }
+
+  checkAdminPresent(email: any) {
+    return this.db
+      .collection('All_Admins', (ref) => ref.where('email', '==', email))
       .snapshotChanges();
   }
 

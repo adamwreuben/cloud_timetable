@@ -1,5 +1,47 @@
 <nz-tabset [nzTabBarExtraContent]="extraTemplate">
   <nz-tab nzTitle="All Collisions">
+    <nz-timeline
+    *ngIf="noData !== true"
+    >
+      <nz-timeline-item
+      nzColor="red"
+      *ngFor="let collisionData of allCollideTimeOther"
+      [nzDot]="dotTemplate">
+      <nz-card nzHoverable
+        style="
+        width: 98%;
+        margin: 10px 0 10px 0;">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+              <div>{{collisionData.subjName}}</div>
+              <div style="font-weight: 100;font-size: small;">{{collisionData.location}}</div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div style="margin-right: 10px;">
+              <nz-tag nzColor="error">Collide With Your Time</nz-tag>
+            </div>
+            <div>
+              <nz-tag [nzColor]="'#448AFF'">{{collisionData.type}}</nz-tag>
+              <nz-tag [nzColor]="'#4CAF50'">{{collisionData.start}}</nz-tag>
+              <nz-tag [nzColor]="'#66BB6A'">{{collisionData.end}}</nz-tag>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </nz-timeline-item>
+    </nz-timeline>
+
+    <nz-empty
+    *ngIf="noData === true || selectedCourse === undefined"
+    nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+    [nzNotFoundContent]="contentTpl"
+    >
+      <ng-template #contentTpl>
+        <span>No Collision</span>
+      </ng-template>
+    </nz-empty>
 
   </nz-tab>
 
@@ -35,49 +77,9 @@
   </nz-select>
 </ng-template>
 
-<nz-timeline
-*ngIf="noData !== true"
->
-  <nz-timeline-item
-  nzColor="red"
-  *ngFor="let collisionData of allCollideTimeOther"
-  [nzDot]="dotTemplate">
-  <nz-card nzHoverable
-    style="
-    width: 98%;
-    margin: 10px 0 10px 0;">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row">
-        <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-          <div>{{collisionData.subjName}}</div>
-          <div style="font-weight: 100;font-size: small;">{{collisionData.location}}</div>
-        </div>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="center center">
-        <div style="margin-right: 10px;">
-          <nz-tag nzColor="error">Collide With Your Time</nz-tag>
-        </div>
-        <div>
-          <nz-tag [nzColor]="'#448AFF'">{{collisionData.type}}</nz-tag>
-          <nz-tag [nzColor]="'#4CAF50'">{{collisionData.start}}</nz-tag>
-          <nz-tag [nzColor]="'#66BB6A'">{{collisionData.end}}</nz-tag>
-        </div>
-      </div>
-    </div>
-  </nz-card>
-</nz-timeline-item>
-
 
 <ng-template #dotTemplate>
   <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
 </ng-template>
-<nz-empty
-*ngIf="noData === true"
-      nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      [nzNotFoundContent]="contentTpl"
-    >
-      <ng-template #contentTpl>
-        <span>No Collision</span>
-      </ng-template>
 
-</nz-empty>
+

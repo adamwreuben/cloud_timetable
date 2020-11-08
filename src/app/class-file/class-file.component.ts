@@ -1,4 +1,9 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -13,18 +18,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { concatMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
-
-
 @Component({
   selector: 'app-class-file',
   templateUrl: './class-file.component.html',
-  styleUrls: ['./class-file.component.css']
+  styleUrls: ['./class-file.component.css'],
 })
 export class ClassFileComponent implements OnInit {
-
   universityName: any;
   courseName: any;
-
 
   fileName: any = undefined;
   docFileUrl: File = null;
@@ -42,7 +43,9 @@ export class ClassFileComponent implements OnInit {
   noDataCourses: any;
   selectNow = false;
   onlineStatus: any;
-
+  docIdSub: string;
+  docIdAdmin: string;
+  adminType: any;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -53,8 +56,8 @@ export class ClassFileComponent implements OnInit {
     private db: AngularFirestore,
     private message: NzMessageService,
     private storageServ: StorageService,
-    private firebaseService: FirebaseAllService,
-  ) { }
+    private firebaseService: FirebaseAllService
+  ) {}
 
   ngOnInit(): void {
     this.loadCourses();
@@ -73,14 +76,14 @@ export class ClassFileComponent implements OnInit {
 
   onSubmit() {
     this.statuService.progressBarStatus = true;
-    const id = this.message.loading('Uploading Please Wait...', { nzDuration: 0 }).messageId;
+    const id = this.message.loading('Uploading Please Wait...', {
+      nzDuration: 0,
+    }).messageId;
 
     const storageRef = firebase.storage().ref();
 
     const docRef = storageRef.child(
-      `${this.universityName}/${this.courseName}/${
-        this.subjectSelected
-      }/${new Date().getTime()}_${this.makeid(6)}_${this.fileName}`
+      `${this.adminType === 'collaborate' ? this.statuService.universityNameService : this.universityName}/${this.adminType === 'collaborate' ? this.statuService.courseNameService : this.courseName}/${this.subjectSelected}/${new Date().getTime()}_${this.makeid(6)}_${this.fileName}`
     );
 
     docRef.put(this.docFileUrl).then(() => {
@@ -89,8 +92,12 @@ export class ClassFileComponent implements OnInit {
 
         this.storageServ
           .uploadDocuments(
-            this.universityName,
-            this.courseName,
+            this.adminType === 'collaborate'
+              ? this.statuService.universityNameService
+              : this.universityName,
+            this.adminType === 'collaborate'
+              ? this.statuService.courseNameService
+              : this.courseName,
             {
               documentName: this.fileName,
               dateUploaded: firebase.firestore.FieldValue.serverTimestamp(),
@@ -103,14 +110,16 @@ export class ClassFileComponent implements OnInit {
             this.statuService.progressBarStatus = false;
             this.message.remove(id);
             this.docFileUrl = null;
-            this.message.create('success', 'Successfully Uploaded', {nzDuration: 1000});
+            this.message.create('success', 'Successfully Uploaded', {
+              nzDuration: 1000,
+            });
             this.notification.create(
               'success',
               'Uploaded! 😁',
               'Successfully',
               {
                 nzDuration: 2000,
-                nzPlacement: 'bottomLeft'
+                nzPlacement: 'bottomLeft',
               }
             );
             this.loadDocumentsAfterUpload(this.subjectSelected);
@@ -118,17 +127,15 @@ export class ClassFileComponent implements OnInit {
       });
     });
   }
-  cancel(){
+  cancel() {}
 
-  }
-
-  subjectChange(){
+  subjectChange() {
     this.selectNow = true;
     this.loadDocuments();
   }
 
   loadDocuments() {
-    if (this.listOfData.length !== 0){
+    if (this.listOfData.length !== 0) {
       this.listOfData = [];
       this.noData = false;
     }
@@ -136,15 +143,18 @@ export class ClassFileComponent implements OnInit {
       if (data !== null) {
         this.storageServ
           .getDocuments(
-            this.universityName,
-            this.courseName,
-            this.subjectSelected,
-            data.uid
+            this.adminType === 'collaborate'
+              ? this.statuService.universityNameService
+              : this.universityName,
+            this.adminType === 'collaborate'
+              ? this.statuService.courseNameService
+              : this.courseName,
+            this.subjectSelected
           )
           .subscribe((documentResults) => {
-            if (documentResults !== null){
+            if (documentResults !== null) {
               this.noData = false;
-              documentResults.forEach(documentSingleData => {
+              documentResults.forEach((documentSingleData) => {
                 this.listOfData.push({
                   documentFileId: documentSingleData.payload.doc.id,
                   // tslint:disable-next-line: no-string-literal
@@ -156,21 +166,18 @@ export class ClassFileComponent implements OnInit {
                   // tslint:disable-next-line: no-string-literal
                   documentDownloadUrl: documentSingleData.payload.doc.data()['documentDownloadUrl']
                 });
-
               });
-
-            }else{
+            } else {
               // No Documents
               this.noData = true;
             }
-
           });
       }
     });
   }
 
   loadDocumentsAfterUpload(subjectNameAfter: any) {
-    if (this.listOfData.length !== 0){
+    if (this.listOfData.length !== 0) {
       this.listOfData = [];
       this.noData = false;
     }
@@ -178,59 +185,74 @@ export class ClassFileComponent implements OnInit {
       if (data !== null) {
         this.storageServ
           .getDocuments(
-            this.universityName,
-            this.courseName,
-            subjectNameAfter,
-            data.uid
+            this.adminType === 'collaborate'
+              ? this.statuService.universityNameService
+              : this.universityName,
+            this.adminType === 'collaborate'
+              ? this.statuService.courseNameService
+              : this.courseName,
+            subjectNameAfter
           )
           .subscribe((documentResults) => {
-            if (documentResults !== null){
+            if (documentResults !== null) {
               this.noData = false;
-              documentResults.forEach(documentSingleData => {
+              documentResults.forEach((documentSingleData) => {
                 this.listOfData.push({
                   documentFileId: documentSingleData.payload.doc.id,
-                  documentName: documentSingleData.payload.doc.data().documentName,
-                  dateUploaded: moment(documentSingleData.payload.doc.data().dateUploaded.seconds * 1000).format('llll'),
-                  documentSize: documentSingleData.payload.doc.data().documentSize,
-                  documentDownloadUrl: documentSingleData.payload.doc.data().documentDownloadUrl
+                  documentName: documentSingleData.payload.doc.data()
+                    .documentName,
+                  dateUploaded: moment(
+                    documentSingleData.payload.doc.data().dateUploaded.seconds *
+                      1000
+                  ).format('llll'),
+                  documentSize: documentSingleData.payload.doc.data()
+                    .documentSize,
+                  documentDownloadUrl: documentSingleData.payload.doc.data()
+                    .documentDownloadUrl,
                 });
-
               });
-
-            }else{
+            } else {
               // No Documents
               this.noData = true;
             }
-
           });
       }
     });
   }
 
-  deleteFile(docFilePath: any, docId: any){
+  deleteFile(docFilePath: any, docId: any) {
     this.statuService.progressBarStatus = true;
-    this.storage.storage.refFromURL(docFilePath)
-    .delete().then(() => {
-      this.db.collection('Class Files')
-      .doc(this.universityName)
-      .collection(this.courseName)
-      .doc(this.subjectSelected)
-      .collection('All', ref => ref.where('documentDownloadUrl', '==', docFilePath))
-      .doc(docId).delete().then(() => {
-        this.statuService.progressBarStatus = false;
-        this.loadDocuments();
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+    this.storage.storage
+      .refFromURL(docFilePath)
+      .delete()
+      .then(() => {
+        this.db
+          .collection('Class Files')
+          .doc(
+            this.adminType === 'collaborate'
+              ? this.statuService.universityNameService
+              : this.universityName
+          )
+          .collection(
+            this.adminType === 'collaborate'
+              ? this.statuService.courseNameService
+              : this.courseName
+          )
+          .doc(this.subjectSelected)
+          .collection('All', (ref) =>
+            ref.where('documentDownloadUrl', '==', docFilePath)
+          )
+          .doc(docId)
+          .delete()
+          .then(() => {
+            this.statuService.progressBarStatus = false;
+            this.loadDocuments();
+            this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+              nzDuration: 2000,
+              nzPlacement: 'bottomLeft',
+            });
+          });
       });
-
-    });
   }
 
   loadCourses() {
@@ -238,46 +260,79 @@ export class ClassFileComponent implements OnInit {
     this.afAuth.authState.subscribe((userData) => {
       if (userData !== null) {
         this.firebaseService
-          .getUniversityCourse(userData.uid)
+          .checkAdminType(userData.email)
           .subscribe((data) => {
-            if (data.length !== 0) {
+            if (data !== null) {
               this.statuService.progressBarStatus = false;
+              this.noData = false;
               data.forEach((results) => {
+                this.docIdSub = results.payload.doc.id;
+                this.docIdAdmin = results.payload.doc.id;
                 // tslint:disable-next-line: no-string-literal
-                this.universityName = results.payload.doc.data()['university'];
+                this.adminType = results.payload.doc.data()['type'];
                 // tslint:disable-next-line: no-string-literal
-                this.courseName = results.payload.doc.data()['course'];
-                this.firebaseService
-                  .getCourseLongAndShort(this.universityName, this.courseName)
-                  .subscribe((subjectResults) => {
-                    if (subjectResults !== null) {
-                      this.noDataCourses = false;
-                      this.allSubjectFromFirebase = subjectResults;
-                      this.statuService.progressBarStatus = false;
-                    } else {
-                      // NO subject
-                      this.noDataCourses = true;
-                      this.statuService.progressBarStatus = false;
-                    }
-                  });
+                this.statuService.courseNameService = results.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.universityNameService = results.payload.doc.data()['university'];
+
+                if (this.adminType === 'collaborate') {
+                  this.loadSubject();
+                } else {
+                  this.firebaseService
+                    .getUniversityCourse(userData.uid)
+                    .subscribe((ogUserResults) => {
+                      if (ogUserResults !== null) {
+                        ogUserResults.forEach((ogResults) => {
+                          this.docIdSub = ogResults.payload.doc.id;
+                          // tslint:disable-next-line: no-string-literal
+                          this.courseName = ogResults.payload.doc.data()[
+                            'course'
+                          ];
+                          // tslint:disable-next-line: no-string-literal
+                          this.universityName = ogResults.payload.doc.data()[
+                            'university'
+                          ];
+                        });
+                        this.loadSubject();
+                      } else {
+                        // No data
+                      }
+                    });
+                }
               });
             } else {
               // No data
-              this.statuService.progressBarStatus = false;
-
-              // this.snack.open('Set Your University and Your Course Class', '', {
-              //   duration: 2000,
-              // });
+              this.noData = true;
             }
           });
-      } else {
-        this.router.navigate(['/']);
       }
     });
   }
 
+  loadSubject() {
+    this.firebaseService
+      .getCourseLongAndShort(
+        this.adminType === 'collaborate'
+          ? this.statuService.universityNameService
+          : this.universityName,
+        this.adminType === 'collaborate'
+          ? this.statuService.courseNameService
+          : this.courseName
+      )
+      .subscribe((datas) => {
+        if (datas.length !== 0) {
+          this.noData = false;
+          this.allSubjectFromFirebase = datas;
+        } else {
+          this.noData = true;
+        }
+      });
+  }
+
   formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) { return '0 Bytes'; }
+    if (bytes === 0) {
+      return '0 Bytes';
+    }
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
@@ -298,5 +353,4 @@ export class ClassFileComponent implements OnInit {
     }
     return result;
   }
-
 }

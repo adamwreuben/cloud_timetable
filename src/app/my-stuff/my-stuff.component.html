@@ -1,39 +1,94 @@
-<nz-tabset>
+<nz-tabset
+[nzTabBarExtraContent]="extraTemplate">
   <nz-tab nzTitle="Admin Requests">
 
-    <nz-card nzHoverable
-    style="
-    width: 98%;
-    margin: 10px 0 10px 0;">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row">
-        <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-          <div>{{"Adam"}}</div>
-          <div style="font-weight: 100;font-size: small;">{{"adam@gmail.com"}}</div>
+  <ul nz-list nzSize="small"
+    *ngIf="noData !== true"
+    >
+      <li nz-list-item
+      *ngFor="let data of allAdminRequests"
+      nzNoFlex>
+      <nz-card nzHoverable
+      style="
+      width: 98%;
+      margin: 10px 0 10px 0;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+          <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+            <div>{{data.payload.doc.data().name}}</div>
+            <div style="font-weight: 100;font-size: small;">{{data.payload.doc.data().email}}</div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button
+            nz-button
+            nzDanger
+            (click)="removeAdmin(data.payload.doc.id)"
+            nzType="primary">Remove</button>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center center">
+    </nz-card>
+      </li>
+    </ul>
 
-        <div>
-          <button
-          nz-button
-          nzType="primary">Verify</button>
-
-          <button
-          nz-button
-          nzDanger
-          nzType="primary">Remove</button>
-        </div>
-      </div>
-    </div>
-  </nz-card>
-
-  
-  </nz-tab>
-
-  <nz-tab nzTitle="All Admins">
+    <nz-empty
+    *ngIf="noData === true"
+      nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+      [nzNotFoundContent]="contentTpl"
+    >
+      <ng-template #contentTpl>
+        <span>No Verified Admin</span>
+      </ng-template>
+    </nz-empty>
 
   </nz-tab>
+
 
 </nz-tabset>
+
+<nz-modal
+nzWrapClassName="vertical-center-modal"
+[(nzVisible)]="isVisibleMiddle"
+nzTitle="Add Admin"
+nzOkText="Add"
+(nzOnCancel)="handleCancelMiddle()"
+(nzOnOk)="handleOkMiddle()"
+>
+<form
+nz-form
+class="form"
+#formAdmin="ngForm"
+(ngSubmit)="onSubmitAdminRequest()">
+
+<nz-form-item>
+  <input
+  [(ngModel)]="adminEmail"
+  name="adminEmail"
+  style="width: 100%;margin-bottom: 10px;"
+  nz-input
+  type="email"
+  placeholder="Enter Admin Email"
+  required />
+</nz-form-item>
+
+</form>
+
+</nz-modal>
+
+<ng-template #extraTemplate>
+  <button
+  [nzLoading]="statusServ.progressBarStatus"
+  nz-button
+  nzType="primary"
+  (click)="showModalMiddle()"
+  >
+  <i nz-icon nzType="plus"
+  nzTheme="outline"></i>
+  Add Admin
+</button>
+</ng-template>
+
+<nz-skeleton
+*ngIf="showSkeleton === true && noData !== true"
+[nzActive]="true"></nz-skeleton>
 

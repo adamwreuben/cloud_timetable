@@ -8,15 +8,13 @@ import { StatusServeService } from '../AllServices/status-serve.service';
 @Component({
   selector: 'app-review-ue',
   templateUrl: './review-ue.component.html',
-  styleUrls: ['./review-ue.component.css']
+  styleUrls: ['./review-ue.component.css'],
 })
 export class ReviewUeComponent implements OnInit {
-
   isVisibleMiddle = false;
   isVisibleMiddleUpdate = false;
   selectedWeek = 'Week 1';
   seletedDay = 'Monday';
-
 
   university: any;
   course: any;
@@ -34,42 +32,60 @@ export class ReviewUeComponent implements OnInit {
 
   startArrayStatus = false;
   endArrayStatus = false;
+  docIdSub: string;
+  docIdAdmin: string;
+  adminType: any;
 
   constructor(
     private servFirebase: FirebaseAllService,
     private auth: AngularFireAuth,
     private notification: NzNotificationService,
     public statusServ: StatusServeService
-  ) { }
-
+  ) {}
 
   ngOnInit(): void {
     this.auth.authState.subscribe((userData) => {
       if (userData !== null) {
         this.servFirebase
-          .getUniversityCourse(userData.uid)
-          .subscribe((data) => {
-            if (data.length !== 0) {
-              this.statusServ.progressBarStatus = false;
-              data.forEach((results) => {
-                this.course = results.payload.doc.data()['course'];
-                this.university = results.payload.doc.data()['university'];
+          .checkAdminType(userData.email)
+          .subscribe((adminTypeDdata) => {
+            if (adminTypeDdata !== null) {
+              adminTypeDdata.forEach((typeResults) => {
+                this.docIdSub = typeResults.payload.doc.id;
+                this.docIdAdmin = typeResults.payload.doc.id;
+                // tslint:disable-next-line: no-string-literal
+                this.adminType = typeResults.payload.doc.data()['type'];
+                // tslint:disable-next-line: no-string-literal
+                this.statusServ.courseNameService = typeResults.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
+                this.statusServ.universityNameService = typeResults.payload.doc.data()['university'];
+
+                if (this.adminType !== 'collaborate') {
+                  this.servFirebase
+                    .getUniversityCourse(userData.uid)
+                    .subscribe((ogUserData) => {
+                      if (ogUserData.length !== 0) {
+                        ogUserData.forEach((ogTypeEachData) => {
+                          // tslint:disable-next-line: no-string-literal
+                          this.course = ogTypeEachData.payload.doc.data()['course'];
+                          // tslint:disable-next-line: no-string-literal
+                          this.university = ogTypeEachData.payload.doc.data()['university'];
+                        });
+                      } else {
+                        // No data
+                      }
+                    });
+                }
               });
-            } else {
-              this.statusServ.progressBarStatus = false;
             }
           });
-      } else {
-        // No user data.
       }
     });
   }
 
-
-  weekChange(){
+  weekChange() {
     this.statusServ.weekSelected = this.selectedWeek;
   }
-
 
   handleOkMiddle(): void {
     this.isVisibleMiddle = false;
@@ -95,15 +111,15 @@ export class ReviewUeComponent implements OnInit {
     this.isVisibleMiddleUpdate = true;
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.startTimeValue >= this.endTimeValue) {
       this.notification.create(
         'warning',
         'Something is Wrong😡',
-        'Start Time can\'t Exceed End Time! Or Be Equal',
+        "Start Time can't Exceed End Time! Or Be Equal",
         {
           nzDuration: 2000,
-          nzPlacement: 'bottomLeft'
+          nzPlacement: 'bottomLeft',
         }
       );
     } else {
@@ -111,37 +127,36 @@ export class ReviewUeComponent implements OnInit {
         this.notification.create(
           'warning',
           'Something is Wrong😡',
-          'End Time can\'t be Less than Start Time Or Be Equal!',
+          "End Time can't be Less than Start Time Or Be Equal!",
           {
             nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
+            nzPlacement: 'bottomLeft',
           }
         );
       } else {
         this.servFirebase
           .getTimeCollisionUE(
-            this.university,
-            this.course,
+            this.adminType === 'collaborate'
+              ? this.statusServ.universityNameService
+              : this.university,
+            this.adminType === 'collaborate'
+              ? this.statusServ.courseNameService
+              : this.course,
             this.dayValue,
             this.selectedWeek
           )
           .subscribe((datas) => {
             if (datas.length !== 0) {
-
               datas.forEach((results) => {
                 if (
                   !this.startArray.includes(results.payload.doc.data().start)
                 ) {
                   this.startArray.push(
-                    parseInt(
-                      results.payload.doc.data().start.replace(':', '')
-                    )
+                    parseInt(results.payload.doc.data().start.replace(':', ''))
                   );
                 }
 
-                if (
-                  !this.endArray.includes(results.payload.doc.data().end)
-                ) {
+                if (!this.endArray.includes(results.payload.doc.data().end)) {
                   this.endArray.push(
                     parseInt(results.payload.doc.data().end.replace(':', ''))
                   );
@@ -161,7 +176,7 @@ export class ReviewUeComponent implements OnInit {
                     'Start time already exist!',
                     {
                       nzDuration: 2000,
-                      nzPlacement: 'bottomLeft'
+                      nzPlacement: 'bottomLeft',
                     }
                   );
                   this.endArrayStatus = false;
@@ -183,7 +198,7 @@ export class ReviewUeComponent implements OnInit {
                     'End time already exist!',
                     {
                       nzDuration: 2000,
-                      nzPlacement: 'bottomLeft'
+                      nzPlacement: 'bottomLeft',
                     }
                   );
                   this.endArrayStatus = false;
@@ -206,14 +221,17 @@ export class ReviewUeComponent implements OnInit {
                       start: this.startTimeValue,
                       end: this.endTimeValue,
                     },
-                    this.university,
-                    this.course,
+                    this.adminType === 'collaborate'
+                      ? this.statusServ.universityNameService
+                      : this.university,
+                    this.adminType === 'collaborate'
+                      ? this.statusServ.courseNameService
+                      : this.course,
                     this.selectedWeek
                   )
                   .then(() => {
                     this.statusServ.progressBarStatus = false;
                     this.dayValue = '';
-                    this.selectedWeek = '';
                     this.subjectValue = '';
                     this.startTimeValue = '';
                     this.locationValue = '';
@@ -224,7 +242,7 @@ export class ReviewUeComponent implements OnInit {
                       'Timetable is Added!',
                       {
                         nzDuration: 2000,
-                        nzPlacement: 'bottomLeft'
+                        nzPlacement: 'bottomLeft',
                       }
                     );
                   });
@@ -243,14 +261,17 @@ export class ReviewUeComponent implements OnInit {
                     start: this.startTimeValue,
                     end: this.endTimeValue,
                   },
-                  this.university,
-                  this.course,
+                  this.adminType === 'collaborate'
+                    ? this.statusServ.universityNameService
+                    : this.university,
+                  this.adminType === 'collaborate'
+                    ? this.statusServ.courseNameService
+                    : this.course,
                   this.selectedWeek
                 )
                 .then(() => {
                   this.statusServ.progressBarStatus = false;
                   this.dayValue = '';
-                  this.selectedWeek = '';
                   this.subjectValue = '';
                   this.startTimeValue = '';
                   this.locationValue = '';
@@ -261,7 +282,7 @@ export class ReviewUeComponent implements OnInit {
                     'Timetable is Added!',
                     {
                       nzDuration: 2000,
-                      nzPlacement: 'bottomLeft'
+                      nzPlacement: 'bottomLeft',
                     }
                   );
                 });
@@ -270,5 +291,4 @@ export class ReviewUeComponent implements OnInit {
       }
     }
   }
-
 }

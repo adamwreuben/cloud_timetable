@@ -33,6 +33,8 @@ export class MondayUeComponent implements OnInit, DoCheck {
   noData: any;
   onlineStatus: any;
   showSkeleton: boolean;
+  docIdAdmin: string;
+  adminType: any;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -103,8 +105,8 @@ export class MondayUeComponent implements OnInit, DoCheck {
   onSubmit(){
     this.firebaseService.updateUeTimeTable(
       this.docIds,
-      this.university,
-      this.course,
+      this.universitys,
+      this.courses,
       this.dayValue,
       this.subjectValue,
       this.locationValue,
@@ -122,39 +124,78 @@ export class MondayUeComponent implements OnInit, DoCheck {
 
   loadDatabase(){
     this.showSkeleton = true;
-    this.afAuth.authState.subscribe(userData => {
-      this.firebaseService.getUniversityCourse(userData.uid).subscribe(data => {
-        if (data.length !== 0){
-          this.statuService.progressBarStatus = false;
+    this.afAuth.authState.subscribe((datauser) => {
+      if (datauser !== null) {
+        this.firebaseService
+          .checkAdminType(datauser.email)
+          .subscribe((userVerificationType) => {
+            if (userVerificationType.length !== 0) {
+              userVerificationType.forEach((resultsTypes) => {
+                this.docIdAdmin = resultsTypes.payload.doc.id;
+                // tslint:disable-next-line: no-string-literal
+                this.adminType = resultsTypes.payload.doc.data()['type'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.courseNameService = resultsTypes.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.universityNameService = resultsTypes.payload.doc.data()['university'];
 
-          data.forEach(results => {
-            // tslint:disable-next-line: no-string-literal
-            this.course = results.payload.doc.data()['course'];
-            // tslint:disable-next-line: no-string-literal
-            this.university = results.payload.doc.data()['university'];
+                if (this.adminType === 'collaborate') {
+                  this.firebaseService.getTimetableUe(this.statuService.universityNameService,
+                    this.statuService.courseNameService, this.statuService.weekSelected, 'Monday')
+                  .subscribe(monday => {
+                    if (monday.length !== 0){
+                      this.noData = false;
+                      this.showSkeleton = false;
+                      this.timeMondayObjectFromFirebase = monday;
+                      this.statuService.progressBarStatus = false;
+                    }else{
+                      // No data
+                      this.noData = true;
+                      this.statuService.progressBarStatus = false;
+                    }
+                  });
 
-            this.firebaseService.getTimetableUe(this.university, this.course, this.statuService.weekSelected, 'Monday').subscribe(monday => {
+                } else {
+                  // Load that uid origin CR created the course
+                  this.firebaseService.getUniversityCourse(datauser.uid).subscribe(datas => {
+                    if (datas.length !== 0){
+                      this.statuService.progressBarStatus = false;
 
-              if (monday.length !== 0){
-                this.showSkeleton = false;
-                this.noData = false;
-                this.timeMondayObjectFromFirebase = monday;
-                this.statuService.progressBarStatus = false;
-              }else{
-                // No data
-                this.noData = true;
-                this.statuService.progressBarStatus = false;
-              }
+                      datas.forEach(results => {
+                        // tslint:disable-next-line: no-string-literal
+                        this.course = results.payload.doc.data()['course'];
+                        // tslint:disable-next-line: no-string-literal
+                        this.university = results.payload.doc.data()['university'];
 
-            });
+                        this.firebaseService.getTimetableUe(this.university, this.course, this.statuService.weekSelected, 'Monday')
+                        .subscribe(monday => {
+
+                          if (monday.length !== 0){
+                            this.noData = false;
+                            this.showSkeleton = false;
+                            this.timeMondayObjectFromFirebase = monday;
+                            this.statuService.progressBarStatus = false;
+                          }else{
+                            // No data
+                            this.noData = true;
+                            this.statuService.progressBarStatus = false;
+                          }
+
+                        });
+                      });
+                    }else{
+                    }
+
+                  });
+                }
+              });
+            } else {
+              this.router.navigate(['/']);
+            }
           });
-        }else{
-          // No data
-          // this.snack.open("Set Your University and Your Course Class","",{duration:2000})
-
-        }
-
-      });
+      } else {
+        this.router.navigate(['/']);
+      }
     });
   }
 

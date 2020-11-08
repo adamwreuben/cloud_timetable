@@ -64,22 +64,9 @@
       nz-button><i nz-icon nzType="upload"></i>Upload</button>
 </ng-template>
 
-<nz-empty
-    *ngIf=" noData === true"
-          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-          [nzNotFoundContent]="contentTpl"
-
-        >
-          <ng-template #contentTpl>
-            <span>No Subject Files Found</span>
-          </ng-template>
-
-    </nz-empty>
-
-
 
     <nz-empty
-    *ngIf="selectNow === false "
+    *ngIf="selectNow === false && noData === true"
           nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl"
         >

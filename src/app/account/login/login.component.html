@@ -1,46 +1,5 @@
 <nz-layout style="height: 100%;">
   <nz-content>
-    <nz-modal
-      nzWrapClassName="vertical-center-modal"
-      [(nzVisible)]="isVisibleMiddleVerification"
-      [nzFooter]="null"
-      [nzClosable]="false"
-      nzTitle="Request Course Verification"
-    >
-    <form nz-form class="form" #formRequest="ngForm" (ngSubmit)="onSubmitRequest()">
-
-      <nz-form-item>
-        <nz-select
-        required
-        nzShowSearch
-        nzAllowClear
-        [(ngModel)]="selectedCourse"
-        name="day"
-        style="width: 100%;margin-bottom: 10px;"
-        nzPlaceHolder="Select Course">
-          <nz-option nzTooltipTitle="Computer Science From 2019 To 2022" nz-tooltip nzValue="Computer Science" nzLabel="Computer Science From 2019 To 2022"></nz-option>
-          <nz-option nzTooltipTitle="Computer Engineering From 2010 To 2016" nz-tooltip nzValue="Computer Engineering" nzLabel="Computer Engineering From 2010 To 2016"></nz-option>
-          <nz-option nzTooltipTitle="Software Engineering From 2008 To 2013" nz-tooltip nzValue="Software Engineering" nzLabel="Software Engineering From 2008 To 2013"></nz-option>
-        </nz-select>
-      </nz-form-item>
-
-      <button
-      style="width: 100%;"
-      type="submit"
-      nz-button
-      nz-popconfirm
-      nzPopconfirmTitle="Are You Sure?"
-      nzOkText="Yes" nzCancelText="Cancel"
-      [disabled]="formRequest.invalid"
-      nzType="primary">Request</button>
-
-      <button
-      (click)="handleCancelMiddleVerification()"
-      style="width: 100%;margin-top: 10px;"
-      nz-button
-      nzType="primary">Cancel</button>
-      </form>
-    </nz-modal>
 
 <div fxLayout="row"
 fxLayoutAlign="space-evenly center"
@@ -48,12 +7,12 @@ fxLayoutAlign="space-evenly center"
 
   <div
   style="color: black;font-family: 'Rubik', sans-serif;font-size:xx-large;">
-  <img src="assets/home_ati.svg" style="width: 500px;height: 500px;">
+  <img src="assets/home_ati.svg" style="width: 400px;height: 400px;">
 </div>
 
   <div>
     <div fxLayout="row" style="margin-bottom: 20px;">
-      <!-- <div style="color: black;font-size: large;">Sign In</div> -->
+      <div style="color: black;font-size: large;">Sign In</div>
     </div>
 
     <button
@@ -62,17 +21,6 @@ fxLayoutAlign="space-evenly center"
     nzType="primary" style="background-color: #29B6F6;">
       <i nz-icon nzType="google" nzTheme="outline" style="margin-right: 20px;"></i>
       Sign In With Google
-    </button>
-
-    <nz-divider
-    nzText="Or Request Existing One" style="color: black;font-size: small;"></nz-divider>
-    <button
-    (click)="showModalMiddleVerification()"
-    nz-button
-    nzType="primary"
-    style="margin-top: 10px;background-color: #4CAF50;">
-    <i nz-icon nzType="team" nzTheme="outline"></i>
-      Request Login To Your Specific Course
     </button>
   </div>
 
@@ -161,24 +109,29 @@ fxLayoutAlign="space-evenly center"
         [(ngModel)]="chooseCourse"
         name="course"
         style="width: 100%;margin-bottom: 10px;"
-         nz-input placeholder="Write Your Course Name"
-         required />
+        nz-input
+        placeholder="Write Your Course Name"
+        required />
       </nz-form-item>
 
       <nz-form-item>
         <input
         style="width: 100%;margin-bottom: 10px;"
-        name="start"
-        nzPlaceHolder="Start Year"
-        [(ngModel)]="startYear"required />
+        name="startYearCreate"
+        nz-input
+        placeHolder="Start Year"
+        [(ngModel)]="startYear"
+        required/>
       </nz-form-item>
 
       <nz-form-item>
         <input
         style="width: 100%;margin-bottom: 10px;"
-        name="start"
-        nzPlaceHolder="Graduate Year"
-        [(ngModel)]="endYear"required />
+        name="endYearCreate"
+        nz-input
+        placeHolder="Graduate Year"
+        [(ngModel)]="endYear"
+        required />
       </nz-form-item>
 
       <button

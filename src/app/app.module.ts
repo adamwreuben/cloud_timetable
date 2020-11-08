@@ -41,6 +41,7 @@ import { MondayUeComponent } from './ue-day/monday-ue/monday-ue.component';
 import { ThursdayUeComponent } from './ue-day/thursday-ue/thursday-ue.component';
 import { TuesdayUeComponent } from './ue-day/tuesday-ue/tuesday-ue.component';
 import { WednesdayUeComponent } from './ue-day/wednesday-ue/wednesday-ue.component';
+import { NopageComponent } from './nopage/nopage.component';
 
 registerLocaleData(en);
 
@@ -62,6 +63,7 @@ registerLocaleData(en);
     FridayComponent,
     OverviewPageComponent,
     MyStuffComponent,
+    NopageComponent,
 
     MondayUeComponent,
     TuesdayUeComponent,

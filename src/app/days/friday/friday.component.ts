@@ -8,10 +8,9 @@ import { StatusServeService } from 'src/app/AllServices/status-serve.service';
 @Component({
   selector: 'app-friday',
   templateUrl: './friday.component.html',
-  styleUrls: ['./friday.component.css']
+  styleUrls: ['./friday.component.css'],
 })
 export class FridayComponent implements OnInit {
-
   isVisibleMiddle = false;
   timeFridayObjectFromFirebase: any;
   university: any;
@@ -29,6 +28,8 @@ export class FridayComponent implements OnInit {
   noData: any;
   onlineStatus: any;
   showSkeleton: boolean;
+  docIdAdmin: string;
+  adminType: any;
 
   constructor(
     private firebaseService: FirebaseAllService,
@@ -36,7 +37,7 @@ export class FridayComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private notification: NzNotificationService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadDatabase();
@@ -49,7 +50,6 @@ export class FridayComponent implements OnInit {
     this.firebaseService.deleteTimetableForDay(docId, university, course, day);
     this.loadDatabase();
   }
-
 
   handleOkMiddle(): void {
     this.onSubmit();
@@ -80,11 +80,11 @@ export class FridayComponent implements OnInit {
     this.isVisibleMiddle = true;
   }
 
-  onSubmit(){
+  onSubmit() {
     this.firebaseService.updateTimeTable(
       this.docId,
-      this.university,
-      this.course,
+      this.adminType === 'collaborate' ? this.statuService.universityNameService : this.university,
+      this.adminType === 'collaborate' ? this.statuService.courseNameService : this.course,
       this.dayValue,
       this.subjectValue,
       this.typeValue,
@@ -92,50 +92,86 @@ export class FridayComponent implements OnInit {
       this.startTimeValue,
       this.endTimeValue,
       this.comments
-      );
+    );
   }
 
-
-
-  cancel(){
-  }
+  cancel() {}
 
   loadDatabase() {
     this.showSkeleton = true;
-    this.afAuth.authState.subscribe((userData) => {
-      if (userData !== null) {
+    this.afAuth.authState.subscribe((data) => {
+      if (data !== null) {
         this.firebaseService
-          .getUniversityCourse(userData.uid)
-          .subscribe((data) => {
-            if (data.length !== 0) {
-              data.forEach((results) => {
+          .checkAdminType(data.email)
+          .subscribe((userVerificationType) => {
+            if (userVerificationType.length !== 0) {
+              userVerificationType.forEach((resultsTypes) => {
+                this.docIdAdmin = resultsTypes.payload.doc.id;
                 // tslint:disable-next-line: no-string-literal
-                this.course = results.payload.doc.data()['course'];
+                this.adminType = resultsTypes.payload.doc.data()['type'];
                 // tslint:disable-next-line: no-string-literal
-                this.university = results.payload.doc.data()['university'];
+                this.statuService.courseNameService = resultsTypes.payload.doc.data()['course'];
+                // tslint:disable-next-line: no-string-literal
+                this.statuService.universityNameService = resultsTypes.payload.doc.data()['university'];
 
-                this.firebaseService
-                  .getTimetable(this.university, this.course, 'Friday')
-                  .subscribe((friday) => {
-                    if (friday.length !== 0) {
-                      this.noData = false;
-                      this.showSkeleton = false;
-                      this.timeFridayObjectFromFirebase = friday;
-                      this.statuService.progressBarStatus = false;
-                    } else {
-                      //No data
-                      this.noData = true;
-                      this.statuService.progressBarStatus = false;
-                    }
-                  });
+                if (this.adminType === 'collaborate') {
+                  this.firebaseService
+                    .getTimetable(
+                      this.statuService.universityNameService,
+                      this.statuService.courseNameService,
+                      'Friday'
+                    )
+                    .subscribe((friday) => {
+                      if (friday.length !== 0) {
+                        this.noData = false;
+                        this.showSkeleton = false;
+                        this.timeFridayObjectFromFirebase = friday;
+                        this.statuService.progressBarStatus = false;
+                      } else {
+                        // No data
+                        this.noData = true;
+                        this.statuService.progressBarStatus = false;
+                      }
+                    });
+                } else {
+                  // Load that uid origin CR created the course
+                  this.firebaseService
+                    .getUniversityCourse(data.uid)
+                    .subscribe((datas) => {
+                      if (datas.length !== 0) {
+                        datas.forEach((results) => {
+                          // tslint:disable-next-line: no-string-literal
+                          this.course = results.payload.doc.data()['course'];
+                          // tslint:disable-next-line: no-string-literal
+                          this.university = results.payload.doc.data()[
+                            'university'
+                          ];
+                          this.firebaseService
+                            .getTimetable(
+                              this.university,
+                              this.course,
+                              'Friday'
+                            )
+                            .subscribe((friday) => {
+                              if (friday.length !== 0) {
+                                this.noData = false;
+                                this.showSkeleton = false;
+                                this.timeFridayObjectFromFirebase = friday;
+                                this.statuService.progressBarStatus = false;
+                              } else {
+                                // No data
+                                this.noData = true;
+                                this.statuService.progressBarStatus = false;
+                              }
+                            });
+                        });
+                      } else {
+                      }
+                    });
+                }
               });
             } else {
-              //No data
-              // this.snack.open(
-              //   'Set Your University and Your Course Class',
-              //   '',
-              //   { duration: 2000 }
-              // );
+              this.router.navigate(['/']);
             }
           });
       } else {
@@ -143,5 +179,4 @@ export class FridayComponent implements OnInit {
       }
     });
   }
-
 }
