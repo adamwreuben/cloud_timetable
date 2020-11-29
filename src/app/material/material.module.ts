@@ -32,6 +32,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 const materialModules = [
   NzStepsModule,
@@ -57,6 +58,7 @@ const materialModules = [
   NzButtonModule,
   NzCardModule,
   NzSelectModule,
+  NzBreadCrumbModule,
   NzCollapseModule,
   NzListModule,
   NzTimePickerModule,

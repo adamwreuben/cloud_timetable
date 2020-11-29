@@ -143,9 +143,54 @@ export class LoginComponent implements OnInit, DoCheck {
               }
             });
           } else {
-            this.message.remove(id);
-            this.needsVerification = true;
-            this.showModalMiddle();
+            // this.message.remove(id);
+            // this.needsVerification = true;
+            // this.showModalMiddle();
+            this.fireService.checkAdminPresent(email).subscribe((adminPresentsData) => {
+            if (adminPresentsData.length !== 0) {
+              adminPresentsData.forEach((forResults) => {
+                // tslint:disable-next-line: no-string-literal
+                this.statusVerification = forResults.payload.doc.data()[
+                  'status'
+                ];
+                // tslint:disable-next-line: no-string-literal
+                this.statusServ.universityNameService = forResults.payload.doc.data()[
+                  'university'
+                ];
+                // tslint:disable-next-line: no-string-literal
+                this.statusServ.courseNameService = forResults.payload.doc.data()[
+                  'course'
+                ];
+                if (this.statusVerification === 'verified') {
+                  this.fireService
+                    .getUniversityCourse(uid)
+                    .subscribe((collaborateResults) => {
+                      if (collaborateResults.length !== 0) {
+                        this.message.remove(id);
+                        this.message.success('Welcom Back!', {
+                          nzDuration: 2000,
+                        });
+                        this.statusServ.progressBarStatus = false;
+                        this.router.navigate(['/home']);
+                      } else {
+                        this.message.remove(id);
+                        this.showModalMiddleCreate();
+                      }
+                    });
+                } else {
+                  this.message.remove(id);
+                  this.needsVerification = true;
+                  this.showModalMiddle();
+                }
+              });
+            } else {
+              this.message.remove(id);
+              this.changeImageVerifiation = false;
+              this.statusServ.progressBarStatus = false;
+              this.needsVerification = true;
+              this.showModalMiddle();
+            }
+          });
           }
         });
       } else {

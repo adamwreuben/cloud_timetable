@@ -103,8 +103,8 @@ export class MyStuffComponent implements OnInit {
             this.servFirebase
               .verifyAdminsForSpecificCourse(
                 this.adminEmail,
-                this.statusServ.universityNameService,
-                this.statusServ.courseNameService
+                this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+                this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course
               )
               .then(() => {
                 this.notification.create(
@@ -134,6 +134,7 @@ export class MyStuffComponent implements OnInit {
 
   removeAdmin(docId: any) {
     this.servFirebase.deleteAdminOnCourse(docId);
+    console.log(docId);
     this.loadAllAdmin();
   }
 

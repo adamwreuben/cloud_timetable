@@ -17,8 +17,7 @@ export class FirebaseAllService {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
-    private notification: NzNotificationService,
-
+    private notification: NzNotificationService
   ) {}
 
   // Add invite code..
@@ -61,7 +60,7 @@ export class FirebaseAllService {
             course,
             adminName: user.displayName,
             adminPhoto: user.photoURL,
-            email: user.email
+            email: user.email,
           })
           .catch((error) => {
             console.log(error);
@@ -167,7 +166,7 @@ export class FirebaseAllService {
           userUid: user.uid,
           adminName: user.displayName,
           adminPhoto: user.photoURL,
-          email: user.email
+          email: user.email,
         })
         .catch((error) => {
           console.log(error);
@@ -217,7 +216,7 @@ export class FirebaseAllService {
             data.teacherRoom == null ? 'Please Add' : data.teacherRoom,
           adminName: user.displayName,
           adminPhoto: user.photoURL,
-          adminEmail: user.email
+          adminEmail: user.email,
         })
         .catch((error) => {
           console.log(error);
@@ -250,9 +249,6 @@ export class FirebaseAllService {
     }
   }
 
-
-
-
   // Get University And Course
   getUniversityCourse(userUid: any) {
     return this.db
@@ -261,8 +257,7 @@ export class FirebaseAllService {
   }
 
   getUniversityCourseOnly() {
-    return this.db.collection('University')
-    .snapshotChanges();
+    return this.db.collection('University').snapshotChanges();
   }
   // ******* END OF GET ALL TIMETABLE ********
 
@@ -290,13 +285,18 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
-  getTimeCollisionSubject(universityName: any, course: any, day: any, subject: any) {
+  getTimeCollisionSubject(
+    universityName: any,
+    course: any,
+    day: any,
+    subject: any
+  ) {
     return this.db
       .collection('TimeTable')
       .doc(universityName)
       .collection('All')
       .doc(course)
-      .collection(day, ref => ref.where('subject', '==', subject))
+      .collection(day, (ref) => ref.where('subject', '==', subject))
       .snapshotChanges();
   }
 
@@ -327,7 +327,6 @@ export class FirebaseAllService {
       .snapshotChanges();
   }
 
-
   // ******END OF GET TIMETABLE FOR EACH DAY */
 
   // ***TIMETABLE FOR UE WEEK 1*/
@@ -356,24 +355,23 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
-
-
 
   // ********** END OF DELETE **********
 
   // DELETE UE TIMETABLE WEEK 1****
-  deleteTimetableUe(docId: any, university: any, course: any, week: any, day: any) {
+  deleteTimetableUe(
+    docId: any,
+    university: any,
+    course: any,
+    week: any,
+    day: any
+  ) {
     this.db
       .collection('UE')
       .doc(university)
@@ -385,15 +383,10 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -428,20 +421,20 @@ export class FirebaseAllService {
         comment,
       })
       .then(() => {
-        this.notification.create(
-          'success',
-          'Updated! 😁',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Updated! 😁', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
-
-  updateCollisionValue(docId: any, university: any, course: any, day: any, collisionCourse: CollisionModel[]){
+  updateCollisionValue(
+    docId: any,
+    university: any,
+    course: any,
+    day: any,
+    collisionCourse: CollisionModel[]
+  ) {
     this.db
       .collection('TimeTable')
       .doc(university)
@@ -451,7 +444,7 @@ export class FirebaseAllService {
       .doc(docId)
       .update({
         collision: 'yes',
-        collidedCourse: collisionCourse
+        collidedCourse: collisionCourse,
       })
       .then(() => {
         // this.matSnack.open('Collision Detected is Added !', '', { duration: 2000 });
@@ -490,15 +483,10 @@ export class FirebaseAllService {
         date,
       })
       .then(() => {
-        this.notification.create(
-          'success',
-          'Updated! 😁',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Updated! 😁', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
   // **END UE UPDATE TIMETABLE */
@@ -530,15 +518,10 @@ export class FirebaseAllService {
         teacherRoom,
       })
       .then(() => {
-        this.notification.create(
-          'success',
-          'Updated! 😁',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Updated! 😁', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -552,15 +535,10 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -575,15 +553,10 @@ export class FirebaseAllService {
         course: courseData,
       })
       .then(() => {
-        this.notification.create(
-          'success',
-          'Updated! 😁',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Updated! 😁', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -593,15 +566,10 @@ export class FirebaseAllService {
       .doc(docId)
       .delete()
       .then(() => {
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -621,7 +589,11 @@ export class FirebaseAllService {
       });
   }
 
-  async verifyAdminsForSpecificCourse(adminEmail: string, universityName: any, courseName: any) {
+  async verifyAdminsForSpecificCourse(
+    adminEmail: string,
+    universityName: any,
+    courseName: any
+  ) {
     this.db
       .collection('All_Admins')
       .add({
@@ -629,7 +601,7 @@ export class FirebaseAllService {
         status: 'verified',
         type: 'collaborate',
         course: courseName,
-        university: universityName
+        university: universityName,
       })
       .catch((error) => {
         console.log(error);
@@ -651,27 +623,22 @@ export class FirebaseAllService {
           'Successfully',
           {
             nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
+            nzPlacement: 'bottomLeft',
           }
         );
       });
   }
 
-  deleteAdminOnCourse(docId: any){
+  deleteAdminOnCourse(docId: any) {
     this.db
       .collection('All_Admins')
       .doc(docId)
       .delete()
       .then(() => {
-        this.notification.create(
-          'success',
-          'Deleted! 😔',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Deleted! 😔', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 
@@ -695,13 +662,13 @@ export class FirebaseAllService {
 
   getUserVerifiedCrOnlySpecificCourse(course: any) {
     return this.db
-      .collection('All_Admins', ref => ref.where('course', '==', course))
+      .collection('All_Admins', (ref) => ref.where('course', '==', course))
       .snapshotChanges();
   }
 
   checkAdminType(email: any) {
     return this.db
-      .collection('All_Admins', ref => ref.where('email', '==', email))
+      .collection('All_Admins', (ref) => ref.where('email', '==', email))
       .snapshotChanges();
   }
 
@@ -719,15 +686,10 @@ export class FirebaseAllService {
         status: 'verified',
       })
       .then(() => {
-        this.notification.create(
-          'success',
-          'Updated! 😁',
-          'Successfully',
-          {
-            nzDuration: 2000,
-            nzPlacement: 'bottomLeft'
-          }
-        );
+        this.notification.create('success', 'Updated! 😁', 'Successfully', {
+          nzDuration: 2000,
+          nzPlacement: 'bottomLeft',
+        });
       });
   }
 }

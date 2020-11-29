@@ -82,6 +82,7 @@ registerLocaleData(en);
     FlexLayoutModule,
     BrowserAnimationsModule,
     MaterialModule,
+    
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth

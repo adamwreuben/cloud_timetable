@@ -216,8 +216,8 @@ export class ReviewComponent implements OnInit {
                       end: this.endTimeValue,
                       comment: this.comment,
                     },
-                    this.university,
-                    this.course
+                    this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+                    this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course
                   )
                   .then(() => {
                     this.dayValue = '';
@@ -240,6 +240,8 @@ export class ReviewComponent implements OnInit {
                         nzPlacement: 'bottomLeft'
                       }
                     );
+                  }).catch(error => {
+                    console.log(error);
                   });
               }
             } else {
@@ -261,6 +263,9 @@ export class ReviewComponent implements OnInit {
                 .then(() => {
                   this.dayValue = '';
                   this.subjectValue = '';
+                  this.startTimeValue = '';
+                  this.typeValue = '';
+                  this.locationValue = '';
                   this.startTimeValue = '';
                   this.endTimeValue = '';
                   this.startArray = [];
