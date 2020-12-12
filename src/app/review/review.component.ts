@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FirebaseAllService } from '../AllServices/firebase-all.service';
 import { StatusServeService } from '../AllServices/status-serve.service';
+import { AutogenerateService } from '../AllServices/autogenerate.service';
 
 @Component({
   selector: 'app-review',
@@ -10,6 +12,22 @@ import { StatusServeService } from '../AllServices/status-serve.service';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
+
+  // GENERATE PARAMETER
+  ncodes = new FormControl('');
+  showButton: any;
+  showRows = false;
+  showPopup = true;
+  error!: any;
+  errors: any[] = [];
+  errPopup = false;
+  codes!: any[];
+  isShown = false;
+  rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  days!: any[];
+  loading: any;
+  // END GENERATE PARAMETER
+
 
   isOkLoading = false;
   isVisibleMiddle = false;
@@ -44,7 +62,9 @@ export class ReviewComponent implements OnInit {
     public statusServ: StatusServeService,
     public servFirebase: FirebaseAllService,
     private notification: NzNotificationService,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private timetableGeneratorService: AutogenerateService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +105,119 @@ export class ReviewComponent implements OnInit {
       }
     });
   }
+
+  // **** GENEREATE CODES FROM CELCAT ********
+
+  get formrows() {
+    return this.codesForm.get('formrows') as FormArray;
+  }
+
+  codesForm = this.fb.group({
+    formrows: this.fb.array([
+      this.fb.control('')
+    ])
+  });
+
+  addRow() {
+    this.formrows.push(this.fb.control(''));
+  }
+
+  delete(index: any){
+    this.formrows.removeAt(Number(index));
+  }
+
+  updateForm(code: any) {
+    this.showButton = this.formrows.valid;
+    //console.log(code);
+    this.check(code);
+  }
+
+  nCodes(n: any) {
+    this.formrows.clear();
+    if (n !== ''){
+      this.showRows = true;
+      const x = Number(n);
+      for (let i = 1; i <= x; i++) {
+        this.addRow();
+      }
+    }
+
+    if (n === '') {
+      this.formrows.clear();
+      this.showRows = false;
+    }
+  }
+
+  gotCodes() {
+    this.showPopup = false;
+    //console.log(this.codesForm.value);
+  }
+
+  create() {
+    this.showPopup = true;
+  }
+
+  close() {
+    this.showPopup = false;
+  }
+
+  re_enter() {
+    this.errPopup = false;
+    this.showPopup = true;
+  }
+
+  makeT(){
+    this.showPopup = false;
+
+    let dt: any;
+    const _this = this;
+    this.loading = true;
+
+    var ss: any[] = [];
+
+    for (var i = 0; i < this.codesForm.value['formrows'].length; i++) {
+      let code = this.codesForm.value['formrows'][i];
+      this.timetableGeneratorService.checkCode(code).subscribe(data => {
+        let msg = data.message;
+        if (msg !== 'exists') {
+          ss.push(msg);
+          this.errPopup = true;
+        }
+      });
+    }
+
+    this.errors = ss;
+
+    this.timetableGeneratorService.getData(this.codesForm.value).subscribe(data => {
+      this.loading = false;
+      if (data) {
+         console.log('all Data');
+         console.log(data.data);
+         data.data.array.forEach(elementResults => {
+          
+         });
+      }
+    });
+  }
+
+  check(code: any) {
+    let msg = '';
+    if (code) {
+      this.timetableGeneratorService.checkCode(code).subscribe(data => {
+        let ms = data.message;
+        if ( ms === 'exists') {
+          this.error = '';
+        }
+        if (ms !== 'exists') {
+          this.error = ms;
+          //this.showButton = false;
+          msg = ms;
+        }
+      });
+    }
+  }
+
+  // **** END OF GENERATE *********
 
 
   handleOkMiddle(): void {

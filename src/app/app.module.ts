@@ -29,8 +29,6 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { MyStuffComponent } from './my-stuff/my-stuff.component';
 
 
-
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -82,11 +80,11 @@ registerLocaleData(en);
     FlexLayoutModule,
     BrowserAnimationsModule,
     MaterialModule,
-    
+
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    AngularFireStorageModule,// storage
+    AngularFireStorageModule// storage
 
   ],
 

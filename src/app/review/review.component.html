@@ -23,6 +23,10 @@
 </nz-tabset>
 
 <ng-template #extraTemplate>
+  <button nz-button
+  style="margin-right: 10px;"
+  (click) = "create()"
+  >Generate Timetable</button>
   <button
   [nzLoading]="statusServ.progressBarStatus"
   nz-button
@@ -253,5 +257,57 @@
 
     </nz-drawer>
 
+    <div class="pop-up" *ngIf='loading'>
+      <div class="blur"></div>
+      <div class="lds-ring"><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
 
+    <div class="pop-up" *ngIf='errPopup'>
 
+      <div class="blur"></div>
+      <nz-card class="form-container">
+          <p class="error-alert" *ngFor='let err of errors'>
+              {{err}}
+          </p>
+
+          <div class="love">
+              <button mat-stroked-button  (click) = 're_enter()' style="border-color: steelblue">
+                 <span> RE-ENTER</span>
+              </button>
+          </div>
+      </nz-card>
+    </div>
+
+    <div class="pop-up" *ngIf='showPopup'>
+
+      <div class="blur"></div>
+
+      <nz-card class="form-container">
+          <i id='close' (click)='close()' nz-icon nzType="close" nzTheme="outline"></i>
+          <label class="form-heading">
+              GENERATE TIMETABLE
+          </label>
+          <nav>
+              <div>
+                  <label for=""> How many Subject Codes do you have?</label>
+                  <label></label>
+                  <input type="text" [formControl]='ncodes' (ngModelChange)="nCodes(ncodes.value)" placeholder="Number of courses">
+              </div>
+          </nav>
+          <form [formGroup]="codesForm" (ngSubmit)="makeT()" *ngIf="showRows">
+              <div formArrayName='formrows' class="form-rows">
+                  <label class="form-desc"> Enter the codes to fit the spaces below</label>
+                  <div><label><small style="color: red;">{{error}}</small></label></div>
+                  <div class="in-form" *ngFor="let formrow of formrows.controls; let i=index">
+                      <label for="">{{i+1}}</label>
+                      <input type="text" formControlName="{{i}}" (ngModelChange)='updateForm(formrow.value)' required>
+                      <button (click)="delete(i)" class="cbtn">x</button>
+                  </div>
+                  <button type="submit" [disabled]="!showButton" class="sbtn"> SUBMIT </button>
+              </div>
+          </form>
+
+      </nz-card>
+
+  </div>
