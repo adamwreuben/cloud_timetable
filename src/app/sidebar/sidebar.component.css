@@ -1,0 +1,56 @@
+
+.layout {
+  min-height: 100vh;
+  background-color: white;
+}
+
+nz-sider {
+  overflow: hidden;
+  height: 100%;
+  padding-top: 40px;
+  position: fixed;
+  left: 0;
+}
+
+.right-layout {
+  margin-left: 200px;
+  background-color: white;
+}
+
+nz-select {
+  margin: 0 8px 10px 0;
+  width: 100%;
+}
+
+nz-content {
+  margin: 10px 10px 0;
+  overflow: initial;
+  background-color: white;
+}
+nz-badge {
+  margin-right: 30px;
+}
+
+nz-footer {
+  text-align: center;
+}
+[nz-menu] {
+  width: 240px;
+}
+
+nz-header {
+  background: whitesmoke;
+  padding: 0;
+}
+
+[nz-menu-item]{
+  margin: 0 10px 0 10px;
+  color: white;
+  border-radius: 5px;
+  width: 180px;
+}
+[nz-menu-item]:hover{
+  background-color: #5ec4f3;
+}
+
+/* [ngStyle]="{'background-color': switchLayoutType === 'overview'? '#1d8ec2':'#29B6F6' }" */

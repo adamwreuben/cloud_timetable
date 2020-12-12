@@ -1,0 +1,23 @@
+<nz-card nzHoverable style="width:98%"
+*ngIf="showSkeleton !== true">
+  <nz-row [nzGutter]="16"
+
+  >
+    <nz-col [nzSpan]="12">
+      <nz-statistic nzValue="50+ Students" [nzTitle]="'Active Users'"></nz-statistic>
+    </nz-col>
+
+    <nz-col [nzSpan]="12">
+      <nz-statistic nzValue="120 Students" [nzTitle]="'All Users (Ati Network)'"></nz-statistic>
+    </nz-col>
+
+    <nz-col [nzSpan]="12">
+      <nz-statistic nzValue="{{totalCrNumber === undefined? '0 Crs': totalCrNumber}}"  nzTitle="Total CRs (Ati Network)"></nz-statistic>
+    </nz-col>
+  </nz-row>
+</nz-card>
+
+<nz-skeleton
+*ngIf="showSkeleton === true"
+[nzActive]="true"></nz-skeleton>
+

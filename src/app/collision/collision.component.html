@@ -1,0 +1,85 @@
+<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tab nzTitle="All Collisions">
+    <nz-timeline
+    *ngIf="noData !== true"
+    >
+      <nz-timeline-item
+      nzColor="red"
+      *ngFor="let collisionData of allCollideTimeOther"
+      [nzDot]="dotTemplate">
+      <nz-card nzHoverable
+        style="
+        width: 98%;
+        margin: 10px 0 10px 0;">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+              <div>{{collisionData.subjName}}</div>
+              <div style="font-weight: 100;font-size: small;">{{collisionData.location}}</div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div style="margin-right: 10px;">
+              <nz-tag nzColor="error">Collide With Your Time</nz-tag>
+            </div>
+            <div>
+              <nz-tag [nzColor]="'#448AFF'">{{collisionData.type}}</nz-tag>
+              <nz-tag [nzColor]="'#4CAF50'">{{collisionData.start}}</nz-tag>
+              <nz-tag [nzColor]="'#66BB6A'">{{collisionData.end}}</nz-tag>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </nz-timeline-item>
+    </nz-timeline>
+
+    <nz-empty
+    *ngIf="noData === true || selectedCourse === undefined"
+    nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+    [nzNotFoundContent]="contentTpl"
+    >
+      <ng-template #contentTpl>
+        <span>No Collision</span>
+      </ng-template>
+    </nz-empty>
+
+  </nz-tab>
+
+</nz-tabset>
+<ng-template #extraTemplate>
+  <nz-select
+  class="courseClassSelect"
+  nzPlaceHolder="Select Course"
+  [(ngModel)]="selectedCourse"
+  required
+  nzShowSearch
+  nzAllowClear
+  name="courseName"
+  style="margin-right: 10px;">
+    <nz-option
+    *ngFor="let courses of allCourseFromFirebase"
+    [nzValue]="courses.payload.doc.data().course"
+    [nzLabel]="courses.payload.doc.data().course"></nz-option>
+  </nz-select>
+  <nz-select
+  required
+  [(ngModel)]="dayValue"
+  name="day"
+  *ngIf="selectedCourse !== undefined"
+  (ngModelChange)="setDayValue()"
+  class="DayClassSelect"
+  nzPlaceHolder="Select Day">
+  <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+  <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+  <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+  <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+  <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+  </nz-select>
+</ng-template>
+
+
+<ng-template #dotTemplate>
+  <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
+</ng-template>
+
+

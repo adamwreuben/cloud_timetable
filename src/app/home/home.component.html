@@ -1,0 +1,258 @@
+<nz-tabset
+[nzTabBarExtraContent]="extraTemplate">
+  <nz-tab nzTitle="All Subjects">
+    <ul nz-list nzSize="small"
+    *ngIf="noData !== true"
+    >
+      <li nz-list-item
+      *ngFor="let data of allCourseInitials"
+      nzNoFlex>
+        <nz-card nzHoverable style="width:98%;margin-bottom: 10px;">
+          <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+            <div fxLayout="row">
+              <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+                <div style="font-size: large;color: black;">{{data.payload.doc.data().subjectShort}}</div>
+                <div style="font-weight: 400;font-size: small;">{{data.payload.doc.data().subjectLong}}</div>
+              </div>
+            </div>
+            <div>
+              <a
+              style="margin-right: 10px;"
+              (click)="open(
+                data.payload.doc.data().subjectShort,
+                data.payload.doc.data().teacherName,
+                data.payload.doc.data().teacherEmail,
+                data.payload.doc.data().teacherPhoneNo,
+                data.payload.doc.data().teacherRoom,
+                data.payload.doc.data().subjectLong
+              )">Teacher Profile</a>
+
+              <button
+              nz-button
+              nzType="primary"
+              style="margin-right: 10px;"
+              (click)='showModalMiddleUpdate(
+                data.payload.doc.id,
+                data.payload.doc.data().university,
+                data.payload.doc.data().course,
+                data.payload.doc.data().subjectShort,
+                data.payload.doc.data().subjectLong,
+                data.payload.doc.data().teacherName,
+                data.payload.doc.data().teacherEmail,
+                data.payload.doc.data().teacherPhoneNo,
+                data.payload.doc.data().teacherRoom
+              )'
+              >Update</button>
+
+              <button nz-button nzType="primary" nzDanger
+  nz-popconfirm
+  nzPopconfirmTitle="This May Affect Your Class Files, and Timetable Update Option. Proceed?"
+  (nzOnConfirm)="deleteData(
+    data.payload.doc.id,
+    data.payload.doc.data().university,
+    data.payload.doc.data().course)"
+  (nzOnCancel)="cancel()"
+  nzPopconfirmPlacement="top"
+  nzDanger>Delete</button>
+            </div>
+
+          </div>
+        </nz-card>
+
+      </li>
+    </ul>
+
+    <nz-empty
+    *ngIf="noData === true"
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+        >
+          <ng-template #contentTpl>
+            <span>No Subject Found</span>
+          </ng-template>
+
+    </nz-empty>
+
+    <nz-skeleton
+    *ngIf="showSkeleton === true && noData !== true"
+    [nzActive]="true"></nz-skeleton>
+
+  </nz-tab>
+
+</nz-tabset>
+
+
+    <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="720"
+      (nzOnClose)="handleCancelMiddle()"
+      [nzVisible]="isVisibleMiddle"
+      nzTitle="Set Subject"
+    >
+    <form
+    nz-form class="form"
+    #formAddSubject="ngForm"
+    (ngSubmit)="onSubmitSubj()">
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="subjectShort"
+        name="short"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Set Subject Short Form" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="subjectLong"
+        name="long"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Set Subject Long Form" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherName"
+        name="name"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Name" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherEmail"
+        name="email"
+        style="width: 100%;margin-bottom: 10px;"
+        nz-input type="email" placeholder="Teacher Email" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherPhoneNo"
+        name="phoneNo"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Phone Number" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherRoom"
+        name="room"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Office" required />
+      </nz-form-item>
+
+      <div style="float: right;margin-top: 20px;">
+         <button
+        [disabled]="formAddSubject.invalid"
+        type="submit"
+        nz-button
+        nzType="primary">Add</button>
+      </div>
+
+
+
+    </form>
+
+
+    </nz-drawer>
+
+
+    <ng-template #extraTemplate>
+      <button
+      [nzLoading]="statuService.progressBarStatus"
+      nz-button nzType="primary"
+      (click)="showModalMiddle()"
+      >
+      <i nz-icon nzType="plus" nzTheme="outline"></i>
+      Set Subject
+    </button>
+
+
+    </ng-template>
+
+
+    <nz-drawer [nzVisible]="visible" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="close()">
+      <p class="title" style=" margin-bottom: 24px;color: black;">Teacher Profile For {{subjectinfo}}({{shortInfo}})</p>
+      <nz-descriptions [nzColumn]="2" nzTitle="Personal Teacher Data">
+        <nz-descriptions-item nzTitle="Full Name" [nzSpan]="1">{{nameInfo}}</nz-descriptions-item>
+      </nz-descriptions>
+      <nz-divider></nz-divider>
+      <nz-descriptions [nzColumn]="2" nzTitle="Teacher Subject">
+        <nz-descriptions-item nzTitle="Teach" [nzSpan]="2">
+          {{subjectinfo}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Office" [nzSpan]="1">{{roomInfo}}</nz-descriptions-item>
+      </nz-descriptions>
+      <nz-divider></nz-divider>
+      <nz-descriptions [nzColumn]="2" nzTitle="Contacts">
+        <nz-descriptions-item nzTitle="Email" [nzSpan]="1">{{emailInfo}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Phone Number" [nzSpan]="1">{{phoneNoInfo}}</nz-descriptions-item>
+      </nz-descriptions>
+    </nz-drawer>
+
+
+    <nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isVisibleMiddleUpdate"
+      nzTitle="Update Subject"
+      nzOkText="Update"
+      (nzOnCancel)="handleCancelMiddleUpdate()"
+      (nzOnOk)="handleOkMiddleUpdate()"
+    >
+    <form nz-form
+    class="form"
+    #formUpdate="ngForm"
+    (ngSubmit)="onSubmitUpdate()">
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="subjectShort"
+        name="shortUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Set Subject Short Form" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="subjectLong"
+        name="longUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Set Subject Long Form" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherName"
+        name="nameUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Name" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherEmail"
+        name="emailUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input type="email" placeholder="Teacher Email" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherPhoneNo"
+        name="phoneNoUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Phone Number" required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="teacherRoom"
+        name="roomUpdate"
+        style="width: 100%;margin-bottom: 10px;"
+         nz-input placeholder="Teacher Office" required />
+      </nz-form-item>
+
+    </form>
+    </nz-modal>

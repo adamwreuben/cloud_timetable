@@ -1,0 +1,162 @@
+<nz-layout style="height: 100%;">
+  <nz-content>
+
+<div fxLayout="row"
+fxLayoutAlign="space-evenly center"
+  style="width: 100%;height: 100%;">
+
+  <div
+  style="color: black;font-family: 'Rubik', sans-serif;font-size:xx-large;">
+  <img src="assets/home_ati.svg" style="width: 450px;height: 450px;">
+</div>
+
+  <div>
+    <div fxLayout="row" style="margin-bottom: 20px;">
+      <div style="color: black;font-size: large;">Sign In</div>
+    </div>
+
+    <button
+    appGoogleSign
+    nz-button
+    nzType="primary" style="background-color: #29B6F6;">
+      <i nz-icon nzType="google" nzTheme="outline" style="margin-right: 20px;"></i>
+      Sign In With Google
+    </button>
+  </div>
+
+</div>
+
+<nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isVisibleMiddle"
+      nzClosable="false"
+      [nzFooter]="null"
+    >
+
+<div  fxLayout="column" fxLayoutAlign="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center">
+
+          <div *ngIf="changeImageVerifiation === false">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="144" height="144"
+        viewBox="0 0 172 172"
+        style=" fill:#000000;"><g fill="none"
+         fill-rule="nonzero" stroke="none" stroke-width="1"
+         stroke-linecap="butt" stroke-linejoin="miter"
+         stroke-miterlimit="10" stroke-dasharray=""
+         stroke-dashoffset="0" font-family="none"
+         font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M106.13833,10.75l12.30158,19.02033l22.62517,1.13233l1.14308,22.62158l19.03108,12.29083l-10.32358,20.167l10.33433,20.15625l-19.02033,
+          12.30158l-1.13233,22.62517l-22.62158,1.14308l-12.29083,19.03108l-20.167,-10.32358l-20.15625,10.33433l-12.30158,-19.02033l-22.62517,-1.13233l-1.14308,-22.62158l-19.03108,-12.29083l10.32358,-20.167l-10.33433,-20.15625l19.02033,-12.30158l1.13233,-22.62517l22.62158,-1.14308l12.29083,-19.03108l20.167,10.32358z" fill="#e74c3c"></path><path d="M76.669,111.99708l-23.28092,-23.27375l7.60383,-7.60025l15.79175,15.79175l34.28533,-33.23183l7.482,7.7185z" fill="#ffffff"></path></g></g></svg>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === true">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="144" height="144"
+        viewBox="0 0 172 172"
+        style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g>
+          <path d="M106.13833,10.75l12.30158,19.02033l22.62517,1.13233l1.14308,22.62158l19.03108,12.29083l-10.32358,20.167l10.33433,20.15625l-19.02033,12.30158l-1.13233,22.62517l-22.62158,1.14308l-12.29083,19.03108l-20.167,-10.32358l-20.15625,10.33433l-12.30158,-19.02033l-22.62517,-1.13233l-1.14308,-22.62158l-19.03108,-12.29083l10.32358,-20.167l-10.33433,-20.15625l19.02033,-12.30158l1.13233,-22.62517l22.62158,-1.14308l12.29083,-19.03108l20.167,10.32358z" fill="#2ecc71"></path><path d="M76.669,111.99708l-23.28092,-23.27375l7.60383,-7.60025l15.79175,15.79175l34.28533,-33.23183l7.482,7.7185z" fill="#ffffff"></path></g></g></svg>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === false">
+            <button
+            nzType="primary"
+            nz-button (click)="requestVerifiation()">Request CR Verification</button>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === false" style="margin-top: 20px;">
+            <p style="font-family: 'Rubik', sans-serif">**You will Get Started After being Verified**</p>
+          </div>
+
+          <div *ngIf="changeImageVerifiation === true">
+            <p style="font-family: 'Rubik', sans-serif;color: black;">Please Wait For Your Verification, This may take sometime.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </nz-modal>
+
+
+    <nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isVisibleMiddleCreate"
+      [nzFooter]="null"
+      nzClosable="false"
+      nzTitle="Set Your Course Account"
+
+    >
+    <form nz-form class="form" #formSet="ngForm" (ngSubmit)="onSubmitSet()">
+      <nz-form-item>
+        <nz-select
+        required
+        [(ngModel)]="chooseUniversity"
+        name="university"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Select University">
+          <nz-option
+          nzValue="University Of Dar es salaam"
+          nzLabel="University Of Dar es salaam(UDSM)"></nz-option>
+          <nz-option
+          nzValue="Dar es Salaam Institute of Technology"
+          nzLabel="Dar es Salaam Institute of Technology(DIT)"></nz-option>
+        </nz-select>
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        [(ngModel)]="chooseCourse"
+        name="course"
+        style="width: 100%;margin-bottom: 10px;"
+        nz-input
+        placeholder="Write Your Course Name"
+        required />
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        style="width: 100%;margin-bottom: 10px;"
+        name="startYearCreate"
+        nz-input
+        placeHolder="Start Year"
+        [(ngModel)]="startYear"
+        required/>
+      </nz-form-item>
+
+      <nz-form-item>
+        <input
+        style="width: 100%;margin-bottom: 10px;"
+        name="endYearCreate"
+        nz-input
+        placeHolder="Graduate Year"
+        [(ngModel)]="endYear"
+        required />
+      </nz-form-item>
+
+      <button
+      style="width: 100%;"
+      type="submit"
+      nz-button
+      [disabled]="formSet.invalid"
+      nzType="primary">Set Account</button>
+
+      </form>
+    </nz-modal>
+
+
+  </nz-content>
+
+  <nz-footer>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        ©2020 Adam W Reuben
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        🇹🇿
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+    </nz-footer>
+</nz-layout>
+
+

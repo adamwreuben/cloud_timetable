@@ -1,0 +1,97 @@
+<nz-layout class="layout">
+  <nz-sider style="background-color: #29B6F6;">
+
+    <ul nz-menu nzMode="inline" style="background-color: #29B6F6;">
+      <li nz-menu-item (click)="changeLayoutDesign('overview')"
+      [ngStyle]="{'background-color': switchLayoutType === 'overview'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="home" nzTheme="outline"></i>
+        <span>Home</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('stuff')"
+      [ngStyle]="{'background-color': switchLayoutType === 'stuff'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="file-protect" nzTheme="outline"></i>
+        <span>Admins</span>
+      </li>
+      <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')"
+      [ngStyle]="{'background-color': switchLayoutType === 'review'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Class Timetable</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('ue')"
+      [ngStyle]="{'background-color': switchLayoutType === 'ue'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>UE Timetable</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('home')"
+      [ngStyle]="{'background-color': switchLayoutType === 'home'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="read" nzTheme="outline"></i>
+        <span>Review Subjects</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('collision')"
+      [ngStyle]="{'background-color': switchLayoutType === 'collision'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="ungroup" nzTheme="outline"></i>
+        <span>Collisions</span>
+      </li>
+      <li nz-menu-item (click)="changeLayoutDesign('files')"
+      [ngStyle]="{'background-color': switchLayoutType === 'files'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="cloud-server" nzTheme="outline"></i>
+        <span>Class Files</span>
+      </li>
+
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-header>
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;padding: 5px;">
+        <div
+        style=" margin-left: 20px;color: black;font-family: 'Rubik', sans-serif;font-size:x-large;
+        "
+        >
+          Ati
+        </div>
+        <div>
+          <nz-avatar
+          nzSize="small"
+          style="
+          display: inline-block;
+          vertical-align: middle;"
+          [ngStyle]="{ 'background-color': '#f56a00' }" nzIcon="user" [nzSrc]="userProfileImg" nzSize="large" style="vertical-align: middle;margin-right: 10px;">
+        </nz-avatar>
+
+          <button
+          (click)="logOut()"
+          nz-button
+          nzType="primary"
+          >LogOut</button>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div *ngIf="switchLayoutType === 'home' ">
+        <app-home></app-home>
+      </div>
+      <div *ngIf="switchLayoutType === 'overview' ">
+        <app-overview-page></app-overview-page>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'stuff' ">
+        <app-my-stuff></app-my-stuff>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'review' ">
+        <app-review></app-review>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'ue' ">
+        <app-review-ue></app-review-ue>
+      </div>
+      <div *ngIf="switchLayoutType === 'collision' ">
+        <app-collision></app-collision>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'files' ">
+        <app-class-file></app-class-file>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,545 @@
+::ng-deep .vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep .vertical-center-modal .ant-modal {
+  top: 0;
+}
+
+.tsci-logo {
+  padding: 10px;
+}
+
+.tsci-logo img {
+  object-fit: contain;
+  width: 100px;
+}
+
+.udict-logo {
+  padding: 10px;
+}
+
+.udict-logo img {
+  object-fit: contain;
+  width: 200px;
+}
+
+
+
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    position: relative;
+    overflow: auto;
+    font-family: ubuntu-regular;
+}
+
+.pdf {
+  width: 10px;
+  height: 10px;
+  overflow: auto;
+  position: fixed;
+}
+
+.topnav {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+  }
+
+.topnav i {
+  font-size: 14px;
+}
+
+.topnav .title {
+  font-size: 16px;
+}
+
+.topnav button {
+  margin: 0px 7px;
+  font-size: 14px;
+}
+
+.gen {
+  font-size: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+table {
+  width: 100%;
+  max-width: 1000px;
+  border-collapse: collapse;
+  border: 1px solid #38678f;
+  margin: 10px auto;
+  position: relative;
+  background: white;
+  font-size: 14px;
+}
+
+th {
+  border: 1px solid #38678f;
+}
+
+.table-top th {
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 10px;
+  min-width: 80px;
+}
+
+.table-top th:first-child {
+  font-size: 16px;
+  padding: 10px;
+  min-width: 40px;
+}
+
+.table-left th:first-child {
+  background-color: white;
+  box-shadow: inset 0px 1px 2px #568ebd;
+}
+
+.sticky-col.top {
+  background: steelblue;
+  height: 54px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  font-weight: lighter;
+  text-shadow: 0 1px 0 #38678f;
+  color: white;
+  box-shadow: inset 0px 1px 2px #568ebd;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.sticky-col.top.left {
+  left:0;
+  z-index: 2;
+}
+
+.sticky-row.left {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  font-weight: lighter;
+  transition: all 0.2s;
+}
+
+.sticky-row {
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  padding: 10px;
+}
+
+tr {
+  /*border-bottom: 1px solid #cccccc;*/
+}
+
+tr:last-child {
+  border-bottom: 0px;
+}
+
+td {
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  padding: 10px;
+  width: 80px;
+  height: 150px;
+  transition: all 0.2s;
+}
+td:last-child {
+  border-right: 0px;
+}
+
+.table-body {
+  position: relative;
+}
+
+
+.remarks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-family: ubuntu-regular;
+    position: sticky;
+    left: 0;
+    max-width: 300px;
+    }
+
+.remarks.bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.remarks label {
+    font-size: 14px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.opening {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+}
+
+.remarks .card {
+  display: flex;
+  justify-content: flex-start;
+  align-self: center;
+}
+
+.contacts div {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.contacts div span i{
+    padding: 3px;
+    font-size: 16px;
+    margin: 0px 7px;
+    color: blue;
+}
+
+.contacts div span {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.error-alert {
+  font-family: ubuntu-regular;
+  color: red;
+}
+
+.love  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ubuntu-regular;
+}
+
+.love i{
+    color: red;
+    font-size: 24px;
+    margin: 0px 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: ubuntu-bold;
+    color: rgba(135,209,228,1);
+}
+
+.controls button {
+    border:0;
+    margin: 0px 10px;
+    padding: 5px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 1px #888;
+    font-weight: 500;
+    color: rgba(135,209,228,1);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.pop-up {
+    z-index: 3;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+#close {
+    font-size: 28px;
+    right: 10px;
+    top: 10px;
+    z-index: 2;
+    cursor: pointer;
+    position: sticky;
+    box-shadow: 0px 0px 5px #666;
+    border-radius: 100px;
+    top: 0;
+    background-color: white;
+    padding: 10px;
+}
+.blur {
+    position: absolute;
+    background: inherit;
+    background-color: rgb(0,0,0,0.5);
+    filter: blur(10px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.form-container {
+    z-index: 1;
+    top:10%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-10%);
+    box-shadow: 0px 0px 5px #666;
+    background-color: whitesmoke;
+    width: 280px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+.form-heading {
+    padding: 5px 0px;
+    text-align: center;
+    font-family: ubuntu-bold;
+    font-size: 12px;
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border-bottom: 1px solid rgba(135,209,228,1);
+}
+
+.form-container nav {
+    width: 90%;
+    margin: auto;
+    padding: 10px 0px;
+    font-family: ubuntu-regular;
+}
+
+.form-container nav div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form-container nav div input{
+    width: 100%;
+    background: none;
+    padding: 10px;
+    margin: 0px 10px;
+    text-transform: lowercase;
+    border: 0;
+    border-bottom: .5px solid #999;
+    transition-duration: 1s ease;
+}
+
+.form-container nav div input:focus {
+    border-bottom: 1px solid #666;
+}
+
+.form-container form {
+    width: 100%;
+    margin: auto;
+    padding: 10px 0px;
+    font-family: ubuntu-regular;
+}
+
+.form-desc {
+    font-size: 14px;
+}
+
+.form-rows {
+    width: 90%;
+    margin: auto;
+}
+
+.in-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.in-form input{
+    width: 70%;
+    background: none;
+    padding: 5px;
+    margin: 0px 10px;
+    border: 0;
+    border: 1px solid #999;
+    transition-duration: 1s ease;
+    font-family: ubuntu-regular;
+    text-transform: uppercase;
+}
+
+.in-form input:focus {
+    border: 1px solid rgba(135,209,228,1);
+}
+
+.sbtn {
+    width: auto;
+    display: flex;
+    margin: 10px auto;
+    font-size: 12px;
+    justify-content: center;
+    align-self: center;
+    border: 0;
+    font-family: ubuntu-regular;
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    cursor: pointer;
+}
+
+.sbtn:hover {
+    border: 1px solid green;
+    background: rgba(135,209,228,1);
+    color: white;
+}
+
+.cbtn:hover {
+    border: 1px solid red;
+    background: rgba(135,209,228,1);
+    color: white;
+}
+
+.cbtn {
+    cursor: pointer;
+    border: 0;
+    border: 1px solid #888;
+    border-radius: 10px;
+    padding: 5px;
+    width: 30px;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+  .form-container {
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .hide {
+  display: inline;
+  }
+
+  .topnav button {
+    margin: 0px 10px;
+    display: flex;
+    font-size: 16px;
+  }
+
+  .topnav .title {
+    font-size: 24px;
+  }
+
+  .contacts {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .remarks {
+    position: static;
+    left: 0;
+    max-width: 100%;
+    }
+
+  .opening {
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .gen {
+    font-size: 14px;
+  }
+
+
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
+/* Set width to make card deck cards 100% width */
+@media (max-width: 950px) {
+
+}

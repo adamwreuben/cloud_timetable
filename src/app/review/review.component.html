@@ -1,0 +1,313 @@
+
+<nz-tabset
+[nzTabBarExtraContent]="extraTemplate"
+  mat-align-tabs="start"
+>
+  <nz-tab nzTitle="Monday">
+    <app-monday></app-monday>
+  </nz-tab>
+  <nz-tab nzTitle="Tuesday">
+    <app-tuesday></app-tuesday>
+  </nz-tab>
+  <nz-tab nzTitle="Wednesday">
+    <app-wednesday></app-wednesday>
+  </nz-tab>
+  <nz-tab nzTitle="Thursday">
+    <app-thursday></app-thursday>
+  </nz-tab>
+
+  <nz-tab nzTitle="Friday">
+    <app-friday></app-friday>
+  </nz-tab>
+
+</nz-tabset>
+
+<ng-template #extraTemplate>
+  <button nz-button
+  style="margin-right: 10px;"
+  (click) = "create()"
+  >Generate Timetable</button>
+  <button
+  [nzLoading]="statusServ.progressBarStatus"
+  nz-button
+  nzType="primary"
+  (click)="showModalMiddle()"
+  >
+  <i nz-icon nzType="plus" nzTheme="outline"></i>
+  Set Timetable
+</button>
+</ng-template>
+
+    <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="720"
+      (nzOnClose)="handleCancelMiddle()"
+      [nzVisible]="isVisibleMiddle"
+      nzTitle="Set Subject Timetable"
+    >
+    <form nz-form class="form" #formAdd="ngForm" (ngSubmit)="onSubmitAdd()">
+      <nz-form-item>
+        <nz-select
+        required
+        [(ngModel)]="dayValue"
+        name="dayValues"
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Select Day">
+        <nz-option nzValue="Monday" nzLabel="Monday"></nz-option>
+        <nz-option nzValue="Tuesday" nzLabel="Tuesday"></nz-option>
+        <nz-option nzValue="Wednesday" nzLabel="Wednesday"></nz-option>
+        <nz-option nzValue="Thursday" nzLabel="Thursday"></nz-option>
+        <nz-option nzValue="Friday" nzLabel="Friday"></nz-option>
+        </nz-select>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-select
+        [(ngModel)]="subjectValue"
+        name="subject"
+        required
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Select Subject Name">
+        <nz-option
+        *ngFor="let subject of allCourseInitials"
+        [nzValue]="subject.payload.doc.data().subjectShort"
+        [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
+        </nz-select>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-select
+        [(ngModel)]="typeValue"
+        name="type"
+        required
+        style="width: 100%;margin-bottom: 10px;"
+        nzPlaceHolder="Set Lesson Type">
+        <nz-option nzValue="Lecture" nzLabel="Lecture"></nz-option>
+        <nz-option nzValue="Tutorial" nzLabel="Tutorial"></nz-option>
+        <nz-option nzValue="Practical" nzLabel="Practical"></nz-option>
+        <nz-option nzValue="Workshop" nzLabel="Workshop"></nz-option>
+        <nz-option nzValue="Discussion" nzLabel="Discussion"></nz-option>
+        <nz-option nzValue="Test" nzLabel="Test"></nz-option>
+        </nz-select>
+      </nz-form-item>
+
+        <nz-form-item>
+          <input
+          [(ngModel)]="locationValue"
+          name="location"
+          style="width: 100%;margin-bottom: 10px;"
+           nz-input placeholder="Lesson Location" required />
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-select
+          style="width: 100%;margin-bottom: 10px;"
+          nzPlaceHolder="Start Time"
+           [(ngModel)]="startTimeValue"
+           name="start"
+           required>
+            <nz-option nzValue="07:00" nzLabel="07:00">07:00</nz-option>
+            <nz-option nzValue="07:30" nzLabel="07:30">07:30</nz-option>
+            <nz-option nzValue="07:45" nzLabel="07:45">07:45</nz-option>
+            <nz-option nzValue="07:55" nzLabel="07:55">07:55</nz-option>
+            <nz-option nzValue="08:00" nzLabel="08:00">08:00</nz-option>
+            <nz-option nzValue="08:30" nzLabel="08:30">08:30</nz-option>
+            <nz-option nzValue="08:45" nzLabel="08:45">08:45</nz-option>
+            <nz-option nzValue="08:55" nzLabel="08:55">08:55</nz-option>
+            <nz-option nzValue="09:00" nzLabel="09:00">09:00</nz-option>
+            <nz-option nzValue="09:30" nzLabel="09:30">09:30</nz-option>
+            <nz-option nzValue="09:45" nzLabel="09:45">09:45</nz-option>
+            <nz-option nzValue="09:55" nzLabel="09:55">09:55</nz-option>
+            <nz-option nzValue="10:00" nzLabel="10:00">10:00</nz-option>
+            <nz-option nzValue="10:30" nzLabel="10:30">10:30</nz-option>
+            <nz-option nzValue="10:45" nzLabel="10:45">10:45</nz-option>
+            <nz-option nzValue="10:55" nzLabel="10:55">10:55</nz-option>
+            <nz-option nzValue="11:00" nzLabel="11:00">11:00</nz-option>
+            <nz-option nzValue="11:30" nzLabel="11:30">11:30</nz-option>
+            <nz-option nzValue="11:45" nzLabel="11:45">11:45</nz-option>
+            <nz-option nzValue="11:55" nzLabel="11:55">11:55</nz-option>
+            <nz-option nzValue="12:00" nzLabel="12:00">12:00</nz-option>
+            <nz-option nzValue="12:30" nzLabel="12:30">12:30</nz-option>
+            <nz-option nzValue="12:45" nzLabel="12:45">12:45</nz-option>
+            <nz-option nzValue="12:55" nzLabel="12:55">12:55</nz-option>
+            <nz-option nzValue="13:00" nzLabel="13:00">13:00</nz-option>
+            <nz-option nzValue="13:30" nzLabel="13:30">13:30</nz-option>
+            <nz-option nzValue="13:45" nzLabel="13:45">13:45</nz-option>
+            <nz-option nzValue="13:55" nzLabel="13:55">13:55</nz-option>
+            <nz-option nzValue="14:00" nzLabel="14:00">14:00</nz-option>
+            <nz-option nzValue="14:30" nzLabel="14:30">14:30</nz-option>
+            <nz-option nzValue="14:45" nzLabel="14:45">14:45</nz-option>
+            <nz-option nzValue="14:55" nzLabel="14:55">14:55</nz-option>
+            <nz-option nzValue="15:00" nzLabel="15:00">15:00</nz-option>
+            <nz-option nzValue="15:30" nzLabel="15:30">15:30</nz-option>
+            <nz-option nzValue="15:45" nzLabel="15:45">15:45</nz-option>
+            <nz-option nzValue="15:55" nzLabel="15:55">15:55</nz-option>
+            <nz-option nzValue="16:00" nzLabel="16:00">16:00</nz-option>
+            <nz-option nzValue="16:30" nzLabel="16:30">16:30</nz-option>
+            <nz-option nzValue="16:45" nzLabel="16:45">16:45</nz-option>
+            <nz-option nzValue="16:55" nzLabel="16:55">16:55</nz-option>
+            <nz-option nzValue="17:00" nzLabel="17:00">17:00</nz-option>
+            <nz-option nzValue="17:30" nzLabel="17:30">17:30</nz-option>
+            <nz-option nzValue="17:45" nzLabel="17:45">17:45</nz-option>
+            <nz-option nzValue="17:55" nzLabel="17:55">17:55</nz-option>
+            <nz-option nzValue="18:00" nzLabel="18:00">18:00</nz-option>
+            <nz-option nzValue="18:30" nzLabel="18:30">18:30</nz-option>
+            <nz-option nzValue="18:45" nzLabel="18:45">18:45</nz-option>
+            <nz-option nzValue="18:55" nzLabel="18:55">18:55</nz-option>
+            <nz-option nzValue="19:00" nzLabel="19:00">19:00</nz-option>
+            <nz-option nzValue="19:30" nzLabel="19:30">19:30</nz-option>
+            <nz-option nzValue="19:45" nzLabel="19:45">19:45</nz-option>
+            <nz-option nzValue="19:55" nzLabel="19:55">19:55</nz-option>
+            <nz-option nzValue="20:00" nzLabel="20:00">20:00</nz-option>
+            <nz-option nzValue="20:30" nzLabel="20:30">20:30</nz-option>
+            <nz-option nzValue="20:45" nzLabel="20:45">20:45</nz-option>
+            <nz-option nzValue="20:55" nzLabel="20:55">20:55</nz-option>
+            <nz-option nzValue="21:00" nzLabel="21:00">21:00</nz-option>
+          </nz-select>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-select
+          style="width: 100%;margin-bottom: 10px;"
+          nzPlaceHolder="End Time"
+           [(ngModel)]="endTimeValue"
+           name="end"
+           required>
+            <nz-option nzValue="07:00" nzLabel="07:00">07:00</nz-option>
+            <nz-option nzValue="07:30" nzLabel="07:30">07:30</nz-option>
+            <nz-option nzValue="07:45" nzLabel="07:45">07:45</nz-option>
+            <nz-option nzValue="07:55" nzLabel="07:55">07:55</nz-option>
+            <nz-option nzValue="08:00" nzLabel="08:00">08:00</nz-option>
+            <nz-option nzValue="08:30" nzLabel="08:30">08:30</nz-option>
+            <nz-option nzValue="08:45" nzLabel="08:45">08:45</nz-option>
+            <nz-option nzValue="08:55" nzLabel="08:55">08:55</nz-option>
+            <nz-option nzValue="09:00" nzLabel="09:00">09:00</nz-option>
+            <nz-option nzValue="09:30" nzLabel="09:30">09:30</nz-option>
+            <nz-option nzValue="09:45" nzLabel="09:45">09:45</nz-option>
+            <nz-option nzValue="09:55" nzLabel="09:55">09:55</nz-option>
+            <nz-option nzValue="10:00" nzLabel="10:00">10:00</nz-option>
+            <nz-option nzValue="10:30" nzLabel="10:30">10:30</nz-option>
+            <nz-option nzValue="10:45" nzLabel="10:45">10:45</nz-option>
+            <nz-option nzValue="10:55" nzLabel="10:55">10:55</nz-option>
+            <nz-option nzValue="11:00" nzLabel="11:00">11:00</nz-option>
+            <nz-option nzValue="11:30" nzLabel="11:30">11:30</nz-option>
+            <nz-option nzValue="11:45" nzLabel="11:45">11:45</nz-option>
+            <nz-option nzValue="11:55" nzLabel="11:55">11:55</nz-option>
+            <nz-option nzValue="12:00" nzLabel="12:00">12:00</nz-option>
+            <nz-option nzValue="12:30" nzLabel="12:30">12:30</nz-option>
+            <nz-option nzValue="12:45" nzLabel="12:45">12:45</nz-option>
+            <nz-option nzValue="12:55" nzLabel="12:55">12:55</nz-option>
+            <nz-option nzValue="13:00" nzLabel="13:00">13:00</nz-option>
+            <nz-option nzValue="13:30" nzLabel="13:30">13:30</nz-option>
+            <nz-option nzValue="13:45" nzLabel="13:45">13:45</nz-option>
+            <nz-option nzValue="13:55" nzLabel="13:55">13:55</nz-option>
+            <nz-option nzValue="14:00" nzLabel="14:00">14:00</nz-option>
+            <nz-option nzValue="14:30" nzLabel="14:30">14:30</nz-option>
+            <nz-option nzValue="14:45" nzLabel="14:45">14:45</nz-option>
+            <nz-option nzValue="14:55" nzLabel="14:55">14:55</nz-option>
+            <nz-option nzValue="15:00" nzLabel="15:00">15:00</nz-option>
+            <nz-option nzValue="15:30" nzLabel="15:30">15:30</nz-option>
+            <nz-option nzValue="15:45" nzLabel="15:45">15:45</nz-option>
+            <nz-option nzValue="15:55" nzLabel="15:55">15:55</nz-option>
+            <nz-option nzValue="16:00" nzLabel="16:00">16:00</nz-option>
+            <nz-option nzValue="16:30" nzLabel="16:30">16:30</nz-option>
+            <nz-option nzValue="16:45" nzLabel="16:45">16:45</nz-option>
+            <nz-option nzValue="16:55" nzLabel="16:55">16:55</nz-option>
+            <nz-option nzValue="17:00" nzLabel="17:00">17:00</nz-option>
+            <nz-option nzValue="17:30" nzLabel="17:30">17:30</nz-option>
+            <nz-option nzValue="17:45" nzLabel="17:45">17:45</nz-option>
+            <nz-option nzValue="17:55" nzLabel="17:55">17:55</nz-option>
+            <nz-option nzValue="18:00" nzLabel="18:00">18:00</nz-option>
+            <nz-option nzValue="18:30" nzLabel="18:30">18:30</nz-option>
+            <nz-option nzValue="18:45" nzLabel="18:45">18:45</nz-option>
+            <nz-option nzValue="18:55" nzLabel="18:55">18:55</nz-option>
+            <nz-option nzValue="19:00" nzLabel="19:00">19:00</nz-option>
+            <nz-option nzValue="19:30" nzLabel="19:30">19:30</nz-option>
+            <nz-option nzValue="19:45" nzLabel="19:45">19:45</nz-option>
+            <nz-option nzValue="19:55" nzLabel="19:55">19:55</nz-option>
+            <nz-option nzValue="20:00" nzLabel="20:00">20:00</nz-option>
+            <nz-option nzValue="20:30" nzLabel="20:30">20:30</nz-option>
+            <nz-option nzValue="20:45" nzLabel="20:45">20:45</nz-option>
+            <nz-option nzValue="20:55" nzLabel="20:55">20:55</nz-option>
+            <nz-option nzValue="21:00" nzLabel="21:00">21:00</nz-option>
+          </nz-select>
+        </nz-form-item>
+
+        <nz-form-item>
+          <textarea
+          style="width: 100%;margin-bottom: 10px;"
+          [(ngModel)]="comment"
+          name="comments"
+          nz-input placeholder="Enter Some Comment, Its Okay To Leave Blank! "
+          nzAutosize></textarea>
+        </nz-form-item>
+
+        <div style="float: right;margin-top: 20px;">
+
+          <button
+          [disabled]="formAdd.invalid"
+          type="submit"
+          nz-button
+          nzType="primary">Set</button>
+        </div>
+
+      </form>
+
+
+    </nz-drawer>
+
+    <div class="pop-up" *ngIf='loading'>
+      <div class="blur"></div>
+      <div class="lds-ring"><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+
+    <div class="pop-up" *ngIf='errPopup'>
+
+      <div class="blur"></div>
+      <nz-card class="form-container">
+          <p class="error-alert" *ngFor='let err of errors'>
+              {{err}}
+          </p>
+
+          <div class="love">
+              <button mat-stroked-button  (click) = 're_enter()' style="border-color: steelblue">
+                 <span> RE-ENTER</span>
+              </button>
+          </div>
+      </nz-card>
+    </div>
+
+    <div class="pop-up" *ngIf='showPopup'>
+
+      <div class="blur"></div>
+
+      <nz-card class="form-container">
+          <i id='close' (click)='close()' nz-icon nzType="close" nzTheme="outline"></i>
+          <label class="form-heading">
+              GENERATE TIMETABLE
+          </label>
+          <nav>
+              <div>
+                  <label for=""> How many Subject Codes do you have?</label>
+                  <label></label>
+                  <input type="text" [formControl]='ncodes' (ngModelChange)="nCodes(ncodes.value)" placeholder="Number of courses">
+              </div>
+          </nav>
+          <form [formGroup]="codesForm" (ngSubmit)="makeT()" *ngIf="showRows">
+              <div formArrayName='formrows' class="form-rows">
+                  <label class="form-desc"> Enter the codes to fit the spaces below</label>
+                  <div><label><small style="color: red;">{{error}}</small></label></div>
+                  <div class="in-form" *ngFor="let formrow of formrows.controls; let i=index">
+                      <label for="">{{i+1}}</label>
+                      <input type="text" formControlName="{{i}}" (ngModelChange)='updateForm(formrow.value)' required>
+                      <button (click)="delete(i)" class="cbtn">x</button>
+                  </div>
+                  <button type="submit" [disabled]="!showButton" class="sbtn"> SUBMIT </button>
+              </div>
+          </form>
+
+      </nz-card>
+
+  </div>

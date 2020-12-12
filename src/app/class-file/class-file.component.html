@@ -1,0 +1,79 @@
+<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tab nzTitle="All Class Files">
+    <nz-table
+    [nzData]="listOfData"
+    *ngIf="noData !== true"
+    nzTemplateMode>
+      <thead>
+        <tr>
+          <th>Name Of Document</th>
+          <th>Time Updated</th>
+          <th>Size</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fileData of listOfData">
+          <td>{{fileData.documentName}}</td>
+          <td>{{fileData.dateUploaded}}</td>
+          <td>{{fileData.documentSize}}</td>
+          <td>
+          <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          nzDanger
+          style="margin: 10px"
+          nz-popconfirm
+          nzPopconfirmTitle="Are you Sure?"
+          (nzOnConfirm)="deleteFile(fileData.documentDownloadUrl, fileData.documentFileId)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+
+          >Delete</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </nz-table>
+
+  </nz-tab>
+
+</nz-tabset>
+<ng-template #extraTemplate>
+  <nz-select
+  [(ngModel)]="subjectSelected"
+  nzPlaceHolder="Choose"
+  (ngModelChange)="subjectChange()">
+    <nz-option
+    *ngFor="let subject of allSubjectFromFirebase"
+    [nzValue]="subject.payload.doc.data().subjectShort"
+    [nzLabel]="subject.payload.doc.data().subjectShort">{{subject.payload.doc.data().subjectShort}}</nz-option>
+  </nz-select>
+
+  <input style="display: none"
+      type="file" (change)="uploadDoc($event)" #fileInput
+      accept=".doc,.docx,.xml,
+      application/msword,
+      .ppt,.pptx,.txt,.pdf,
+      application/vnd.ms-powerpoint,text/plain,
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+      application/pdf,application/vnd.ms-excel">
+      <button
+      *ngIf="subjectSelected !== undefined"
+      nzType="default"
+      (click)="fileInput.click()"
+      nz-button><i nz-icon nzType="upload"></i>Upload</button>
+</ng-template>
+
+
+    <nz-empty
+    *ngIf="selectNow === false && noData === true"
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+        >
+          <ng-template #contentTpl>
+            <span>Please Select Subject To See Your Files!</span>
+          </ng-template>
+
+    </nz-empty>
