@@ -18,7 +18,7 @@ export class AutogenerateService {
   constructor(private http: HttpClient) { }
 
   getData(codes: any): Observable<any> {
-    const url = 'https://mytimetableudsm.herokuapp.com/udsm-timetable';
+    const url = 'https://mytimetableudsm.herokuapp.com/ati/udsm-timetable';
     return this.http.post(url, {data: codes});
   }
 
