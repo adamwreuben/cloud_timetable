@@ -193,9 +193,6 @@ export class ReviewComponent implements OnInit {
       if (data) {
          console.log('all Data');
          console.log(data.data);
-         data.data.array.forEach(elementResults => {
-          
-         });
       }
     });
   }
@@ -217,6 +214,10 @@ export class ReviewComponent implements OnInit {
     }
   }
 
+  cancel(){
+    
+  }
+
   // **** END OF GENERATE *********
 
 
@@ -231,6 +232,14 @@ export class ReviewComponent implements OnInit {
 
   showModalMiddle(): void {
     this.isVisibleMiddle = true;
+  }
+
+  handleOkGenerate(){
+
+  }
+
+  handleCancelGenerate(){
+    this.showPopup = false;
   }
 
 

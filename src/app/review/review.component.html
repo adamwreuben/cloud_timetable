@@ -254,7 +254,6 @@
 
       </form>
 
-
     </nz-drawer>
 
     <div class="pop-up" *ngIf='loading'>
@@ -272,14 +271,15 @@
           </p>
 
           <div class="love">
-              <button mat-stroked-button  (click) = 're_enter()' style="border-color: steelblue">
+              <button nz-button
+              mat-stroked-button  (click) = 're_enter()' style="border-color: steelblue">
                  <span> RE-ENTER</span>
               </button>
           </div>
       </nz-card>
     </div>
 
-    <div class="pop-up" *ngIf='showPopup'>
+    <!-- <div class="pop-up" *ngIf='showPopup'>
 
       <div class="blur"></div>
 
@@ -309,5 +309,51 @@
           </form>
 
       </nz-card>
+    </div> -->
 
-  </div>
+
+  <nz-modal [(nzVisible)]="showPopup"
+  nzTitle="Generate Timetable"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancelGenerate()"
+  (nzOnOk)="handleOkGenerate()">
+    <div style="width: 100%;">
+      <nav>
+        <div fxLayout="column" fxLayoutAlign="space-evenly center">
+            <label for="" style="color: black;"> How many Course Codes do you have?</label>
+            <label></label>
+            <input type="text" [formControl]='ncodes' (ngModelChange)="nCodes(ncodes.value)" placeholder="Number of courses">
+        </div>
+    </nav>
+    <form [formGroup]="codesForm" (ngSubmit)="makeT()" *ngIf="showRows">
+        <div formArrayName='formrows' class="form-rows" fxLayout="column" fxLayoutAlign="space-evenly center">
+            <label class="form-desc" style="color: black;"> Enter the codes to fit the spaces below</label>
+            <div><label><small style="color: red;">{{error}}</small></label></div>
+            <div class="in-form" *ngFor="let formrow of formrows.controls; let i=index">
+                <label for="">{{i+1}}</label>
+                <input type="text" formControlName="{{i}}" (ngModelChange)='updateForm(formrow.value)' required>
+                <button nz-button nzType="danger" nzShape="circle" (click)="delete(i)">
+                  <i nz-icon nzType="close"></i>
+                </button>
+
+            </div>
+            <!-- <button type="submit" [disabled]="!showButton" class="sbtn"> SUBMIT </button> -->
+        </div>
+    </form>
+    </div>
+
+    <ng-template #modalFooter>
+      <div fxLayout="row" fxLayoutAlign="space-around center" >
+        <button nz-button nzType="default" (click)="handleCancelGenerate()">Cancel</button>
+        <button
+        type="submit" [disabled]="!showButton"
+        nz-button nzType="primary"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure you need to Submit?"
+        (nzOnConfirm)="makeT()"
+        (nzOnCancel)="cancel()"
+        nzPopconfirmPlacement="top"
+        >Submit</button>
+      </div>
+    </ng-template>
+  </nz-modal>
