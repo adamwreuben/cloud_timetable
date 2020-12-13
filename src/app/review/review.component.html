@@ -322,7 +322,7 @@
         <div fxLayout="column" fxLayoutAlign="space-evenly center">
             <label for="" style="color: black;"> How many Course Codes do you have?</label>
             <label></label>
-            <input type="text" [formControl]='ncodes' (ngModelChange)="nCodes(ncodes.value)" placeholder="Number of courses">
+            <input nz-input type="text" [formControl]='ncodes' (ngModelChange)="nCodes(ncodes.value)" placeholder="Number of courses">
         </div>
     </nav>
     <form [formGroup]="codesForm" (ngSubmit)="makeT()" *ngIf="showRows">
@@ -331,7 +331,8 @@
             <div><label><small style="color: red;">{{error}}</small></label></div>
             <div class="in-form" *ngFor="let formrow of formrows.controls; let i=index">
                 <label for="">{{i+1}}</label>
-                <input type="text" formControlName="{{i}}" (ngModelChange)='updateForm(formrow.value)' required>
+                <input
+                nz-input type="text" formControlName="{{i}}" (ngModelChange)='updateForm(formrow.value)' required>
                 <button nz-button nzType="danger" nzShape="circle" (click)="delete(i)">
                   <i nz-icon nzType="close"></i>
                 </button>
