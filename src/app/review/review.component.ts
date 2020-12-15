@@ -188,11 +188,22 @@ export class ReviewComponent implements OnInit {
 
     this.errors = ss;
 
-    this.timetableGeneratorService.getData(this.codesForm.value).subscribe(data => {
+    this.timetableGeneratorService.getData(this.codesForm.value).subscribe(dataGenerate => {
       this.loading = false;
-      if (data) {
-         console.log('all Data');
-         console.log(data.data);
+      if (dataGenerate) {
+         var myJsonObject = JSON.parse(JSON.stringify(dataGenerate));
+         for(var objectIndex in myJsonObject['data']){
+          console.log(myJsonObject['data'][objectIndex]['day']);
+          console.log(myJsonObject['data'][objectIndex]['code']);
+          var itemArrayJson = myJsonObject['data'][objectIndex]['data']
+          for(var itemIndex in itemArrayJson){
+            console.log(itemArrayJson[itemIndex]['data']['starttime']);
+            console.log(itemArrayJson[itemIndex]['data']['endtime']);
+            console.log(itemArrayJson[itemIndex]['data']['location']);
+
+          }
+         }
+
       }
     });
   }
@@ -215,7 +226,7 @@ export class ReviewComponent implements OnInit {
   }
 
   cancel(){
-    
+
   }
 
   // **** END OF GENERATE *********
