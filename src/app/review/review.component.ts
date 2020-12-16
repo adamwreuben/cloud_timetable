@@ -193,13 +193,49 @@ export class ReviewComponent implements OnInit {
       if (dataGenerate) {
          var myJsonObject = JSON.parse(JSON.stringify(dataGenerate));
          for(var objectIndex in myJsonObject['data']){
-          console.log(myJsonObject['data'][objectIndex]['day']);
-          console.log(myJsonObject['data'][objectIndex]['code']);
+           if((myJsonObject['data'][objectIndex]['day'] !== undefined) && (myJsonObject['data'][objectIndex]['day'])){
+            if(myJsonObject['data'][objectIndex]['data'].length !== 0){
+              //console.log(myJsonObject['data'][objectIndex]['day']);
+            }
+           }
+
           var itemArrayJson = myJsonObject['data'][objectIndex]['data']
           for(var itemIndex in itemArrayJson){
-            console.log(itemArrayJson[itemIndex]['data']['starttime']);
-            console.log(itemArrayJson[itemIndex]['data']['endtime']);
-            console.log(itemArrayJson[itemIndex]['data']['location']);
+            if((itemArrayJson[itemIndex]['data']['groups'] !== undefined) && (itemArrayJson[itemIndex]['data']['groups'] !== '')){
+              // console.log(itemArrayJson[itemIndex]['data']['groups']);
+              // console.log(itemArrayJson[itemIndex]['data']['starttime']);
+              // console.log(itemArrayJson[itemIndex]['data']['endtime']);
+              // console.log(itemArrayJson[itemIndex]['data']['location']);
+              // console.log(itemArrayJson[itemIndex]['data']['type']);
+
+              this.servFirebase
+                  .uploadTimetable(
+                    {
+                      dayName: myJsonObject['data'][objectIndex]['day'],
+                      subjName: itemArrayJson[itemIndex]['data']['groups'],
+                      type: itemArrayJson[itemIndex]['data']['type'],
+                      location: itemArrayJson[itemIndex]['data']['location'],
+                      start: itemArrayJson[itemIndex]['data']['starttime'],
+                      end: itemArrayJson[itemIndex]['data']['endtime'],
+                      comment: this.comment,
+                    },
+                    this.adminType === 'collaborate' ? this.statusServ.universityNameService : this.university,
+                    this.adminType === 'collaborate' ? this.statusServ.courseNameService : this.course
+                  )
+                  .then(() => {
+                    this.notification.create(
+                      'success',
+                      'Successfully😁',
+                      'Timetable is Added!',
+                      {
+                        nzDuration: 2000,
+                        nzPlacement: 'bottomLeft'
+                      }
+                    );
+                  }).catch(error => {
+                    console.log(error);
+                  });
+            }
 
           }
          }
