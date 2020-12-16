@@ -17,7 +17,7 @@ export class ReviewComponent implements OnInit {
   ncodes = new FormControl('');
   showButton: any;
   showRows = false;
-  showPopup = true;
+  showPopup = false;
   error!: any;
   errors: any[] = [];
   errPopup = false;
