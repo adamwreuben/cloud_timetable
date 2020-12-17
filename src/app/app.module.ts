@@ -40,6 +40,7 @@ import { ThursdayUeComponent } from './ue-day/thursday-ue/thursday-ue.component'
 import { TuesdayUeComponent } from './ue-day/tuesday-ue/tuesday-ue.component';
 import { WednesdayUeComponent } from './ue-day/wednesday-ue/wednesday-ue.component';
 import { NopageComponent } from './nopage/nopage.component';
+import { YahooDirective } from './yahoo.directive';
 
 registerLocaleData(en);
 
@@ -68,6 +69,7 @@ registerLocaleData(en);
     WednesdayUeComponent,
     ThursdayUeComponent,
     FridayUeComponent,
+    YahooDirective,
 
   ],
   imports: [
