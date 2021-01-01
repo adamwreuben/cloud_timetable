@@ -41,8 +41,35 @@ import { TuesdayUeComponent } from './ue-day/tuesday-ue/tuesday-ue.component';
 import { WednesdayUeComponent } from './ue-day/wednesday-ue/wednesday-ue.component';
 import { NopageComponent } from './nopage/nopage.component';
 import { YahooDirective } from './yahoo.directive';
+import { VerifyComponent } from './verify/verify.component';
+
+import { LettersAvatarModule } from "ngx-letters-avatar";
+import { TimeMomentPipe } from './pipes/time-moment.pipe';
 
 registerLocaleData(en);
+
+const avatarColors =
+[
+  "#FF1744",
+  "#F50057",
+  "#D500F9",
+  "#651FFF",
+  "#3D5AFE",
+  "#2979FF",
+  "#00B0FF",
+  "#00E5FF",
+  "#1DE9B6",
+  "#00E676",
+  "#76FF03",
+  "#C6FF00",
+  "#FFEA00",
+  "#FFC400",
+  "#FF9100",
+  "#FF3D00",
+  "#3E2723",
+  "#212121",
+  "#263238"
+];
 
 @NgModule({
   declarations: [
@@ -70,6 +97,8 @@ registerLocaleData(en);
     ThursdayUeComponent,
     FridayUeComponent,
     YahooDirective,
+    VerifyComponent,
+    TimeMomentPipe,
 
   ],
   imports: [
@@ -86,8 +115,8 @@ registerLocaleData(en);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    AngularFireStorageModule// storage
-
+    AngularFireStorageModule,// storage
+    LettersAvatarModule
   ],
 
   providers: [{ provide: NZ_I18N, useValue: en_US }],

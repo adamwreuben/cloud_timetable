@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
     | 'home'
     | 'review'
     | 'ue'
+    | 'verify'
     | 'collision'
     | 'files'
     | 'overview'
@@ -33,7 +34,7 @@ export class SidebarComponent implements OnInit {
   universitySub: any;
   allCourseInitials: any;
   docIdAdmin: any;
-
+  checkIfItsyahoo: any;
   adminType: any;
 
   constructor(
@@ -55,6 +56,15 @@ export class SidebarComponent implements OnInit {
           this.hideButton = true;
           this.userProfileImg = data.photoURL;
           this.userName = data.displayName;
+
+          if(data.email.includes('yahoo')){
+            this.checkIfItsyahoo = true;
+          }else{
+            this.checkIfItsyahoo = false;
+          }
+          console.log('name:', this.userName);
+          console.log('ImageUrl:', this.userProfileImg);
+
           this.fireService
             .checkAdminType(data.email)
             .subscribe((userVerificationType) => {

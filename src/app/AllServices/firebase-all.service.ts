@@ -249,7 +249,48 @@ export class FirebaseAllService {
     }
   }
 
+  //Verification of Posts
+  updatePostVerification(docId: any, course: any) {
+    this.db
+      .collection('StudentCommunity')
+      .doc('UDSM')
+      .collection(course)
+      .doc(docId)
+      .update({
+        status: 'verified',
+        postTime: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        this.notification.create(
+          'success',
+          'Post Verified! 😁',
+          'Successfully',
+          {
+            nzDuration: 2000,
+            nzPlacement: 'bottomLeft',
+          }
+        );
+      });
+  }
+  getUnVerifiedPost(course: any) {
+    return this.db
+      .collection('StudentCommunity')
+      .doc('UDSM')
+      .collection(course, (ref) => ref.where('status', '==', 'not'))
+      .snapshotChanges();
+  }
+
+  getVerifiedPost(course: any) {
+    return this.db
+      .collection('StudentCommunity')
+      .doc('UDSM')
+      .collection(course, (ref) => ref.where('status', '==', 'verified'))
+      .snapshotChanges();
+  }
+  //End of post verification
+
   // Get University And Course
+
   getUniversityCourse(userUid: any) {
     return this.db
       .collection('University', (ref) => ref.where('userUid', '==', userUid))

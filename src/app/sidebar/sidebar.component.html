@@ -12,6 +12,11 @@
         <i nz-icon nzType="file-protect" nzTheme="outline"></i>
         <span>Admins</span>
       </li>
+      <li nz-menu-item (click)="changeLayoutDesign('verify')"
+      [ngStyle]="{'background-color': switchLayoutType === 'verify'? '#1d8ec2':'#29B6F6' }">
+        <i nz-icon nzType="save" nzTheme="fill"></i>
+        <span>Verify Content</span>
+      </li>
       <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')"
       [ngStyle]="{'background-color': switchLayoutType === 'review'? '#1d8ec2':'#29B6F6' }">
         <i nz-icon nzType="calendar" nzTheme="outline"></i>
@@ -51,12 +56,25 @@
         </div>
         <div>
           <nz-avatar
+          *ngIf="checkIfItsyahoo !== true"
           nzSize="small"
           style="
           display: inline-block;
           vertical-align: middle;"
           [ngStyle]="{ 'background-color': '#f56a00' }" nzIcon="user" [nzSrc]="userProfileImg" nzSize="large" style="vertical-align: middle;margin-right: 10px;">
         </nz-avatar>
+
+        <ngx-letters-avatar
+          *ngIf="checkIfItsyahoo === true"
+          [avatarName]="userName"
+          [width]="40"
+          [circular]="true"
+          style="
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 10px;
+          margin-bottom: 10px;"
+          fontFamily="Open Sans"></ngx-letters-avatar>
 
           <button
           (click)="logOut()"
@@ -80,6 +98,10 @@
 
       <div *ngIf="switchLayoutType === 'review' ">
         <app-review></app-review>
+      </div>
+
+      <div *ngIf="switchLayoutType === 'verify' ">
+        <app-verify></app-verify>
       </div>
 
       <div *ngIf="switchLayoutType === 'ue' ">
