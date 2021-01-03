@@ -162,16 +162,21 @@ export class HomeComponent implements OnInit {
     this.statuService.progressBarStatus = true;
     this.firebaseService
       .uploadShortAndLongForm(
-        this.adminType === 'collaborate' ? this.statuService.universityNameService : this.university,
-        this.adminType === 'collaborate' ? this.statuService.courseNameService : this.course,
-          {
-        subjectShort: this.subjectShort,
-        subjectLong: this.subjectLong,
-        teacherName: this.teacherName,
-        teacherEmail: this.teacherEmail,
-        teacherPhone: this.teacherPhoneNo,
-        teacherRoom: this.teacherRoom,
-      })
+        this.adminType === 'collaborate'
+          ? this.statuService.universityNameService
+          : this.university,
+        this.adminType === 'collaborate'
+          ? this.statuService.courseNameService
+          : this.course,
+        {
+          subjectShort: this.subjectShort,
+          subjectLong: this.subjectLong,
+          teacherName: this.teacherName,
+          teacherEmail: this.teacherEmail,
+          teacherPhone: this.teacherPhoneNo,
+          teacherRoom: this.teacherRoom,
+        }
+      )
       .then(() => {
         this.statuService.progressBarStatus = false;
         this.notification.create('success', '😁', 'Subject is Added!', {
@@ -204,25 +209,29 @@ export class HomeComponent implements OnInit {
                 // tslint:disable-next-line: no-string-literal
                 this.adminType = results.payload.doc.data()['type'];
                 // tslint:disable-next-line: no-string-literal
-                this.statuService.courseNameService = results.payload.doc.data()['course'];
+                this.statuService.courseNameService = results.payload.doc.data()[
+                  'course'
+                ];
                 // tslint:disable-next-line: no-string-literal
-                this.statuService.universityNameService = results.payload.doc.data()['university'];
+                this.statuService.universityNameService = results.payload.doc.data()[
+                  'university'
+                ];
 
                 if (this.adminType === 'collaborate') {
                   this.firebaseService
-                  .getCourseLongAndShort(
-                    this.statuService.universityNameService,
-                    this.statuService.courseNameService
-                  )
-                  .subscribe((datas) => {
-                    if (datas.length !== 0) {
-                      this.noData = false;
-                      this.showSkeleton = false;
-                      this.allCourseInitials = datas;
-                    } else {
-                      this.noData = true;
-                    }
-                  });
+                    .getCourseLongAndShort(
+                      this.statuService.universityNameService,
+                      this.statuService.courseNameService
+                    )
+                    .subscribe((datas) => {
+                      if (datas.length !== 0) {
+                        this.noData = false;
+                        this.showSkeleton = false;
+                        this.allCourseInitials = datas;
+                      } else {
+                        this.noData = true;
+                      }
+                    });
                 } else {
                   // Load that uid origin CR created the course
                   this.firebaseService
@@ -233,34 +242,32 @@ export class HomeComponent implements OnInit {
                           // tslint:disable-next-line: no-string-literal
                           this.course = resultsOg.payload.doc.data()['course'];
                           // tslint:disable-next-line: no-string-literal
-                          this.university = resultsOg.payload.doc.data()['university'];
+                          this.university = resultsOg.payload.doc.data()[
+                            'university'
+                          ];
                           this.firebaseService
-                          .getCourseLongAndShort(
-                          this.university,
-                          this.course
-                          )
-                         .subscribe((datasOg) => {
-                           if (datasOg.length !== 0) {
-                             this.noData = false;
-                             this.showSkeleton = false;
-                             this.allCourseInitials = datasOg;
-                    } else {
-                      this.noData = true;
-                    }
-                  });
-                });
-              } else {
-
-              }
-            });
-          }
-        });
-      } else {
-        // No data
-         this.noData = true;
-        }
-      });
-    }
-  });
- }
+                            .getCourseLongAndShort(this.university, this.course)
+                            .subscribe((datasOg) => {
+                              if (datasOg.length !== 0) {
+                                this.noData = false;
+                                this.showSkeleton = false;
+                                this.allCourseInitials = datasOg;
+                              } else {
+                                this.noData = true;
+                              }
+                            });
+                        });
+                      } else {
+                      }
+                    });
+                }
+              });
+            } else {
+              // No data
+              this.noData = true;
+            }
+          });
+      }
+    });
+  }
 }

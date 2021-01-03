@@ -276,7 +276,9 @@ export class FirebaseAllService {
     return this.db
       .collection('StudentCommunity')
       .doc('UDSM')
-      .collection(course, (ref) => ref.where('status', '==', 'not'))
+      .collection(course)
+      .doc('All_Posts')
+      .collection('All', (ref) => ref.where('status', '==', 'not'))
       .snapshotChanges();
   }
 
@@ -284,7 +286,9 @@ export class FirebaseAllService {
     return this.db
       .collection('StudentCommunity')
       .doc('UDSM')
-      .collection(course, (ref) => ref.where('status', '==', 'verified'))
+      .collection(course)
+      .doc('All_Posts')
+      .collection('All', (ref) => ref.where('status', '==', 'verified'))
       .snapshotChanges();
   }
   //End of post verification

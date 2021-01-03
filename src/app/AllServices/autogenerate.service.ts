@@ -21,6 +21,11 @@ export class AutogenerateService {
     return this.http.post(url, { data: codes });
   }
 
+  getCourse(codes: any): Observable<any> {
+    const url = 'https://mytimetableudsm.herokuapp.com/ati/udsm-courses';
+    return this.http.get(url);
+  }
+
   checkCode(code: any): Observable<any> {
     const url = 'https://mytimetableudsm.herokuapp.com/check';
     return this.http.post(url, { code });

@@ -206,14 +206,11 @@ nzNoFlex
   margin: 10px 0 10px 0;">
 
 <div fxLayout="row" fxLayoutAlign="space-between center">
-<div fxLayout="row">
 
-<div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
-<div style="font-size: large;color: black;">{{monday.payload.doc.data().subject}}</div>
-<div style="font-weight: 100;font-size: small;">{{monday.payload.doc.data().location}}</div>
-</div>
-
-</div>
+  <div fxLayout="column" fxLayoutAlign="space-around start" style="margin-left: 10px;">
+    <div style="font-size: large;color: black;">{{monday.payload.doc.data().subject}}</div>
+    <div style="font-weight: 100;font-size: small;">{{monday.payload.doc.data().location}}</div>
+  </div>
 
 <div>
 <button nz-button nzType="primary"
@@ -244,11 +241,9 @@ style="margin-right: 10px;"
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
-<div>
-<nz-tag [nzColor]="'#448AFF'">{{monday.payload.doc.data().type}}</nz-tag>
-<nz-tag [nzColor]="'#4CAF50'">{{monday.payload.doc.data().start}}</nz-tag>
-<nz-tag [nzColor]="'#66BB6A'">{{monday.payload.doc.data().end}}</nz-tag>
-</div>
+  <nz-tag [nzColor]="'#448AFF'">{{monday.payload.doc.data().type}}</nz-tag>
+  <nz-tag [nzColor]="'#4CAF50'">{{monday.payload.doc.data().start}}</nz-tag>
+  <nz-tag [nzColor]="'#66BB6A'">{{monday.payload.doc.data().end}}</nz-tag>
 </div>
 
 </div>
