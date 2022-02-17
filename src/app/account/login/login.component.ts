@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit, DoCheck {
             // this.snack.open('Please Wait...', '', { duration: 2000 });
             if (data.email === 'adamreuben66@gmail.com') {
               this.statusServ.progressBarStatus = false;
-              this.router.navigate(['/me']);
+              this.router.navigate(['/']);
+              //this.router.navigate(['/me']);
             } else {
               this.statusServ.progressBarStatus = false;
               this.loadVerification(data.uid, data.email);
