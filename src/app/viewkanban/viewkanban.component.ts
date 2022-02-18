@@ -63,9 +63,7 @@ ngOnInit(): void {
         }else{
           this.checkIfItsyahoo = false;
         }
-        console.log('name:', this.userName);
-        console.log('ImageUrl:', this.userProfileImg);
-
+      
         this.fireService
           .checkAdminType(data.email)
           .subscribe((userVerificationType) => {
@@ -153,9 +151,9 @@ loadVerification(uid: any) {
         this.status = results.payload.doc.data()['status'];
         if (this.status === 'verified') {
           //this.routers.navigate(['/home']);
-          this.routers.navigate(['/colleges']);
+          //this.routers.navigate(['/colleges']);
         } else {
-          this.routers.navigate(['/verify']);
+          //this.routers.navigate(['/verify']);
         }
       });
     } else {
