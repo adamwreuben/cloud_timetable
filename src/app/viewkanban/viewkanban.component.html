@@ -5,20 +5,20 @@
   
       <ul nz-menu nzMode="inline" style="background-color: #512DA8;">
         <li nz-menu-item (click)="changeLayoutDesign('overview')"
-        [ngStyle]="{'background-color': switchLayoutType === 'overview'? '#651FFF':'#673AB7' }">
+        [ngStyle]="{'background-color': switchLayoutType === 'teachers'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="team" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Teachers</span>
         </li>
         
         
         <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')"
-        [ngStyle]="{'background-color': switchLayoutType === 'review'? '#651FFF':'#673AB7' }">
+        [ngStyle]="{'background-color': switchLayoutType === 'faculties'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="book" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Faculties</span>
         </li>
 
         <li nz-menu-item (click)="changeLayoutDesign('stuff')"
-        [ngStyle]="{'background-color': switchLayoutType === 'stuff'? '#651FFF':'#673AB7' }">
+        [ngStyle]="{'background-color': switchLayoutType === 'settings'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="setting" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Settings</span>
         </li>
@@ -79,35 +79,17 @@
         </div>
       </nz-header>
       <nz-content>
-        <div *ngIf="switchLayoutType === 'home' ">
-          <app-home></app-home>
+        <div *ngIf="switchLayoutType === 'faculties' ">
+          <app-faculties></app-faculties>
         </div>
-        <div *ngIf="switchLayoutType === 'overview' ">
-          <app-overview-page></app-overview-page>
-        </div>
-  
-        <div *ngIf="switchLayoutType === 'stuff' ">
-          <app-my-stuff></app-my-stuff>
+        <div *ngIf="switchLayoutType === 'teachers' ">
+            <app-teachers></app-teachers>
         </div>
   
-        <div *ngIf="switchLayoutType === 'review' ">
-          <app-review></app-review>
+        <div *ngIf="switchLayoutType === 'settings' ">
+          <app-settings></app-settings>
         </div>
-  
-        <div *ngIf="switchLayoutType === 'verify' ">
-          <app-verify></app-verify>
-        </div>
-  
-        <div *ngIf="switchLayoutType === 'ue' ">
-          <app-review-ue></app-review-ue>
-        </div>
-        <div *ngIf="switchLayoutType === 'collision' ">
-          <app-collision></app-collision>
-        </div>
-  
-        <div *ngIf="switchLayoutType === 'files' ">
-          <app-class-file></app-class-file>
-        </div>
+
       </nz-content>
     </nz-layout>
   </nz-layout>

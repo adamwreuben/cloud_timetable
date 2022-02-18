@@ -12,15 +12,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrls: ['./viewkanban.component.css']
 })
 export class ViewkanbanComponent implements OnInit {
-  switchLayoutType:
-  | 'home'
-  | 'review'
-  | 'ue'
-  | 'verify'
-  | 'collision'
-  | 'files'
-  | 'overview'
-  | 'stuff' = 'review';
+  switchLayoutType:"teachers"|"faculties"|"settings" = 'faculties';
 onlineStatus: any;
 status;
 
