@@ -40,10 +40,10 @@
     width: 100%;
   
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(top, white 50% , #673AB7 50%); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(top, white 50%, #673AB7 50%); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(top, white 50%, #673AB7 50%); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to top, white 50% , #673AB7 50%); /* Standard syntax */
+    background: -webkit-linear-gradient(top, #FAFBFC 50% , #673AB7 50%); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(top, #FAFBFC 50%, #673AB7 50%); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(top, #FAFBFC 50%, #673AB7 50%); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to top, #FAFBFC 50% , #673AB7 50%); /* Standard syntax */
     }
   
 

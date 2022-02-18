@@ -4,20 +4,20 @@
     <nz-sider style="background-color: #512DA8;">
   
       <ul nz-menu nzMode="inline" style="background-color: #512DA8;">
-        <li nz-menu-item (click)="changeLayoutDesign('overview')"
+        <li nz-menu-item (click)="changeLayoutDesign('teachers')"
         [ngStyle]="{'background-color': switchLayoutType === 'teachers'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="team" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Teachers</span>
         </li>
         
         
-        <li nz-menu-item nzSelected (click)="changeLayoutDesign('review')"
+        <li nz-menu-item nzSelected (click)="changeLayoutDesign('faculties')"
         [ngStyle]="{'background-color': switchLayoutType === 'faculties'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="book" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Faculties</span>
         </li>
 
-        <li nz-menu-item (click)="changeLayoutDesign('stuff')"
+        <li nz-menu-item (click)="changeLayoutDesign('settings')"
         [ngStyle]="{'background-color': switchLayoutType === 'settings'? '#651FFF':'#673AB7' }">
         <i nz-icon nzType="setting" nzTheme="outline"></i>
           <span style="font-family: 'Nunito', sans-serif;">Settings</span>
