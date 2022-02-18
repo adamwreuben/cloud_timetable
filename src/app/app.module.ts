@@ -54,6 +54,8 @@ import { SettingsComponent } from './kanban/settings/settings.component';
 
 registerLocaleData(en);
 
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 const avatarColors =
 [
   "#FF1744",
@@ -128,7 +130,9 @@ const avatarColors =
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule,// storage
-    LettersAvatarModule
+    LettersAvatarModule,
+
+    DragDropModule
   ],
 
   providers: [{ provide: NZ_I18N, useValue: en_US }],
