@@ -1,13 +1,14 @@
 
 .layout {
     min-height: 100vh;
-    background-color: white;
+    padding: 0;
+    background-color: #FAFBFC;
   }
   
   nz-sider {
     overflow: hidden;
     height: 100%;
-    padding-top: 40px;
+    padding-top: 10px;
     position: fixed;
     left: 0;
   }
@@ -23,9 +24,7 @@
   }
   
   nz-content {
-    margin: 10px 10px 0;
-    overflow: initial;
-    background-color: white;
+    background-color: #FAFBFC;
   }
   nz-badge {
     margin-right: 30px;
@@ -34,12 +33,13 @@
   nz-footer {
     text-align: center;
   }
+  
   [nz-menu] {
     width: 240px;
   }
   
   nz-header {
-    background: #512DA8;
+    background: #673AB7;
     padding: 0;
   }
   

@@ -1,32 +1,7 @@
 
 
 <nz-layout class="layout">
-    <nz-sider style="background-color: #512DA8;">
-  
-      <ul nz-menu nzMode="inline" style="background-color: #512DA8;">
-        <li nz-menu-item (click)="changeLayoutDesign('teachers')"
-        [ngStyle]="{'background-color': switchLayoutType === 'teachers'? '#651FFF':'#673AB7' }">
-        <i nz-icon nzType="team" nzTheme="outline"></i>
-          <span style="font-family: 'Nunito', sans-serif;">Teachers</span>
-        </li>
-        
-        
-        <li nz-menu-item nzSelected (click)="changeLayoutDesign('faculties')"
-        [ngStyle]="{'background-color': switchLayoutType === 'faculties'? '#651FFF':'#673AB7' }">
-        <i nz-icon nzType="book" nzTheme="outline"></i>
-          <span style="font-family: 'Nunito', sans-serif;">Faculties</span>
-        </li>
-
-        <li nz-menu-item (click)="changeLayoutDesign('settings')"
-        [ngStyle]="{'background-color': switchLayoutType === 'settings'? '#651FFF':'#673AB7' }">
-        <i nz-icon nzType="setting" nzTheme="outline"></i>
-          <span style="font-family: 'Nunito', sans-serif;">Settings</span>
-        </li>
-        
-  
-      </ul>
-    </nz-sider>
-    <nz-layout class="right-layout">
+    <nz-layout>
       <nz-header>
         <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;padding: 5px;">
           <div
@@ -34,18 +9,6 @@
           "
           >
           Department name
-          <!-- <button nz-button nz-dropdown [nzDropdownMenu]="menuDepartment">
-            Department name
-            <i nz-icon nzType="down"></i>
-          </button>
-          <nz-dropdown-menu #menuDepartment="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item style="color: black;">Department of Botany</li>
-              <li nz-menu-item>Department of Science</li>
-              <li nz-menu-item>Department of Zulich</li>
-              <li nz-menu-item>Department of IT</li>
-            </ul>
-          </nz-dropdown-menu> -->
           </div>
           <div>
             <nz-avatar
@@ -89,7 +52,6 @@
         <div *ngIf="switchLayoutType === 'settings' ">
           <app-settings></app-settings>
         </div>
-
       </nz-content>
     </nz-layout>
   </nz-layout>
