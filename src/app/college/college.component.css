@@ -1,0 +1,55 @@
+
+
+
+
+
+
+.layout {
+    min-height: 100vh;
+    background-color: white;
+  }
+  
+  nz-sider {
+    overflow: hidden;
+    height: 100%;
+    padding-top: 40px;
+    position: fixed;
+    left: 0;
+  }
+  
+  
+  nz-content {
+    background-color: #FAFBFC;
+  }
+  nz-badge {
+    margin-right: 30px;
+  }
+  
+  nz-footer {
+    text-align: center;
+  }
+  [nz-menu] {
+    width: 240px;
+  }
+  
+  nz-header {
+    background: #673AB7;
+    padding: 0;
+  }
+
+
+  .half_color{
+    height: 400px;
+    width: 100%;
+  
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(top, white 50% , #673AB7 50%); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(top, white 50%, #673AB7 50%); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(top, white 50%, #673AB7 50%); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to top, white 50% , #673AB7 50%); /* Standard syntax */
+    }
+  
+
+  
+  /* [ngStyle]="{'background-color': switchLayoutType === 'overview'? '#1d8ec2':'#29B6F6' }" */
+  

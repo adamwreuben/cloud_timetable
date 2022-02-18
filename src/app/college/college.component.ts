@@ -6,21 +6,11 @@ import { StatusServeService } from '../AllServices/status-serve.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: 'app-all',
-  templateUrl: './all.component.html',
-  styleUrls: ['./all.component.css']
+  selector: 'app-college',
+  templateUrl: './college.component.html',
+  styleUrls: ['./college.component.css']
 })
-export class AllComponent implements OnInit {
-
-  switchLayoutType:
-    | 'home'
-    | 'review'
-    | 'ue'
-    | 'verify'
-    | 'collision'
-    | 'files'
-    | 'overview'
-    | 'stuff' = 'review';
+export class CollegeComponent implements OnInit {
 
   onlineStatus: any;
   status;
@@ -55,7 +45,7 @@ export class AllComponent implements OnInit {
       this.afAuth.authState.subscribe((data) => {
         if (data !== null) {
           this.statuService.progressBarStatus = false;
-          this.loadVerification(data.uid);
+          //this.loadVerification(data.uid);
           this.hideButton = true;
           this.userProfileImg = data.photoURL;
           this.userName = data.displayName;
@@ -85,7 +75,7 @@ export class AllComponent implements OnInit {
                       data.displayName,
                       data.uid
                     );
-                    this.loadSubjects();
+                    //.loadSubjects();
                   } else {
                     this.fireService.getUniversityCourse(data.uid).subscribe(ogUserResults => {
                       if (ogUserResults !== null){
@@ -101,7 +91,7 @@ export class AllComponent implements OnInit {
                           this.statuService.universityNameService = resultsTypes.payload.doc.data()['university'];
 
                         });
-                        this.loadSubjects();
+                        //this.loadSubjects();
                       }else{
                         // No data
                       }
@@ -139,46 +129,6 @@ export class AllComponent implements OnInit {
     this.afAuth.signOut().then(() => {
       this.routers.navigate(['/']);
     });
-  }
-
-  changeLayoutDesign(status) {
-    this.switchLayoutType = status;
-  }
-
-  loadVerification(uid: any) {
-    this.fireService.getUserVerification(uid).subscribe((datas) => {
-      if (datas.length !== 0) {
-        datas.forEach((results) => {
-          // tslint:disable-next-line: no-string-literal
-          this.status = results.payload.doc.data()['status'];
-          if (this.status === 'verified') {
-            //this.routers.navigate(['/home']);
-            this.routers.navigate(['/colleges']);
-          } else {
-            this.routers.navigate(['/verify']);
-          }
-        });
-      } else {
-      }
-    });
-  }
-
-  loadSubjects() {
-    this.fireService.getCourseLongAndShort(
-      this.adminType === 'collaborate' ? this.statuService.universityNameService : this.universitySub,
-      this.adminType === 'collaborate' ? this.statuService.courseNameService : this.courseSub)
-    .subscribe((datas) => {
-      if (datas.length !== 0) {
-        this.noData = false;
-      } else {
-        this.noData = true;
-        this.createNotification();
-      }
-    });
-  }
-
-  viewCollege(collegeId: string){
-    this.routers.navigate(['colleges',collegeId = collegeId])
   }
 
 }

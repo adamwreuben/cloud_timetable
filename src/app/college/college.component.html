@@ -1,0 +1,200 @@
+
+
+<nz-layout class="layout">
+    <nz-header>
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;padding: 5px;">
+          <div
+          style=" margin-left: 20px;color: white;font-family: 'Fredoka One', cursive;font-size:x-large;
+          "
+          >
+            Ati
+          </div>
+          <div>
+            <nz-avatar
+            *ngIf="checkIfItsyahoo !== true"
+            nzSize="small"
+            style="
+            display: inline-block;
+            vertical-align: middle;"
+            [ngStyle]="{ 'background-color': '#f56a00' }" nzIcon="user" [nzSrc]="userProfileImg" nzSize="large" style="vertical-align: middle;margin-right: 10px;">
+          </nz-avatar>
+  
+          <ngx-letters-avatar
+            *ngIf="checkIfItsyahoo === true"
+            [avatarName]="userName"
+            [width]="40"
+            [circular]="true"
+            style="
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            margin-bottom: 10px;"
+            fontFamily="Open Sans"></ngx-letters-avatar>
+  
+            <button
+            (click)="logOut()"
+            nz-button
+            nzType="primary"
+            style="font-family: 'Nunito', sans-serif;"
+            >Add Department</button>
+          </div>
+        </div>
+      </nz-header>
+      <nz-content>
+        <div style="width: 100%;margin: 10px;" 
+        fxLayout="row" fxLayoutAlign="center center">
+            
+            <div>
+                <div fxLayout="column" style="margin-top: 20px;">
+                    <div style="font-family: 'Nunito', sans-serif;color: black;">YOUR DEPARTMENTS</div>
+                    <div fxLayout="column">
+                        <div fxLayout="column" style="margin-bottom: 10px;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                                <div style="font-family: 'Nunito', sans-serif;">Department of Information and Technology</div>
+                                <div>
+                                    <button nz-button nzType="dashed" style="margin-right: 10px;">
+                                        <i nz-icon nzType="team" nzTheme="outline"></i>
+                                        Admins
+                                    </button>
+                                    <button nz-button nzType="dashed">
+                                        <i nz-icon nzType="setting" nzTheme="outline"></i>
+                                        Settings
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;" fxLayout="row">
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in computer science</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CS</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in computer Engineering</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CE</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in Electronic science</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC ES</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in Business Information Technology</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC BIT</div>
+                                    </nz-card>
+                                </div>
+                            </div>
+                            <nz-divider></nz-divider>
+                        </div>
+
+
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                                <div style="font-family: 'Nunito', sans-serif;">Department of Engineering</div>
+                                <div>
+                                    <button nz-button nzType="dashed" style="margin-right: 10px;">
+                                        <i nz-icon nzType="team" nzTheme="outline"></i>
+                                        Admins
+                                    </button>
+                                    <button nz-button nzType="dashed">
+                                        <i nz-icon nzType="setting" nzTheme="outline"></i>
+                                        Settings
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;" fxLayout="row">
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in computer science</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CS</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in Architecture Engineering</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC AE</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in Electronic Engineering</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC EE</div>
+                                    </nz-card>
+                                </div>
+
+                                <div style="margin: 10px;">
+                                    <nz-card 
+                                    (click)="viewCollege('coict1234568TUC')"
+                                    nzHoverable style="width:200px;height: 200px;"
+                                    fxLayout="column" fxLayoutAlign="center center">
+                                     <div
+                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                         font-weight: bolder;"
+                                     >Bachelor of science in Civil Engineering</div>
+                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CE</div>
+                                    </nz-card>
+                                </div>
+                                
+                            </div>
+                            <nz-divider></nz-divider>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+      </nz-content> 
+</nz-layout>
+  

@@ -46,6 +46,7 @@ import { VerifyComponent } from './verify/verify.component';
 import { LettersAvatarModule } from "ngx-letters-avatar";
 import { TimeMomentPipe } from './pipes/time-moment.pipe';
 import { AllComponent } from './all/all.component';
+import { CollegeComponent } from './college/college.component';
 
 registerLocaleData(en);
 
@@ -101,6 +102,7 @@ const avatarColors =
     VerifyComponent,
     TimeMomentPipe,
     AllComponent,
+    CollegeComponent,
 
   ],
   imports: [

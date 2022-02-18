@@ -4,6 +4,7 @@ import { LoginComponent } from './account/login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NopageComponent } from './nopage/nopage.component';
 import { AllComponent } from './all/all.component';
+import { CollegeComponent } from './college/college.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,9 @@ const routes: Routes = [
   },
   {
     path: 'colleges', component: AllComponent
+  },
+  {
+    path: 'colleges/:collegeId', component: CollegeComponent
   },
   {
     path: 'home', component: SidebarComponent

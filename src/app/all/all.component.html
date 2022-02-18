@@ -46,39 +46,44 @@
                 <div fxLayout="column" fxLayoutAlign="center center" >
                     <div style="font-family: 'Nunito', sans-serif;color: white;font-size: larger;">Your university colleges</div>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
-                        <div>
-                            <nz-card nzHoverable style="width:240px">
-                               <div fxLayout="column" fxLayoutAlign="center center">
-                                 <div>
-                                  <i nz-icon nzType="plus" nzTheme="outline"></i>
-                                 </div>
-                                 <div>Add College</div>
+                        <div style="margin: 10px;">
+                            <nz-card nzHoverable style="width:200px;height: 200px;"
+                            fxLayout="column" fxLayoutAlign="center center">
+                               <div fxLayout="column" fxLayoutAlign="center center"
+                               style="margin-bottom: 10px;">
+                                <i nz-icon nzType="plus"
+                                style="color: #673AB7;" 
+                                nzTheme="outline"></i>
                                </div>
+                               <div style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                               font-weight: bolder;">Add College</div>
                             </nz-card>
                         </div>
 
-                        <div>
-                          <nz-card nzHoverable style="width:240px">
-                             <div fxLayout="column" fxLayoutAlign="center center">
-                               <div>
-                                <i nz-icon nzType="plus" nzTheme="outline"></i>
-                               </div>
-                               <div>Add College</div>
-                             </div>
+                        <div style="margin: 10px;">
+                          <nz-card 
+                          (click)="viewCollege('coict1234568TUC')"
+                          nzHoverable style="width:200px;height: 200px;"
+                          fxLayout="column" fxLayoutAlign="center center">
+                           <div
+                           style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                               font-weight: bolder;"
+                           >College Of Information and Technology</div>
+                           <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">COICT</div>
                           </nz-card>
                       </div>
 
-                      <div>
-                        <nz-card nzHoverable style="width:240px">
-                           <div fxLayout="column" fxLayoutAlign="center center">
-                             <div>
-                              <i nz-icon nzType="plus" nzTheme="outline"></i>
-                             </div>
-                             <div>Add College</div>
-                           </div>
+                      <div style="margin: 10px;">
+                        <nz-card nzHoverable style="width:200px;height: 200px;"
+                        fxLayout="column" fxLayoutAlign="center center">
+                         <div
+                         style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                             font-weight: bolder;"
+                         >College Of Engineering and Technology</div>
+                         <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">COET</div>
                         </nz-card>
                     </div>
-                    
+
                     </div>
                 </div>
                 
