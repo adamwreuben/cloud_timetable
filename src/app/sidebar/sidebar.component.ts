@@ -151,9 +151,9 @@ export class SidebarComponent implements OnInit {
           this.status = results.payload.doc.data()['status'];
           if (this.status === 'verified') {
             //this.routers.navigate(['/home']);
-            this.routers.navigate(['/colleges']);
+            //this.routers.navigate(['/colleges']);
           } else {
-            this.routers.navigate(['/verify']);
+            //this.routers.navigate(['/verify']);
           }
         });
       } else {

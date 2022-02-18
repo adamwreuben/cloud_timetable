@@ -153,7 +153,8 @@ export class CollegeComponent implements OnInit {
   }
 
   openFaculyKanban(): void {
-    this.facultlyKaban = true;
+    //this.facultlyKaban = true;
+    this.routers.navigate(['home'])
   }
 
   closeFaculyKanban(): void {
