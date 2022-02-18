@@ -46,7 +46,20 @@
             
             <div>
                 <div fxLayout="column" style="margin-top: 20px;">
-                    <div style="font-family: 'Nunito', sans-serif;color: black;">YOUR DEPARTMENTS</div>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                        <div style="font-family: 'Nunito', sans-serif;color: black;">COLLEGE NAME</div>
+                        <div>
+                            <button nz-button style="margin-right: 10px;">
+                                <i nz-icon nzType="book" nzTheme="outline"></i>
+                                Courses
+                            </button>
+                            <button nz-button nzType="dashed">
+                                <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+                                Drop course here
+                            </button>
+                        </div>
+                    </div>
+                    <nz-divider></nz-divider>
                     <div fxLayout="column">
                         <div fxLayout="column" style="margin-bottom: 10px;">
                             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
@@ -64,15 +77,16 @@
                             </div>
                             <div style="margin-top: 10px;" fxLayout="row">
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
-                                    nzHoverable style="width:200px;height: 200px;"
+                                    <nz-card nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
-                                     <div
-                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
-                                         font-weight: bolder;"
-                                     >Bachelor of science in computer science</div>
-                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CS</div>
+                                       <div fxLayout="column" fxLayoutAlign="center center"
+                                       style="margin-bottom: 10px;">
+                                        <i nz-icon nzType="plus"
+                                        style="color: #673AB7;" 
+                                        nzTheme="outline"></i>
+                                       </div>
+                                       <div style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                       font-weight: bolder;">Add faculty</div>
                                     </nz-card>
                                 </div>
 
@@ -135,15 +149,16 @@
                             </div>
                             <div style="margin-top: 10px;" fxLayout="row">
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
-                                    nzHoverable style="width:200px;height: 200px;"
+                                    <nz-card nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
-                                     <div
-                                     style="font-family: 'Nunito', sans-serif; color: #673AB7;
-                                         font-weight: bolder;"
-                                     >Bachelor of science in computer science</div>
-                                     <div style="font-family: 'Nunito', sans-serif;color: black;margin-top: 5px;">BSC CS</div>
+                                       <div fxLayout="column" fxLayoutAlign="center center"
+                                       style="margin-bottom: 10px;">
+                                        <i nz-icon nzType="plus"
+                                        style="color: #673AB7;" 
+                                        nzTheme="outline"></i>
+                                       </div>
+                                       <div style="font-family: 'Nunito', sans-serif; color: #673AB7;
+                                       font-weight: bolder;">Add faculty</div>
                                     </nz-card>
                                 </div>
 
