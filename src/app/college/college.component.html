@@ -49,11 +49,14 @@
                     <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
                         <div style="font-family: 'Nunito', sans-serif;color: black;">COLLEGE NAME</div>
                         <div>
-                            <button nz-button style="margin-right: 10px;">
+                            <button 
+                            (click)="openCourseListDrawer()"
+                            nz-button style="margin-right: 10px;">
                                 <i nz-icon nzType="book" nzTheme="outline"></i>
                                 Courses
                             </button>
-                            <button nz-button nzType="dashed">
+                            <button nz-button nzType="dashed"
+                            (click)="openDragAndDropCourse()">
                                 <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
                                 Drop course here
                             </button>
@@ -92,7 +95,7 @@
 
                                 <div style="margin: 10px;">
                                     <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    (click)="openFaculyKanban()"
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -209,6 +212,53 @@
                     
                 </div>
             </div>
+
+
+            <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="720"
+      [nzVisible]="courseDrapDropVisible"
+      nzTitle="Drap and Drop Csv file or Excell file containing your courses"
+      [nzFooter]="footerTpl"
+      (nzOnClose)="closeDragAndDropCourse()"
+    >
+
+    <div>Contents</div>
+    
+    </nz-drawer>
+
+
+    <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="900"
+      [nzVisible]="courseListDrawer"
+      nzTitle="List of all college courses"
+      [nzFooter]="footerTpl"
+      (nzOnClose)="closeCourseListDrawer()"
+    >
+
+    <div>Contents</div>
+    
+    </nz-drawer>
+
+
+    <nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="1300"
+      [nzVisible]="facultlyKaban"
+      nzTitle="Setting course to specific faculty"
+      [nzFooter]="footerTpl"
+      (nzOnClose)="closeFaculyKanban()"
+    >
+
+    <div>Contents</div>
+    
+    </nz-drawer>
+
+
         </div>
       </nz-content> 
 </nz-layout>

@@ -12,6 +12,11 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class CollegeComponent implements OnInit {
 
+  courseDrapDropVisible: boolean;
+  courseListDrawer: boolean;
+  facultlyKaban: boolean;
+
+
   onlineStatus: any;
   status;
 
@@ -130,5 +135,31 @@ export class CollegeComponent implements OnInit {
       this.routers.navigate(['/']);
     });
   }
+
+  openDragAndDropCourse(): void {
+    this.courseDrapDropVisible = true;
+  }
+
+  closeDragAndDropCourse(): void {
+    this.courseDrapDropVisible = false;
+  }
+
+  openCourseListDrawer(): void {
+    this.courseListDrawer = true;
+  }
+
+  closeCourseListDrawer(): void {
+    this.courseListDrawer = false;
+  }
+
+  openFaculyKanban(): void {
+    this.facultlyKaban = true;
+  }
+
+  closeFaculyKanban(): void {
+    this.facultlyKaban = false;
+  }
+
+  
 
 }
