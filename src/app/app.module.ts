@@ -47,6 +47,7 @@ import { LettersAvatarModule } from "ngx-letters-avatar";
 import { TimeMomentPipe } from './pipes/time-moment.pipe';
 import { AllComponent } from './all/all.component';
 import { CollegeComponent } from './college/college.component';
+import { ViewkanbanComponent } from './viewkanban/viewkanban.component';
 
 registerLocaleData(en);
 
@@ -103,6 +104,7 @@ const avatarColors =
     TimeMomentPipe,
     AllComponent,
     CollegeComponent,
+    ViewkanbanComponent,
 
   ],
   imports: [
