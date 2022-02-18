@@ -3,7 +3,7 @@
 
 .layout {
     min-height: 100vh;
-    background-color: white;
+    background-color: #FAFBFC;
   }
   
   nz-sider {
@@ -16,7 +16,7 @@
   
   
   nz-content {
-    background-color: white;
+    background-color: #FAFBFC;
   }
   nz-badge {
     margin-right: 30px;

@@ -62,8 +62,7 @@ export class SidebarComponent implements OnInit {
           }else{
             this.checkIfItsyahoo = false;
           }
-          console.log('name:', this.userName);
-          console.log('ImageUrl:', this.userProfileImg);
+          
 
           this.fireService
             .checkAdminType(data.email)
