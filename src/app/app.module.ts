@@ -48,6 +48,9 @@ import { TimeMomentPipe } from './pipes/time-moment.pipe';
 import { AllComponent } from './all/all.component';
 import { CollegeComponent } from './college/college.component';
 import { ViewkanbanComponent } from './viewkanban/viewkanban.component';
+import { TeachersComponent } from './kanban/teachers/teachers.component';
+import { FacultiesComponent } from './kanban/faculties/faculties.component';
+import { SettingsComponent } from './kanban/settings/settings.component';
 
 registerLocaleData(en);
 
@@ -105,6 +108,9 @@ const avatarColors =
     AllComponent,
     CollegeComponent,
     ViewkanbanComponent,
+    TeachersComponent,
+    FacultiesComponent,
+    SettingsComponent,
 
   ],
   imports: [
