@@ -5,6 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NopageComponent } from './nopage/nopage.component';
 import { AllComponent } from './all/all.component';
 import { CollegeComponent } from './college/college.component';
+import { ViewkanbanComponent } from './viewkanban/viewkanban.component';
 
 
 const routes: Routes = [
@@ -12,8 +13,12 @@ const routes: Routes = [
     path: '', component: LoginComponent
   },
   {
+    path: 'boards/:departmentId', component: ViewkanbanComponent
+  },
+  {
     path: 'colleges', component: AllComponent
   },
+
   {
     path: 'colleges/:collegeId', component: CollegeComponent
   },

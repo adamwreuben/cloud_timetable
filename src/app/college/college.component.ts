@@ -160,6 +160,11 @@ export class CollegeComponent implements OnInit {
     this.facultlyKaban = false;
   }
 
+
+  viewBoardForDepartment(departmentId: string){
+    this.routers.navigate(['boards',departmentId = departmentId])
+  }
+
   
 
 }
