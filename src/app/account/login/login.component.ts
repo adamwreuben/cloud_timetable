@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, DoCheck {
             // this.snack.open('Please Wait...', '', { duration: 2000 });
             if (data.email === 'adamreuben66@gmail.com') {
               this.statusServ.progressBarStatus = false;
-              this.router.navigate(['/']);
+              this.router.navigate(['/colleges']);
               //this.router.navigate(['/me']);
             } else {
               this.statusServ.progressBarStatus = false;
@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit, DoCheck {
         this.chooseCourse = '';
         this.startYear = '';
         this.endYear = '';
-        this.router.navigate(['/home']);
+        this.router.navigate(['/colleges']);
         this.message.create('success', 'Successful Added!', {
           nzDuration: 2000,
         });
@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit, DoCheck {
                 this.message.remove(id);
                 this.message.success('Welcom Back!', { nzDuration: 2000 });
                 this.statusServ.progressBarStatus = false;
-                this.router.navigate(['/home']);
+                this.router.navigate(['/colleges']);
               } else {
                 this.message.remove(id);
                 this.showModalMiddleCreate();
@@ -175,7 +175,7 @@ export class LoginComponent implements OnInit, DoCheck {
                   nzDuration: 2000,
                 });
                 this.statusServ.progressBarStatus = false;
-                this.router.navigate(['/home']);
+                this.router.navigate(['/colleges']);
               } else {
                 this.message.remove(id);
                 this.needsVerification = true;
@@ -209,7 +209,7 @@ export class LoginComponent implements OnInit, DoCheck {
                   .getUniversityCourse(userData.uid)
                   .subscribe((data) => {
                     if (data !== null) {
-                      this.router.navigate(['/home']);
+                      this.router.navigate(['/colleges']);
                     } else {
                       this.showModalMiddleCreate();
                     }
