@@ -46,7 +46,7 @@
             
             <div>
                 <div fxLayout="column" style="margin-top: 20px;">
-                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
                         <div style="font-family: 'Nunito', sans-serif;color: black;">COLLEGE NAME</div>
                         <div>
                             <button 
@@ -65,7 +65,7 @@
                     <nz-divider></nz-divider>
                     <div fxLayout="column">
                         <div fxLayout="column" style="margin-bottom: 10px;">
-                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
                                 <div style="font-family: 'Nunito', sans-serif;">Department of Information and Technology</div>
                                 <div>
                                     <button nz-button nzType="dashed" style="margin-right: 10px;">
@@ -107,8 +107,7 @@
                                 </div>
 
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    <nz-card
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -120,8 +119,7 @@
                                 </div>
 
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    <nz-card
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -137,7 +135,7 @@
 
 
                         <div fxLayout="column">
-                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 800px;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
                                 <div style="font-family: 'Nunito', sans-serif;">Department of Engineering</div>
                                 <div>
                                     <button nz-button nzType="dashed" style="margin-right: 10px;">
@@ -166,8 +164,7 @@
                                 </div>
 
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    <nz-card
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -179,8 +176,7 @@
                                 </div>
 
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    <nz-card
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -192,8 +188,7 @@
                                 </div>
 
                                 <div style="margin: 10px;">
-                                    <nz-card 
-                                    (click)="viewCollege('coict1234568TUC')"
+                                    <nz-card
                                     nzHoverable style="width:200px;height: 200px;"
                                     fxLayout="column" fxLayoutAlign="center center">
                                      <div
@@ -217,10 +212,9 @@
             <nz-drawer
       [nzBodyStyle]="{ overflow: 'auto' }"
       [nzMaskClosable]="false"
-      [nzWidth]="720"
+      [nzWidth]="900"
       [nzVisible]="courseDrapDropVisible"
       nzTitle="Drap and Drop Csv file or Excell file containing your courses"
-      [nzFooter]="footerTpl"
       (nzOnClose)="closeDragAndDropCourse()"
     >
 
@@ -233,9 +227,9 @@
       [nzBodyStyle]="{ overflow: 'auto' }"
       [nzMaskClosable]="false"
       [nzWidth]="900"
+      [nzClosable]="true"
       [nzVisible]="courseListDrawer"
       nzTitle="List of all college courses"
-      [nzFooter]="footerTpl"
       (nzOnClose)="closeCourseListDrawer()"
     >
 
@@ -249,12 +243,29 @@
       [nzMaskClosable]="false"
       [nzWidth]="1300"
       [nzVisible]="facultlyKaban"
-      nzTitle="Setting course to specific faculty"
-      [nzFooter]="footerTpl"
+      nzTitle="Bachelor of science in computer science courses"
       (nzOnClose)="closeFaculyKanban()"
     >
 
-    <div>Contents</div>
+    <div fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div style="font-family: 'Nunito', sans-serif;">Choose year</div>
+            <div>
+                <button nz-button nz-dropdown [nzDropdownMenu]="menuForYears">
+                    Year of study
+                    <i nz-icon nzType="down"></i>
+                  </button>
+                  <nz-dropdown-menu #menuForYears="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item>First year</li>
+                      <li nz-menu-item>Second year</li>
+                      <li nz-menu-item>Third year</li>
+                      <li nz-menu-item>Fourth year</li>
+                    </ul>
+                  </nz-dropdown-menu>
+            </div>
+        </div>
+    </div>
     
     </nz-drawer>
 
