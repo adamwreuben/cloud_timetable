@@ -50,3 +50,7 @@
   
   /* [ngStyle]="{'background-color': switchLayoutType === 'overview'? '#1d8ec2':'#29B6F6' }" */
   
+
+  .form {
+    width: 100%;
+  }

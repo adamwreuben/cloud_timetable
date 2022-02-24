@@ -12,6 +12,13 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class AllComponent implements OnInit {
 
+
+  showDialogModalToAddCollege = false;
+  collegeNameInput: string;
+  collegeShortNameInput: string;
+  collegeLocationInput: string;
+
+
   switchLayoutType:
     | 'home'
     | 'review'
@@ -118,6 +125,22 @@ export class AllComponent implements OnInit {
         }
       });
     });
+  }
+
+  createCollege(){
+    
+  }
+
+  showAddCollegeModal(): void {
+    this.showDialogModalToAddCollege = true;
+  }
+
+  handleOkay():void{
+    this.showDialogModalToAddCollege = false;
+  }
+
+  showHideCollegeModal(): void {
+    this.showDialogModalToAddCollege = false;
   }
 
   createNotification() {

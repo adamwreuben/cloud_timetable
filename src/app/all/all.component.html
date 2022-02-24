@@ -47,7 +47,9 @@
                     <div style="font-family: 'Nunito', sans-serif;color: white;font-size: larger;font-weight: bold;">Your university colleges</div>
                     <div fxLayout="row" fxLayoutAlign="space-around center">
                         <div style="margin: 10px;">
-                            <nz-card nzHoverable style="width:200px;height: 200px;"
+                            <nz-card 
+                            (click)="showAddCollegeModal()"
+                            nzHoverable style="width:200px;height: 200px;"
                             fxLayout="column" fxLayoutAlign="center center">
                                <div fxLayout="column" fxLayoutAlign="center center"
                                style="margin-bottom: 10px;">
@@ -89,6 +91,58 @@
                 
             </div>
         </div>
+
+        <nz-modal [(nzVisible)]="showDialogModalToAddCollege" nzTitle="Add College" (nzOnCancel)="showHideCollegeModal()">
+
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <div>
+              <img src="assets/add_college.svg" style="width: 100px;height: 100px;">
+            </div>
+            <div style="margin-top: 20px;">
+              <form nz-form class="form" #formAddCollege="ngForm" (ngSubmit)="createCollege()">
+                
+                <nz-form-item>
+                  <input
+                  [(ngModel)]="collegeShortNameInput"
+                  name="course"
+                  style="width: 100%;margin-bottom: 10px;"
+                  nz-input
+                  placeholder="College short name"
+                  required />
+                </nz-form-item>
+          
+                <nz-form-item>
+                  <input
+                  [(ngModel)]="collegeLocationInput"
+                  name="course"
+                  style="width: 100%;margin-bottom: 10px;"
+                  nz-input
+                  placeholder="College location"
+                  required />
+                </nz-form-item>
+
+                <nz-form-item>
+                  <input
+                  [(ngModel)]="collegeNameInput"
+                  name="course"
+                  style="width: 100%;margin-bottom: 10px;"
+                  nz-input
+                  placeholder="College name"
+                  required />
+                </nz-form-item>
+          
+                <button
+                style="width: 100%;"
+                type="submit"
+                nz-button
+                [disabled]="formAddCollege.invalid"
+                nzType="primary">Create</button>
+          
+                </form>
+            </div>
+          </div>
+          
+        </nz-modal>
       </nz-content> 
 </nz-layout>
   
